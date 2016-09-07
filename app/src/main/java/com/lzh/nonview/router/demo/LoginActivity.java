@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         uri = getIntent().getParcelableExtra("uri");
-        extras = (ActivityRouteBundleExtras) getIntent().getSerializableExtra("extra");
+        extras = getIntent().getParcelableExtra("extra");
     }
 
     @OnClick(R.id.login)
