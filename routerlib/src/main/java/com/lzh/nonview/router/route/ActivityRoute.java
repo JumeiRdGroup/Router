@@ -20,7 +20,8 @@ import java.util.Set;
  */
 public class ActivityRoute implements IActivityRoute {
     Uri uri;
-    ActivityRouteBuilder builder;
+    Bundle bundle;
+    ActivityRouteBundleExtras extras;
     RouteMap routeMap = null;
     RouteCallback callback = new EmptyCallback();
 
@@ -31,15 +32,24 @@ public class ActivityRoute implements IActivityRoute {
     }
 
     @Override
+    public void replaceBundleExtras(ActivityRouteBundleExtras extras) {
+        if (extras != null) {
+            this.extras = extras;
+        }
+    }
+
+    @Override
     public void open(Context context, Uri uri) {
         try {
-            if (callback.interceptOpen(uri)) return;
+            if (callback.interceptOpen(uri,context,extras)) return;
+
             ActivityRoute route = (ActivityRoute) getRoute(uri);
             route.openInternal(context);
-            callback.onOpenSuccess(uri);
+
+            callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
             if (e instanceof NotFoundException) {
-                callback.routeNotFound(uri);
+                callback.notFound(uri,routeMap.getClzName());
             } else {
                 callback.onOpenFailed(uri,e);
             }
@@ -59,24 +69,25 @@ public class ActivityRoute implements IActivityRoute {
     @Override
     public IRoute getRoute(Uri uri) {
         this.uri = uri;
+        this.extras = new ActivityRouteBundleExtras();
+
         URIParser parser = new URIParser(uri);
         routeMap = getRouteMapByUri(parser);
         Map<String, String> keyMap = routeMap.getParams();
 
-        builder = new ActivityRouteBuilder();
-        Bundle extras = builder.getExtras();
+        bundle = new Bundle();
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
         for (String key : keySet) {
             String type = keyMap.get(key);
-            putExtraByType(extras, params, key, type);
+            putExtraByType(bundle, params, key, type);
         }
         return this;
     }
 
     static void putExtraByType(Bundle extras, Map<String, String> params, String key, String type) {
         if (Utils.isEmpty(type))
-            type = "string";// when not set this key in router.json,reset type to string
+            type = "S";// when not set this key in router.json,reset type to string
         switch (type) {
             case "b":
                 extras.putByte(key,Byte.parseByte(params.get(key)));
@@ -112,12 +123,12 @@ public class ActivityRoute implements IActivityRoute {
     @Override
     public void open(Context context) {
         try {
-            if (callback.interceptOpen(uri)) return;
+            if (callback.interceptOpen(uri,context,extras)) return;
             openInternal(context);
-            callback.onOpenSuccess(uri);
+            callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
             if (e instanceof NotFoundException) {
-                callback.routeNotFound(uri);
+                callback.notFound(uri,routeMap.getClzName());
             } else {
                 callback.onOpenFailed(this.uri,e);
             }
@@ -131,11 +142,12 @@ public class ActivityRoute implements IActivityRoute {
         }
         Intent intent = new Intent();
         intent.setClassName(context,routeMap.getClzName());
-        intent.putExtras(builder.getExtras());
+        intent.putExtras(bundle);
+        intent.putExtras(extras.getExtras());
         if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,builder.getRequestCode());
-            int inAnimation = builder.getInAnimation();
-            int outAnimation = builder.getOutAnimation();
+            ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
+            int inAnimation = extras.getInAnimation();
+            int outAnimation = extras.getOutAnimation();
             if (inAnimation > 0 && outAnimation > 0) {
                 ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
             }
@@ -147,25 +159,26 @@ public class ActivityRoute implements IActivityRoute {
 
     @Override
     public IActivityRoute requestCode(int requestCode) {
-        this.builder.setRequestCode(requestCode);
+        this.extras.setRequestCode(requestCode);
         return this;
     }
 
     @Override
     public Bundle getExtras() {
-        return this.builder.getExtras();
+        return this.extras.getExtras();
     }
 
     @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.builder.setInAnimation(enterAnim);
-        this.builder.setOutAnimation(exitAnim);
+        this.extras.setInAnimation(enterAnim);
+        this.extras.setOutAnimation(exitAnim);
         return this;
     }
 
     @Override
     public IActivityRoute setExtras(Bundle extras) {
-        return null;
+        this.extras.setExtras(extras);
+        return this;
     }
 
 }

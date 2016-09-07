@@ -33,8 +33,12 @@ public class EmptyActivityRoute implements IActivityRoute{
 
     @Override
     public IActivityRoute setExtras(Bundle extras) {
-        // empty
         return this;
+    }
+
+    @Override
+    public void replaceBundleExtras(ActivityRouteBundleExtras extras) {
+
     }
 
     @Override

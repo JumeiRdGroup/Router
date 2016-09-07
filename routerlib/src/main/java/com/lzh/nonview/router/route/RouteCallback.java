@@ -1,5 +1,6 @@
 package com.lzh.nonview.router.route;
 
+import android.content.Context;
 import android.net.Uri;
 
 /**
@@ -8,15 +9,20 @@ import android.net.Uri;
 public interface RouteCallback {
 
     /**
-     *
-     * @param uri
-     * @return true if
+     * whether or not be interrupted when open activity by uri
+     * @param uri uri
+     * @return true if should be intercepted
      */
-    boolean interceptOpen(Uri uri);
+    boolean interceptOpen(Uri uri, Context context,ActivityRouteBundleExtras extras);
 
-    void routeNotFound(Uri uri);
+    /**
+     * When class of activity with this uri is not found
+     * @param uri uri
+     * @param clzName the activity name corresponding of
+     */
+    void notFound(Uri uri, String clzName);
 
-    void onOpenSuccess(Uri uri);
+    void onOpenSuccess(Uri uri,String clzName);
 
     void onOpenFailed(Uri uri,Exception e);
 }

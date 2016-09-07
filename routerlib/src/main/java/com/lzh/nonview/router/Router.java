@@ -12,7 +12,8 @@ import com.lzh.nonview.router.route.RouteCallback;
 
 
 /**
- * Created by admin on 16/9/5.
+ * Entry of router lib,you can call open to open immediately or getRoute to set some extra data later;
+ * Created by lzh on 16/9/5.
  */
 public class Router {
 

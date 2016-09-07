@@ -1,5 +1,6 @@
 package com.lzh.nonview.router.route;
 
+import android.content.Context;
 import android.net.Uri;
 
 /**
@@ -8,17 +9,17 @@ import android.net.Uri;
 public class EmptyCallback implements RouteCallback {
 
     @Override
-    public boolean interceptOpen(Uri uri) {
+    public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {
         return false;
     }
 
     @Override
-    public void routeNotFound(Uri uri) {
+    public void notFound(Uri uri, String clzName) {
 
     }
 
     @Override
-    public void onOpenSuccess(Uri uri) {
+    public void onOpenSuccess(Uri uri, String clzName) {
 
     }
 

@@ -20,5 +20,7 @@ public interface IActivityRoute extends IRoute{
 
     IActivityRoute setAnim (int enterAnim, int exitAnim);
 
-    IActivityRoute setExtras (Bundle extras);
+    IActivityRoute setExtras(Bundle extras);
+
+    void replaceBundleExtras(ActivityRouteBundleExtras extras);
 }
