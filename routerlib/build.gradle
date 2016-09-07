@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'bintray-release'//添加
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 
     packagingOptions {
         exclude 'LICENSE.txt'
@@ -34,4 +38,15 @@ dependencies {
 
     provided 'com.alibaba:fastjson:1.2.16'
     provided 'com.google.code.gson:gson:2.7'
+}
+
+//添加
+publish {
+    userOrg = 'yjfnypeu'//bintray.com用户名
+    groupId = 'org.lzh.nonview.router'//jcenter上的路径
+    artifactId = 'Router'//项目名称
+    publishVersion = '0.1'//版本号
+    desc = 'A simple router lib to android'//描述，不重要
+    website = 'https://github.com/yjfnypeu/Router'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+
 }
