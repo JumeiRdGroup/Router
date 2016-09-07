@@ -1,0 +1,22 @@
+[
+  {
+    "pkg"   : "com.lzh.nonview.router.demo",
+    "scheme": "jumei",
+    "route" : [
+      {
+        "path" : "main",
+        "clz"  : "ParamsActivity",
+        "pms"  : {
+          "FloatP"     : "f",
+          "ByteP"     : "b",
+          "ShortP"     : "s",
+          "IntP"     : "i",
+          "LongP"     : "l",
+          "DoubleP"     : "d",
+          "BooleanP"     : "B",
+          "CharP"     : "c"
+        }
+      }
+    ]
+  }
+]

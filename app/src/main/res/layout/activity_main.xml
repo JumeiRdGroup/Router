@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/to_webview"
+            android:text="https://www.baidu.com/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/use_simple_router"
+            android:text="jumei://main?FloatP=3.3&amp;ByteP=3&amp;ShortP=2&amp;IntP=85&amp;LongP=328934289&amp;DoubleP=9.324&amp;BooleanP=false&amp;CharP=c&amp;String=username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/addExtras"
+            android:text="添加额外数据跳转"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</ScrollView>
+
