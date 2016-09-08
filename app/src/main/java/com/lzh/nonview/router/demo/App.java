@@ -49,6 +49,7 @@ public class App extends Application {
 
             @Override
             public void onOpenSuccess(Uri uri, String clzName) {
+                // 可在此进行route追踪
                 Toast.makeText(App.this, String.format("Launch activity %s success",clzName), Toast.LENGTH_SHORT).show();
             }
 

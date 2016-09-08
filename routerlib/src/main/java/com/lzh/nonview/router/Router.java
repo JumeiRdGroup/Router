@@ -18,14 +18,28 @@ import com.lzh.nonview.router.route.RouteCallback;
  */
 public class Router {
 
+    /**
+     * {@link Router#open(Uri, Context, RouteCallback)}
+     */
     public static void open (String url,Context context) {
         open(url,context,null);
     }
 
+    /**
+     * {@link Router#open(Uri, Context, RouteCallback)}
+     */
     public static void open (String url, Context context,RouteCallback callback) {
         open(Uri.parse(url),context,callback);
     }
 
+    /**
+     * Open route by rui.it checked scheme first.<br>
+     *     if scheme set is http or https.should be opened by browser,
+     *     or opened with ActivityRoute otherwise.
+     * @param uri The uri to check to open
+     * @param context context to startActivity
+     * @param callback if set to null,should use global route callback that you had set by {@link Router#setRouteCallback(RouteCallback)} before
+    */
     public static void open (Uri uri, Context context,RouteCallback callback) {
         ActivityRoute activityRoute;
         callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
@@ -40,14 +54,26 @@ public class Router {
         }
     }
 
+    /**
+     * {@link Router#getRoute(Uri, RouteCallback)}
+     */
     public static IRoute getRoute (String url) {
         return getRoute(url,null);
     }
 
+    /**
+     * {@link Router#getRoute(Uri, RouteCallback)}
+     */
     public static IRoute getRoute (String url,RouteCallback callback) {
         return getRoute(Uri.parse(url),callback);
     }
 
+    /**
+     * Get route by uri,you should get a route by this way and set some extras data before open
+     * @param uri The uri to check to open
+     * @param callback if set to null,should use global route callback that you had set by {@link Router#setRouteCallback(RouteCallback)} before
+     * @return A IRoute object.it would be {@link BrowserRoute} or {@link ActivityRoute}
+     */
     public static IRoute getRoute (Uri uri,RouteCallback callback) {
         ActivityRoute activityRoute;
         callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
@@ -64,10 +90,18 @@ public class Router {
         return new EmptyActivityRoute();
     }
 
+    /**
+     * Set global route callback to invoked when open a uri
+     * @param callback can't be null
+     */
     public static void setRouteCallback (RouteCallback callback) {
         RouteManager.INSTANCE.setCallback(callback);
     }
 
+    /**
+     * set to create route rules
+     * @param creator Route rules creator.can't be null
+     */
     public static void addRouteCreator(RouteCreator creator) {
         RouteManager.INSTANCE.addCreator(creator);
     }
