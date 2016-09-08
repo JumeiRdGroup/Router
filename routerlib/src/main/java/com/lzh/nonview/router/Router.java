@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
-import com.lzh.nonview.router.parser.RouterParser;
+import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
 import com.lzh.nonview.router.route.EmptyActivityRoute;
@@ -18,8 +18,6 @@ import com.lzh.nonview.router.route.RouteCallback;
  */
 public class Router {
 
-    private static RouteCallback callback;
-
     public static void open (String url,Context context) {
         open(url,context,null);
     }
@@ -30,7 +28,7 @@ public class Router {
 
     public static void open (Uri uri, Context context,RouteCallback callback) {
         ActivityRoute activityRoute;
-        callback = callback == null ? Router.callback : callback;
+        callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             BrowserRoute.getInstance().open(context,uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
@@ -52,7 +50,7 @@ public class Router {
 
     public static IRoute getRoute (Uri uri,RouteCallback callback) {
         ActivityRoute activityRoute;
-        callback = callback == null ? Router.callback : callback;
+        callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             return BrowserRoute.getInstance().getRoute(uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
@@ -67,15 +65,11 @@ public class Router {
     }
 
     public static void setRouteCallback (RouteCallback callback) {
-        Router.callback = callback;
+        RouteManager.INSTANCE.setCallback(callback);
     }
 
-    public static void init(Context context) {
-        try {
-            RouterParser.INSTANCE.parse(context);
-        } catch (Exception e) {
-            throw new RuntimeException("Router init failed:Cause by:" + e.getMessage(),e);
-        }
+    public static void addRouteCreator(RouteCreator creator) {
+        RouteManager.INSTANCE.addCreator(creator);
     }
 
 }

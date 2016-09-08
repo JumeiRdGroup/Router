@@ -8,8 +8,13 @@ import android.widget.Toast;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.module.RouteCreator;
+import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by admin on 16/9/6.
@@ -19,8 +24,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // 对Router框架进行初始化
-        Router.init(this);
+        // 添加route规则创建器
+        Router.addRouteCreator(new RouteInit());
         // 对Router设置Activity Route Callback,作辅助功能
         Router.setRouteCallback(new RouteCallback() {
 
@@ -52,5 +57,22 @@ public class App extends Application {
 
             }
         });
+    }
+
+    class RouteInit implements RouteCreator {
+
+        @Override
+        public Map<String, RouteMap> initRoute() {
+            Map<String,RouteMap> routes = new HashMap<>();
+            routes.put("jumei://main",
+                    new RouteMap(ParamsActivity.class.getCanonicalName())
+                    .addParam("price",RouteMap.FLOAT)
+                    .addParam("bookName",RouteMap.STRING)
+            );
+            routes.put("jumeimail://main",
+                    new RouteMap("com.lzh.nonview.demo.RegisterActivity")
+                    );
+            return routes;
+        }
     }
 }

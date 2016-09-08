@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.parser.RouterParser;
 import com.lzh.nonview.router.parser.URIParser;
 
 import java.util.Map;
@@ -63,7 +63,7 @@ public class ActivityRoute implements IActivityRoute {
 
     RouteMap getRouteMapByUri (URIParser parser) {
         String route = parser.getScheme() + "://" + parser.getHost();
-        return RouterParser.INSTANCE.getRouteMap().get(route);
+        return RouteManager.INSTANCE.getRouteMap().get(route);
     }
 
     @Override
@@ -73,47 +73,46 @@ public class ActivityRoute implements IActivityRoute {
 
         URIParser parser = new URIParser(uri);
         routeMap = getRouteMapByUri(parser);
-        Map<String, String> keyMap = routeMap.getParams();
+        Map<String, Integer> keyMap = routeMap.getParams();
 
         bundle = new Bundle();
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
         for (String key : keySet) {
-            String type = keyMap == null ? "" : keyMap.get(key);
-            putExtraByType(bundle, params, key, type);
+            Integer type = keyMap.get(key);
+            putExtraByType(bundle, params, key, type == null ? RouteMap.STRING : type);
         }
         return this;
     }
 
-    static void putExtraByType(Bundle extras, Map<String, String> params, String key, String type) {
-        if (Utils.isEmpty(type))
-            type = "S";// when not set this key in router.json,reset type to string
+    static void putExtraByType(Bundle extras, Map<String, String> params, String key, int type) {
+        // when not set this key in router.json,reset type to string
         switch (type) {
-            case "b":
+            case RouteMap.BYTE:
                 extras.putByte(key,Byte.parseByte(params.get(key)));
                 break;
-            case "s":
+            case RouteMap.SHORT:
                 extras.putShort(key,Short.parseShort(params.get(key)));
                 break;
-            case "i":
+            case RouteMap.INT:
                 extras.putInt(key,Integer.parseInt(params.get(key)));
                 break;
-            case "l":
+            case RouteMap.LONG:
                 extras.putLong(key,Long.parseLong(params.get(key)));
                 break;
-            case "f":
+            case RouteMap.FLOAT:
                 extras.putFloat(key,Float.parseFloat(params.get(key)));
                 break;
-            case "d":
+            case RouteMap.DOUBLE:
                 extras.putDouble(key,Double.parseDouble(params.get(key)));
                 break;
-            case "c":
+            case RouteMap.CHAR:
                 extras.putChar(key,params.get(key).charAt(0));
                 break;
-            case "B":
+            case RouteMap.BOOLEAN:
                 extras.putBoolean(key,Boolean.parseBoolean(params.get(key)));
                 break;
-            case "S":
+            case RouteMap.STRING:
             default://string
                 extras.putString(key,params.get(key));
                 break;
