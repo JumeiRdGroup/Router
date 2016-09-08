@@ -63,10 +63,13 @@ public enum RouterParser {
     }
 
     void inflateRouteMap(RawParse parse) {
+        if (parse == null) return;
+
         String pkg = parse.getPkg();
         String scheme = parse.getScheme();
         List<RawParse.RouteBean> routeList = parse.getRoute();
-        for (int j = 0; j < routeList.size(); j++) {
+        int count = routeList == null ? 0 : routeList.size();
+        for (int j = 0; j < count; j++) {
             RawParse.RouteBean routeBean = routeList.get(j);
             String route = scheme + "://" + routeBean.getPath();
             RouteMap item = new RouteMap();

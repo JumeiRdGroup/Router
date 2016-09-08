@@ -3,6 +3,8 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 
+import com.lzh.nonview.router.exception.NotFoundException;
+
 /**
  * Created by admin on 16/9/5.
  */
@@ -18,9 +20,9 @@ public interface RouteCallback {
     /**
      * When class of activity with this uri is not found
      * @param uri uri
-     * @param clzName the activity name corresponding of
+     * @param e the activity name corresponding of
      */
-    void notFound(Uri uri, String clzName);
+    void notFound(Uri uri, NotFoundException e);
 
     void onOpenSuccess(Uri uri,String clzName);
 

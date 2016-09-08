@@ -2,7 +2,6 @@ package com.lzh.nonview.router.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,11 +13,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String onLine = "http://online.com/";
-    final String offline = "http://test.com/";
-
-    String host = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick({R.id.to_webview,R.id.use_simple_router})
     void onSimpleClick (TextView tv) {
         // 直接使用open进行跳转
+        // 传参key的类型根据route.json中pms中的定义自动转义.url中传参只支持基本类型与String,
         Router.open(tv.getText().toString(),this);
     }
 

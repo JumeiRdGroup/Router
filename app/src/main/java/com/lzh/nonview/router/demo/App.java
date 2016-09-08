@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
 
@@ -25,6 +26,7 @@ public class App extends Application {
 
             @Override
             public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {
+                // 拦截方法,返回true.表示此open事件被拦截.不继续运行,false不拦截
                 if (DataManager.INSTANCE.isLogin()) return false;
 
                 Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
@@ -36,8 +38,8 @@ public class App extends Application {
             }
 
             @Override
-            public void notFound(Uri uri, String clzName) {
-                Toast.makeText(App.this, clzName + " not find", Toast.LENGTH_SHORT).show();
+            public void notFound(Uri uri, NotFoundException e) {
+                Toast.makeText(App.this, e.getNotFoundName() + " not find", Toast.LENGTH_SHORT).show();
             }
 
             @Override

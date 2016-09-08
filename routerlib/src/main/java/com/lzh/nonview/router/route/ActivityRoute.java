@@ -49,7 +49,7 @@ public class ActivityRoute implements IActivityRoute {
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
             if (e instanceof NotFoundException) {
-                callback.notFound(uri,routeMap.getClzName());
+                callback.notFound(uri, (NotFoundException) e);
             } else {
                 callback.onOpenFailed(uri,e);
             }
@@ -79,7 +79,7 @@ public class ActivityRoute implements IActivityRoute {
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
         for (String key : keySet) {
-            String type = keyMap.get(key);
+            String type = keyMap == null ? "" : keyMap.get(key);
             putExtraByType(bundle, params, key, type);
         }
         return this;
@@ -128,7 +128,7 @@ public class ActivityRoute implements IActivityRoute {
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
             if (e instanceof NotFoundException) {
-                callback.notFound(uri,routeMap.getClzName());
+                callback.notFound(uri, (NotFoundException) e);
             } else {
                 callback.onOpenFailed(this.uri,e);
             }
@@ -138,7 +138,7 @@ public class ActivityRoute implements IActivityRoute {
     private void openInternal(Context context) {
         String clzName = routeMap.getClzName();
         if (!Utils.isClassSupport(clzName)) {
-            throw new NotFoundException();
+            throw new NotFoundException(String.format("target activity is not found : %s",clzName), NotFoundException.NotFoundType.CLZ,clzName);
         }
         Intent intent = new Intent();
         intent.setClassName(context,routeMap.getClzName());

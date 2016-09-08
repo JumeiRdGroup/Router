@@ -3,6 +3,7 @@ package com.lzh.nonview.router;
 import android.content.Context;
 import android.net.Uri;
 
+import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.parser.RouterParser;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
@@ -29,11 +30,15 @@ public class Router {
 
     public static void open (Uri uri, Context context,RouteCallback callback) {
         ActivityRoute activityRoute;
+        callback = callback == null ? Router.callback : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             BrowserRoute.getInstance().open(context,uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
-            activityRoute.setCallback(callback == null ? Router.callback : callback);
+            activityRoute.setCallback(callback);
             activityRoute.open(context,uri);
+        } else {
+            callback.notFound(uri,new NotFoundException(String.format("find route by uri %s failed:",uri),
+                    NotFoundException.NotFoundType.SCHEME,uri.toString()));
         }
     }
 
@@ -47,12 +52,16 @@ public class Router {
 
     public static IRoute getRoute (Uri uri,RouteCallback callback) {
         ActivityRoute activityRoute;
+        callback = callback == null ? Router.callback : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             return BrowserRoute.getInstance().getRoute(uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
-            activityRoute.setCallback(callback == null ? Router.callback : callback);
+            activityRoute.setCallback(callback);
             return activityRoute.getRoute(uri);
         }
+        callback.notFound(uri,
+                new NotFoundException(String.format("find route by uri %s failed:",uri),
+                        NotFoundException.NotFoundType.SCHEME,uri.toString()));
         // return a empty route to avoid NullPointException
         return new EmptyActivityRoute();
     }
