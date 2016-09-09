@@ -63,7 +63,7 @@ public class App extends Application {
     class RouteInit implements RouteCreator {
 
         @Override
-        public Map<String, RouteMap> initRoute() {
+        public Map<String, RouteMap> createRouteRules() {
             Map<String,RouteMap> routes = new HashMap<>();
             routes.put("jumei://main",
                     new RouteMap(ParamsActivity.class.getCanonicalName())

@@ -3,9 +3,6 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 
-/**
- * Created by admin on 16/9/5.
- */
 public interface IRoute {
 
     /**

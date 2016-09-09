@@ -5,9 +5,6 @@ import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 
-/**
- * Created by admin on 16/9/7.
- */
 public class EmptyCallback implements RouteCallback {
 
     @Override

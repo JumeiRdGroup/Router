@@ -4,9 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-/**
- * Created by admin on 16/9/7.
- */
 public class EmptyActivityRoute implements IActivityRoute{
 
     @Override

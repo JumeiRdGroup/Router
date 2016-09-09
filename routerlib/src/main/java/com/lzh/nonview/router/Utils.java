@@ -1,24 +1,21 @@
 package com.lzh.nonview.router;
 
-import java.util.List;
-
-/**
- * Created by admin on 16/9/5.
- */
 public class Utils {
 
+    /**
+     * Adjust if the scheme is http or https
+     * @param scheme scheme for uri
+     * @return return true if is http or https
+     */
     public static boolean isHttp (String scheme) {
         return scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https");
     }
 
-    public static boolean isEmpty (String data) {
-        return data == null || data.isEmpty();
-    }
-
-    public static boolean isListEmpty (List list) {
-        return list == null || list.isEmpty();
-    }
-
+    /**
+     * Check if the class is valid by clzName
+     * @param clzName class name
+     * @return return true if the clz name is supported
+     */
     public static boolean isClassSupport (String clzName) {
         try {
             Class.forName(clzName);

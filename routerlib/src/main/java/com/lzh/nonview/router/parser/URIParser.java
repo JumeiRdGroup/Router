@@ -8,6 +8,7 @@ import java.util.Set;
 
 /**
  *
+ * A parser to parse uri to scheme/host/params .etc
  * Created by lzh on 16/9/5.
  */
 public class URIParser {

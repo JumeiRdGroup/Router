@@ -7,7 +7,8 @@ import android.net.Uri;
 import com.lzh.nonview.router.Utils;
 
 /**
- * Created by admin on 16/9/5.
+ * A route tool to open uri by browser
+ * Created by lzh on 16/9/5.
  */
 public class BrowserRoute implements IRoute {
 

@@ -16,13 +16,29 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A route tool to check route rule by uri and launch activity
  * Created by lzh on 16/9/5.
  */
 public class ActivityRoute implements IActivityRoute {
+    /**
+     * Uri to open
+     */
     Uri uri;
+    /**
+     * The bundle data that contains all of data parsed by uri
+     */
     Bundle bundle;
+    /**
+     * A entity to contains some extra data exclude uri parse
+     */
     ActivityRouteBundleExtras extras;
+    /**
+     * A routeMap entity that associated with uri
+     */
     RouteMap routeMap = null;
+    /**
+     * route callback,will not be null
+     */
     RouteCallback callback = new EmptyCallback();
 
     public void setCallback (RouteCallback callback) {
@@ -33,9 +49,10 @@ public class ActivityRoute implements IActivityRoute {
 
     @Override
     public void replaceBundleExtras(ActivityRouteBundleExtras extras) {
-        if (extras != null) {
-            this.extras = extras;
+        if (extras == null) {
+            extras = new ActivityRouteBundleExtras();
         }
+        this.extras = extras;
     }
 
     @Override

@@ -3,9 +3,14 @@ package com.lzh.nonview.router.module;
 import java.util.Map;
 
 /**
- * Created by admin on 16/9/8.
+ * A interface to define route rules to router lib
+ * Created by lzh on 16/9/8.
  */
 public interface RouteCreator {
 
-    Map<String,RouteMap> initRoute ();
+    /**
+     * create route rules for ActivityRoute
+     * @return A map that contains of all route rules.
+     */
+    Map<String,RouteMap> createRouteRules();
 }

@@ -35,9 +35,6 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.2'
     androidTestCompile 'com.android.support.test:rules:0.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.1'
-
-    provided 'com.alibaba:fastjson:1.2.16'
-    provided 'com.google.code.gson:gson:2.7'
 }
 
 //添加

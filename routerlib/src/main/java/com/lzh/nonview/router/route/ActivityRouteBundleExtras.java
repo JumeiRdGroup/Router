@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
- * Created by admin on 16/9/6.
+ * A container to contains some extra data for intent
+ * Created by lzh on 16/9/6.
  */
 public class ActivityRouteBundleExtras implements Parcelable{
     Bundle extras = new Bundle();
