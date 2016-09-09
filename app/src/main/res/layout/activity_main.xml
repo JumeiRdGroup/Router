@@ -8,15 +8,17 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <Button
             android:id="@+id/to_webview"
             android:text="https://www.baidu.com/"
+            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <Button
             android:id="@+id/use_simple_router"
-            android:text="jumei://main?FloatP=3.3&amp;ByteP=3&amp;ShortP=2&amp;IntP=85&amp;LongP=328934289&amp;DoubleP=9.324&amp;BooleanP=false&amp;CharP=c&amp;String=username"
+            android:text="jumei://main?bookName=zhuangbijiqiao&amp;price=66.66"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

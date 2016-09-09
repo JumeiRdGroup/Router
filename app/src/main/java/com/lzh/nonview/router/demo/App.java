@@ -66,7 +66,7 @@ public class App extends Application {
         public Map<String, RouteMap> createRouteRules() {
             Map<String,RouteMap> routes = new HashMap<>();
             routes.put("jumei://main",
-                    new RouteMap(ParamsActivity.class.getCanonicalName())
+                    new RouteMap(ParamsActivity.class)
                     .addParam("price",RouteMap.FLOAT)
                     .addParam("bookName",RouteMap.STRING)
             );
