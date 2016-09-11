@@ -16,9 +16,6 @@ import com.lzh.nonview.router.route.RouteCallback;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by admin on 16/9/6.
- */
 public class App extends Application {
 
     @Override
@@ -27,7 +24,7 @@ public class App extends Application {
         // 添加route规则创建器
         Router.addRouteCreator(new RouteInit());
         // 对Router设置Activity Route Callback,作辅助功能
-        Router.setRouteCallback(new RouteCallback() {
+        Router.setGlobalRouteCallback(new RouteCallback() {
 
             @Override
             public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {

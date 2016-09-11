@@ -1,4 +1,4 @@
-# Router
+# Router     [ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion) <a href="http://www.methodscount.com/?lib=org.lzh.nonview.router%3ARouter%3A0.2"><img src="https://img.shields.io/badge/Methods and size-171 | 17 KB-e91e63.svg"/></a>
 
 一款简单的Android端用于Activity跳转的路由框架.
 
@@ -26,7 +26,7 @@
 - 添加gradle依赖:
 
 ```
-compile 'org.lzh.nonview.router:Router:0.1.0'
+compile 'org.lzh.nonview.router:Router:0.2'
 ```
 
 [查看具体使用姿势](./Usage.md)

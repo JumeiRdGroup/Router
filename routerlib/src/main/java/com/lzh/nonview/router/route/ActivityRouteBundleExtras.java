@@ -13,14 +13,16 @@ public class ActivityRouteBundleExtras implements Parcelable{
     int requestCode = -1;
     int inAnimation = -1;
     int outAnimation = -1;
+    int flags;
 
-    public ActivityRouteBundleExtras() {}
+    ActivityRouteBundleExtras(){}
 
     protected ActivityRouteBundleExtras(Parcel in) {
-        extras = in.readBundle();
+        extras = in.readBundle(getClass().getClassLoader());
         requestCode = in.readInt();
         inAnimation = in.readInt();
         outAnimation = in.readInt();
+        flags = in.readInt();
     }
 
     public static final Creator<ActivityRouteBundleExtras> CREATOR = new Creator<ActivityRouteBundleExtras>() {
@@ -35,42 +37,6 @@ public class ActivityRouteBundleExtras implements Parcelable{
         }
     };
 
-    public ActivityRouteBundleExtras setExtras(Bundle extras) {
-        this.extras.putAll(extras);
-        return this;
-    }
-
-    public ActivityRouteBundleExtras setRequestCode(int requestCode) {
-        this.requestCode = requestCode;
-        return this;
-    }
-
-    public ActivityRouteBundleExtras setInAnimation(int inAnimation) {
-        this.inAnimation = inAnimation;
-        return this;
-    }
-
-    public ActivityRouteBundleExtras setOutAnimation(int outAnimation) {
-        this.outAnimation = outAnimation;
-        return this;
-    }
-
-    public Bundle getExtras() {
-        return extras;
-    }
-
-    public int getRequestCode() {
-        return requestCode;
-    }
-
-    public int getInAnimation() {
-        return inAnimation;
-    }
-
-    public int getOutAnimation() {
-        return outAnimation;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -82,5 +48,6 @@ public class ActivityRouteBundleExtras implements Parcelable{
         dest.writeInt(requestCode);
         dest.writeInt(inAnimation);
         dest.writeInt(outAnimation);
+        dest.writeInt(flags);
     }
 }

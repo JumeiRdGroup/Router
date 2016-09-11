@@ -19,7 +19,7 @@ import java.util.Set;
  * A route tool to check route rule by uri and launch activity
  * Created by lzh on 16/9/5.
  */
-public class ActivityRoute implements IActivityRoute {
+public class ActivityRoute implements IActivityRoute, IRoute {
     /**
      * Uri to open
      */
@@ -48,11 +48,12 @@ public class ActivityRoute implements IActivityRoute {
     }
 
     @Override
-    public void replaceBundleExtras(ActivityRouteBundleExtras extras) {
+    public IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras) {
         if (extras == null) {
             extras = new ActivityRouteBundleExtras();
         }
         this.extras = extras;
+        return this;
     }
 
     @Override
@@ -151,19 +152,25 @@ public class ActivityRoute implements IActivityRoute {
         }
     }
 
+    public Intent createIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setClassName(context,routeMap.getClzName());
+        intent.putExtras(bundle);
+        intent.putExtras(extras.extras);
+        intent.addFlags(extras.flags);
+        return intent;
+    }
+
     private void openInternal(Context context) {
         String clzName = routeMap.getClzName();
         if (!Utils.isClassSupport(clzName)) {
             throw new NotFoundException(String.format("target activity is not found : %s",clzName), NotFoundException.NotFoundType.CLZ,clzName);
         }
-        Intent intent = new Intent();
-        intent.setClassName(context,routeMap.getClzName());
-        intent.putExtras(bundle);
-        intent.putExtras(extras.getExtras());
+        Intent intent = createIntent(context);
         if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
-            int inAnimation = extras.getInAnimation();
-            int outAnimation = extras.getOutAnimation();
+            ((Activity) context).startActivityForResult(intent,extras.requestCode);
+            int inAnimation = extras.inAnimation;
+            int outAnimation = extras.outAnimation;
             if (inAnimation > 0 && outAnimation > 0) {
                 ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
             }
@@ -175,25 +182,28 @@ public class ActivityRoute implements IActivityRoute {
 
     @Override
     public IActivityRoute requestCode(int requestCode) {
-        this.extras.setRequestCode(requestCode);
+        this.extras.requestCode = requestCode;
         return this;
-    }
-
-    @Override
-    public Bundle getExtras() {
-        return this.extras.getExtras();
     }
 
     @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.extras.setInAnimation(enterAnim);
-        this.extras.setOutAnimation(exitAnim);
+        this.extras.inAnimation = enterAnim;
+        this.extras.outAnimation = exitAnim;
         return this;
     }
 
     @Override
-    public IActivityRoute setExtras(Bundle extras) {
-        this.extras.setExtras(extras);
+    public IActivityRoute addExtras(Bundle extras) {
+        if (extras != null) {
+            this.extras.extras.putAll(extras);
+        }
+        return this;
+    }
+
+    @Override
+    public IActivityRoute addFlags(int flag) {
+        this.extras.flags |= flag;
         return this;
     }
 

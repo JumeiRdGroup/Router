@@ -1,14 +1,20 @@
 package com.lzh.nonview.router.route;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class EmptyActivityRoute implements IActivityRoute{
+public class EmptyActivityRoute implements IActivityRoute,IRoute{
 
     @Override
     public void open(Context context) {
         // empty
+    }
+
+    @Override
+    public Intent createIntent(Context context) {
+        return new Intent();
     }
 
     @Override
@@ -18,24 +24,25 @@ public class EmptyActivityRoute implements IActivityRoute{
     }
 
     @Override
-    public Bundle getExtras() {
-        return new Bundle();
-    }
-
-    @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
         // empty
         return this;
     }
 
     @Override
-    public IActivityRoute setExtras(Bundle extras) {
+    public IActivityRoute addExtras(Bundle extras) {
         return this;
     }
 
     @Override
-    public void replaceBundleExtras(ActivityRouteBundleExtras extras) {
+    public IActivityRoute addFlags(int flag) {
+        return null;
+    }
 
+    @Override
+    public IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras) {
+        // empty
+        return this;
     }
 
     @Override
@@ -45,13 +52,11 @@ public class EmptyActivityRoute implements IActivityRoute{
 
     @Override
     public boolean canOpenRouter(Uri uri) {
-        // empty
-        return false;
+        return true;
     }
 
     @Override
     public IRoute getRoute(Uri uri) {
-        // empty
         return this;
     }
 }

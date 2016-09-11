@@ -26,9 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login)
     void onLoginClick () {
         DataManager.INSTANCE.setLogin(true);
-        IActivityRoute route = (IActivityRoute) Router.getRoute(uri.toString());
-        route.replaceBundleExtras(extras);
-        route.open(this);
+        Router.create(uri).getActivityRoute().replaceBundleExtras(extras).open(this);
         finish();
     }
 }
