@@ -6,9 +6,9 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-23
+    - build-tools-24
     - android-22
-    - android-23
+    - android-24
     - sys-img-armeabi-v7a-android-22
     - extra-android-m2repository
 

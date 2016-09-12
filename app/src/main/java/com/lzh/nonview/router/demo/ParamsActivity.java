@@ -1,12 +1,12 @@
 package com.lzh.nonview.router.demo;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.util.Set;
 
-public class ParamsActivity extends AppCompatActivity {
+public class ParamsActivity extends Activity {
     TextView params;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,17 +1,16 @@
 package com.lzh.nonview.router.demo;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
-import com.lzh.nonview.router.route.IActivityRoute;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private Uri uri;
     private ActivityRouteBundleExtras extras;
     @Override

@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24"
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         applicationId "com.lzh.nonview.router.demo"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -24,7 +24,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
 //    compile project(':routerlib')
     compile 'org.lzh.nonview.router:Router:0.2'
     compile 'com.alibaba:fastjson:1.2.16'
