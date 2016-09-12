@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         applicationId "com.lzh.nonview.router.demo"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
