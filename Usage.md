@@ -2,7 +2,7 @@
 
 - 配置Route规则:
 
-```
+```java
 // 使用add方式添加规则.可以添加多种规则.适用于多组协作开发中
 Router.addRouteCreator(new RouteCreator {
 
@@ -26,7 +26,7 @@ Router.addRouteCreator(new RouteCreator {
 
 - 配置监听回调,拦截方法:
 
-```
+```java
 // 对Router设置Activity Route Callback,作辅助功能
 Router.setRouteCallback(new RouteCallback() {
 
@@ -68,7 +68,7 @@ Router.setRouteCallback(new RouteCallback() {
 使用分为两种方式:
 1.直接通过url直接启动:
 
-```
+```java
 Router.create(url).open(context);
 ```
 
@@ -76,7 +76,7 @@ Router.create(url).open(context);
 
 2.通过添加额外数据进行各种跳转操作:
 
-```
+```java
 // 获取Route对象.并添加额外数据
 Bundle extras = new Bundle();
 ...
@@ -92,6 +92,6 @@ Router.create("jumei://main").getActivityRoute()
 
 3.也可直接获取Intent对象,方便在通知栏使用:
 
-```
+```java
 Intent intent = Router.create("jumei://main").getActivityRoute().createIntent(context);
 ```
