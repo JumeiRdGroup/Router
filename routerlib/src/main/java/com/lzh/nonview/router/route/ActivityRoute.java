@@ -81,6 +81,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
 
     RouteMap getRouteMapByUri (URIParser parser) {
         String route = parser.getScheme() + "://" + parser.getHost();
+        route = Utils.wrapScheme(route);
         return RouteManager.INSTANCE.getRouteMap().get(route);
     }
 

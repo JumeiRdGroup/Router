@@ -1,5 +1,7 @@
 package com.lzh.nonview.router;
 
+import android.text.TextUtils;
+
 public class Utils {
 
     /**
@@ -23,5 +25,11 @@ public class Utils {
         } catch (ClassNotFoundException e) {
             return false;
         }
+    }
+
+    public static String wrapScheme (String scheme) {
+        if (TextUtils.isEmpty(scheme) || !scheme.endsWith("/")) return scheme;
+
+        return scheme.substring(0,scheme.lastIndexOf("/"));
     }
 }

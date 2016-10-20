@@ -17,7 +17,7 @@
 
         <Button
             android:id="@+id/use_simple_router"
-            android:text="jumei://main?bookName=zhuangbijiqiao&amp;price=66.66"
+            android:text="jumei://jumei.com/?username=Haoge&amp;password=123456"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

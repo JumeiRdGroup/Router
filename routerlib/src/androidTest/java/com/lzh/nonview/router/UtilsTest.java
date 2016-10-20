@@ -1,8 +1,5 @@
 package com.lzh.nonview.router;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Assert;
@@ -22,6 +19,12 @@ public class UtilsTest {
     @Test
     public void testIsClassSupport() throws Exception {
         Assert.assertEquals(true,Utils.isClassSupport("android.app.Activity"));
+    }
+
+    @Test
+    public void testWrapScheme () throws Exception {
+        String scheme = "jumei://www.com.cn/data/";
+        Assert.assertEquals("jumei://www.com.cn/data",Utils.wrapScheme(scheme));
     }
 
 }

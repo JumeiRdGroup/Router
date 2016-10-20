@@ -12,6 +12,7 @@ import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.router.RouterRuleCreator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         // 添加route规则创建器
-        Router.addRouteCreator(new RouteInit());
+//        Router.addRouteCreator(new RouteInit());
+        Router.addRouteCreator(new RouterRuleCreator());
         // 对Router设置Activity Route Callback,作辅助功能
         Router.setGlobalRouteCallback(new RouteCallback() {
 

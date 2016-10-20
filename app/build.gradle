@@ -28,6 +28,7 @@ dependencies {
     //    compile 'org.lzh.nonview.router:RouterRule:0.2'
     compile 'com.alibaba:fastjson:1.2.16'
     compile 'com.jakewharton:butterknife:7.0.0'
+    apt 'org.lzh.compiler.parceler:parceler-compiler:0.3'
     compile 'org.lzh.compiler.parceler:parceler-api:0.3'
 
     apt project(':compiler')

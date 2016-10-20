@@ -26,6 +26,9 @@ public class URIParser {
     void parse() {
         scheme = this.uri.getScheme();
         host = this.uri.getHost() + this.uri.getPath();
+        if (host.endsWith("/")) {
+            host = host.substring(0,host.lastIndexOf("/"));
+        }
         params = parseParams();
     }
 
