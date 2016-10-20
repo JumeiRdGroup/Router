@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'com.novoda.bintray-release'//添加
+
+dependencies {
+    compile 'com.squareup:javapoet:1.7.0'
+    compile project(':annotation')
+    compile 'org.lzh.compiler.parceler:parceler-api:0.3'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+publish {
+    artifactId = 'router-compiler'
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
+    licences = rootProject.licences
+}

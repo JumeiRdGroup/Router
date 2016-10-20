@@ -24,8 +24,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-//    compile project(':routerlib')
-    compile 'org.lzh.nonview.router:Router:0.2'
+    compile project(':routerlib')
+    //    compile 'org.lzh.nonview.router:RouterRule:0.2'
     compile 'com.alibaba:fastjson:1.2.16'
     compile 'com.jakewharton:butterknife:7.0.0'
+    compile 'org.lzh.compiler.parceler:parceler-api:0.3'
+
+    apt project(':compiler')
+    compile project(':annotation')
 }

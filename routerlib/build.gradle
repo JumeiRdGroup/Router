@@ -35,15 +35,16 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.2'
     androidTestCompile 'com.android.support.test:rules:0.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.1'
+    compile project(':annotation')
 }
 
-//添加
 publish {
-    userOrg = 'yjfnypeu'//bintray.com用户名
-    groupId = 'org.lzh.nonview.router'//jcenter上的路径
-    artifactId = 'Router'//项目名称
-    publishVersion = '0.2'//版本号
-    desc = 'A simple router lib to android'//描述，不重要
-    website = 'https://github.com/yjfnypeu/Router'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
-
+    artifactId = 'router-api'
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
+    licences = rootProject.licences
 }

@@ -4,13 +4,23 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@RouterRule("jumei://jumei.com/")
 public class LoginActivity extends Activity {
+
+    @Arg
+    int index;
+    @Arg
+    String username;
+
+
     private Uri uri;
     private ActivityRouteBundleExtras extras;
     @Override

@@ -3,6 +3,7 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 
+import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.exception.NotFoundException;
 
 /**
@@ -16,7 +17,7 @@ public interface RouteCallback {
      * @param context context
      * @param extras some extras data for route,
      *               sometimes is null when you not use
-     *               {@link com.lzh.nonview.router.Router#getRoute(Uri, RouteCallback)} to set some extras data
+     *               {@link Router#getActivityRoute()}  to set some extras data
      * @return true if should be intercepted
      */
     boolean interceptOpen(Uri uri, Context context,ActivityRouteBundleExtras extras);

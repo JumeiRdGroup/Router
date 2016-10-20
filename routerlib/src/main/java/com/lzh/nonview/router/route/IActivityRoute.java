@@ -54,6 +54,7 @@ public interface IActivityRoute{
     /**
      * replace {@link ActivityRouteBundleExtras} to {@link ActivityRoute}
      * @param extras {@link ActivityRouteBundleExtras}
+     * @return IActivityRoute
      */
     IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras);
 }
