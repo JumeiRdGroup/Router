@@ -1,5 +1,5 @@
 language: android
-jdk: oraclejdk7
+jdk: jdk7
 sudo: false
 
 android:
