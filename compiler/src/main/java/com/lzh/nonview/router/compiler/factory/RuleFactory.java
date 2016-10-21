@@ -86,7 +86,7 @@ public class RuleFactory {
                 return "RouteMap.BYTE";
             case "char":
             case "java.lang.Character":
-                return "RouteMap.Char";
+                return "RouteMap.CHAR";
             case "short":
             case "java.lang.Short":
                 return "RouteMap.SHORT";
@@ -103,7 +103,7 @@ public class RuleFactory {
             case "java.lang.Double":
                 return "RouteMap.DOUBLE";
             case "java.lang.String":
-                return "RouteMap.CHAR";
+                return "RouteMap.STRING";
         }
         return "RouteMap.STRING";
     }

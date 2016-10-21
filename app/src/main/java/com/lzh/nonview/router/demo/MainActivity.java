@@ -1,17 +1,17 @@
 package com.lzh.nonview.router.demo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.demo.base.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_webview,R.id.use_simple_router})
+    @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.to_parceler_router})
     void onSimpleClick (TextView tv) {
         // 直接使用open进行跳转
         Router.create(tv.getText().toString()).open(this);

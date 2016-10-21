@@ -8,6 +8,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface RouterRule {
+    /**
+     * value of scheme.should be unique and nonNull
+     * @return scheme
+     */
     String value();
+
+    /**
+     * Set a package name of generate class.if not set,it'll be <i>com.lzh.router</i>
+     * @return package name
+     */
     String pack () default "";
 }

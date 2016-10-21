@@ -17,9 +17,15 @@
 
         <Button
             android:id="@+id/use_simple_router"
-            android:text="jumei://jumei.com/?username=Haoge&amp;password=123456"
+            android:text="jumei://main?username=Haoge&amp;password=123456"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/to_parceler_router"
+            android:text="haoge://haoge.cn/parceler?username=haoge&amp;address=China"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button

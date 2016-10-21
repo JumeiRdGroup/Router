@@ -23,7 +23,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         // 添加route规则创建器
-//        Router.addRouteCreator(new RouteInit());
+        Router.addRouteCreator(new RouteInit());
         Router.addRouteCreator(new RouterRuleCreator());
         // 对Router设置Activity Route Callback,作辅助功能
         Router.setGlobalRouteCallback(new RouteCallback() {
@@ -36,7 +36,7 @@ public class App extends Application {
                 Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
                 Intent loginIntent = new Intent(context,LoginActivity.class);
                 loginIntent.putExtra("uri",uri);
-                loginIntent.putExtra("extra",extras);
+                loginIntent.putExtra("extras",extras);
                 context.startActivity(loginIntent);
                 return true;
             }
@@ -69,9 +69,6 @@ public class App extends Application {
                     .addParam("price",RouteMap.FLOAT)
                     .addParam("bookName",RouteMap.STRING)
             );
-            routes.put("jumeimail://main",
-                    new RouteMap("com.lzh.nonview.demo.RegisterActivity")
-                    );
             return routes;
         }
     }
