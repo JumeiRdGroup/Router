@@ -26,6 +26,7 @@ Router.addRouteCreator(new RouteCreator {
 
 - 配置监听回调,拦截方法:
 
+设置全局的监听器。
 ```java
 // 对Router设置Activity Route Callback,作辅助功能
 Router.setRouteCallback(new RouteCallback() {
@@ -62,6 +63,10 @@ Router.setRouteCallback(new RouteCallback() {
     }
 });
 ```
+或者对某个url设置单独的监听器:
+```java
+Router.create(url).setCallback(callback).open(context);
+```
 
 - 使用Router进行跳转
 
@@ -95,3 +100,43 @@ Router.create("jumei://main").getActivityRoute()
 ```java
 Intent intent = Router.create("jumei://main").getActivityRoute().createIntent(context);
 ```
+
+- 结合Parceler框架使用
+
+如果你的项目中使用的Parceler框架。并且添加了Router框架的注解处理器:*apt 'org.lzh.nonview.router:router-compiler:0.3'*即可通过api提供的注解*RouterRule*自动为您的Activity创建对应的路由规则:
+
+1.给需要创建路由规则的Activity添加*RouterRule*注解
+
+```java
+// RouterRule支持两个参数。一个是此处默认的value:设置与此Activity对应的scheme规则。
+// 一个是pack.用于指定此路由规则需要生成于哪个包下的创建器中。
+@RouterRule("haoge://haoge.cn/parceler")
+public class ParcelerActivity extends Activity {
+
+    @Arg
+    String username;
+    @Arg
+    String address;
+}
+```
+
+2.添加后make project一下。让编译器替你生成包含有对应规则的创建器,如下所示。以下代码即为编译时通过Route所生成的:
+
+```java
+public class RouterRuleCreator implements RouteCreator {
+  @Override
+  public Map<String, RouteMap> createRouteRules() {
+    Map<String,RouteMap> routes = new HashMap<>();
+    routes.put("haoge://haoge.cn/parceler",new RouteMap(ParcelerActivity.class).addParam("address",RouteMap.STRING).addParam("username",RouteMap.STRING));;
+    return routes;
+  }
+}
+```
+
+3.通过将此生成的创建器添加到Router中:
+
+```java
+Router.addRouteCreator(new RouterRuleCreator());
+```
+
+继续使用吧

@@ -2,6 +2,8 @@
 
 一款简单的Android端用于Activity跳转的路由框架.
 
+[readme doc](./README-EN.md)
+
 ### 什么是router框架
 简单来说.即通过一行url去指定打开指定页面Activity的工具.充分做到页面间解耦.
 
@@ -24,12 +26,21 @@
 ### Usage
 
 - 添加gradle依赖:
+基本配置:
 
+```Groovy
+// add it to your build.gradle on app project
+compile 'org.lzh.nonview.router:router-api:0.3'
 ```
-compile 'org.lzh.nonview.router:Router:0.2'
+
+如果你也使用了我的另一个框架*[Parceler](https://github.com/yjfnypeu/Parceler)*,建议可以添加一个编译时注解处理器去更好的使用此框架。可很方便的结合*Parceler*框架生成对应的路由规则
+```Groovy
+// add it to your build.gradle on app project
+apt 'org.lzh.nonview.router:router-compiler:0.3'
 ```
 
 [查看具体使用姿势](./Usage.md)
+[Usage doc](./Usage-en.md)
 
 ## License
 ```
