@@ -37,6 +37,12 @@ apt 'org.lzh.nonview.router:router-compiler:0.3'
 [中文使用文档](./Usage.md)  
 [Usage Docs](./Usage-en.md)
 
+###proguard
+```
+-dontwarn **
+-keep class com.lzh.nonview.router.*
+```
+
 ###Contacts
 
 Email:470368500@qq.com  
