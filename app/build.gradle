@@ -15,7 +15,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -29,11 +29,11 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.0'
-    apt 'org.lzh.compiler.parceler:parceler-compiler:0.3'
-    compile 'org.lzh.compiler.parceler:parceler-api:0.3'
+    apt 'org.lzh.compiler.parceler:parceler-compiler:0.5'
+    compile 'org.lzh.compiler.parceler:parceler-api:0.5'
 
-//    compile 'org.lzh.nonview.router:router-api:0.3'
-//    apt 'org.lzh.nonview.router:router-compiler:0.3'
+//    compile 'org.lzh.nonview.router:router-api:0.4'
+//    apt 'org.lzh.nonview.router:router-compiler:0.4'
     compile project(':routerlib')
     apt project(':compiler')
 }

@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-/**
- * Created by admin on 16/9/5.
- */
 public interface IActivityRoute{
 
     /**

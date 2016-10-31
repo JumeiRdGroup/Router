@@ -1,6 +1,7 @@
 package com.lzh.nonview.router.demo;
 
 import android.os.Bundle;
+import android.util.Size;
 import android.widget.TextView;
 
 import com.lzh.compiler.parceler.annotation.Arg;
@@ -15,6 +16,8 @@ public class ParcelerActivity extends BaseActivity {
     String username;
     @Arg
     String address;
+    @Arg
+    Size size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

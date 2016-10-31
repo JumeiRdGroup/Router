@@ -23,23 +23,23 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     /**
      * Uri to open
      */
-    Uri uri;
+    private Uri uri;
     /**
      * The bundle data that contains all of data parsed by uri
      */
-    Bundle bundle;
+    private Bundle bundle;
     /**
      * A entity to contains some extra data exclude uri parse
      */
-    ActivityRouteBundleExtras extras;
+    private ActivityRouteBundleExtras extras;
     /**
      * A routeMap entity that associated with uri
      */
-    RouteMap routeMap = null;
+    private RouteMap routeMap = null;
     /**
      * route callback,will not be null
      */
-    RouteCallback callback = new EmptyCallback();
+    private RouteCallback callback;
 
     public void setCallback (RouteCallback callback) {
         if (callback != null) {
@@ -79,10 +79,20 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return getRouteMapByUri(new URIParser(uri)) != null;
     }
 
-    RouteMap getRouteMapByUri (URIParser parser) {
+    /**
+     * find route by scheme of URIParser.
+     * @param parser uri parser
+     * @return routeMap associate with scheme of parser
+     */
+    private RouteMap getRouteMapByUri (URIParser parser) {
         String route = parser.getScheme() + "://" + parser.getHost();
-        route = Utils.wrapScheme(route);
-        return RouteManager.INSTANCE.getRouteMap().get(route);
+        Map<String, RouteMap> routes = RouteManager.INSTANCE.getRouteMap();
+        String wrap = Utils.wrapScheme(route);
+        if (routes.containsKey(wrap)) {
+            return routes.get(wrap);
+        }
+        String unWrap = Utils.unwrapScheme(wrap);
+        return routes.get(unWrap);
     }
 
     @Override
@@ -104,7 +114,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return this;
     }
 
-    static void putExtraByType(Bundle extras, Map<String, String> params, String key, int type) {
+    private static void putExtraByType(Bundle extras, Map<String, String> params, String key, int type) {
         // when not set this key in router.json,reset type to string
         switch (type) {
             case RouteMap.BYTE:

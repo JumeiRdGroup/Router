@@ -7,7 +7,8 @@ import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.exception.NotFoundException;
 
 /**
- * Created by admin on 16/9/5.
+ * Callback of router
+ * Created by lzh on 16/9/5.
  */
 public interface RouteCallback {
 

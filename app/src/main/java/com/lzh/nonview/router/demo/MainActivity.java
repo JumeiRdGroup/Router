@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
                 .setAnim(R.anim.anim_fade_in,R.anim.anim_fade_out)
                 .open(this);
 
-        Intent intent = Router.create("jumei://main").getActivityRoute().createIntent(this);
+        Intent intent = Router.create("jumei://main/").getActivityRoute().createIntent(this);
     }
 
 }

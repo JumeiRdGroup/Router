@@ -2,6 +2,7 @@ package com.lzh.nonview.router;
 
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.route.EmptyCallback;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public enum RouteManager {
      * global route callback
      */
     RouteCallback GlobalCallback;
+    // provide a empty callback to make it more safely
+    RouteCallback EmptyCallback = new EmptyCallback();
     boolean shouldReload;// if should be reload routeMap.
     /**
      * A container to contains all of route rule creator,compat with some complex scene;
@@ -43,8 +46,12 @@ public enum RouteManager {
         shouldReload = true;
     }
 
+    /**
+     * Get a global callback you had set before,if not set,this should be a empty callback returns
+     * @return a global callback to use,if not set ,it should be a empty callback instead.will not be null
+     */
     public RouteCallback getCallback() {
-        return GlobalCallback;
+        return GlobalCallback == null ? EmptyCallback : GlobalCallback;
     }
 
     public Map<String,RouteMap> getRouteMap() {

@@ -29,7 +29,7 @@ public class Router {
     /**
      * create Router by url
      * @param url the url to create Router
-     * @return Router
+     * @return new Router
      */
     public static Router create(String url) {
         return new Router(Uri.parse(url));
@@ -38,7 +38,7 @@ public class Router {
     /**
      * create Router by uri
      * @param uri the uri to create Router
-     * @return Router
+     * @return new Router
      */
     public static Router create(Uri uri) {
         return new Router(uri);
@@ -47,7 +47,7 @@ public class Router {
     /**
      * Set call back to invoke when open in Router
      * @param callback if set to null,it will use global route callback that you had set by {@link Router#setGlobalRouteCallback(RouteCallback)} before
-     * @return Router
+     * @return Router itself
      */
     public Router setCallback (RouteCallback callback) {
         this.callback = callback;

@@ -24,7 +24,8 @@
 
         <Button
             android:id="@+id/to_parceler_router"
-            android:text="haoge://haoge.cn/parceler?username=haoge&amp;address=China"
+            android:text="haoge://haoge.cn/parceler/?username=haoge&amp;address=China"
+            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

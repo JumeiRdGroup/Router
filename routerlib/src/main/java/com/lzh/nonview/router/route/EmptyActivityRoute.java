@@ -36,7 +36,7 @@ public class EmptyActivityRoute implements IActivityRoute,IRoute{
 
     @Override
     public IActivityRoute addFlags(int flag) {
-        return null;
+        return this;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class Utils {
     }
 
     /**
-     * Check if the class is valid by clzName
+     * Check if the class is available with clzName
      * @param clzName class name
      * @return return true if the clz name is supported
      */
@@ -31,5 +31,9 @@ public class Utils {
         if (TextUtils.isEmpty(scheme) || !scheme.endsWith("/")) return scheme;
 
         return scheme.substring(0,scheme.lastIndexOf("/"));
+    }
+
+    public static String unwrapScheme (String scheme) {
+        return scheme + "/";
     }
 }
