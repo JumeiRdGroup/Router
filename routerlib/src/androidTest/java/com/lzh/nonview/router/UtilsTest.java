@@ -1,5 +1,6 @@
 package com.lzh.nonview.router;
 
+import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Assert;
@@ -27,4 +28,13 @@ public class UtilsTest {
         Assert.assertEquals("jumei://www.com.cn/data",Utils.wrapScheme(scheme));
     }
 
+    @Test
+    public void testCompatUri () throws Exception {
+        String url = "http://www.baidu.com:1010/path/data/san/si/wu?username=haoge&data=null";
+        String complete = "http://www.baidu.com:1010/path/data/san/si/wu?username=haoge&data=null";
+        Uri completeUri = Uri.parse(complete);
+        Uri source = Uri.parse(url);
+        Uri compatUri = Utils.completeUri(source);
+        Assert.assertEquals(completeUri,compatUri);
+    }
 }

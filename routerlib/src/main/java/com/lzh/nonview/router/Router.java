@@ -2,6 +2,7 @@ package com.lzh.nonview.router;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteCreator;
@@ -23,7 +24,7 @@ public class Router {
     private RouteCallback callback;
 
     private Router(Uri uri) {
-        this.uri = uri;
+        this.uri = Utils.completeUri(uri);
     }
 
     /**
@@ -62,6 +63,7 @@ public class Router {
      */
     public void open(Context context) {
         ActivityRoute activityRoute;
+
         callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             BrowserRoute.getInstance().open(context,uri);
