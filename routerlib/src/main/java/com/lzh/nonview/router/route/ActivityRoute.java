@@ -182,7 +182,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
             ((Activity) context).startActivityForResult(intent,extras.requestCode);
             int inAnimation = extras.inAnimation;
             int outAnimation = extras.outAnimation;
-            if (inAnimation > 0 && outAnimation > 0) {
+            if (inAnimation >= 0 && outAnimation >= 0) {
                 ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
             }
         } else {

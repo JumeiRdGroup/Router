@@ -47,7 +47,7 @@ public class Router {
 
     /**
      * Set call back to invoke when open in Router
-     * @param callback if set to null,it will use global route callback that you had set by {@link Router#setGlobalRouteCallback(RouteCallback)} before
+     * @param callback if set to null,it will use global route callback that you set via {@link Router#setGlobalRouteCallback(RouteCallback)} before
      * @return Router itself
      */
     public Router setCallback (RouteCallback callback) {
