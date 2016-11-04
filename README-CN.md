@@ -29,13 +29,13 @@
 
 ```Groovy
 // add it to your build.gradle on app project
-compile 'org.lzh.nonview.router:router-api:0.4'
+compile 'org.lzh.nonview.router:router-api:0.5'
 ```
 
 如果你也使用了我的另一个框架*[Parceler](https://github.com/yjfnypeu/Parceler)*,建议可以添加一个编译时注解处理器去更好的使用此框架。可很方便的结合*Parceler*框架生成对应的路由规则
 ```Groovy
 // add it to your build.gradle on app project
-apt 'org.lzh.nonview.router:router-compiler:0.4'
+apt 'org.lzh.nonview.router:router-compiler:0.5'
 ```
 
 [查看具体使用姿势](./Usage.md)

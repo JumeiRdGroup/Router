@@ -32,8 +32,8 @@ dependencies {
     apt 'org.lzh.compiler.parceler:parceler-compiler:0.5'
     compile 'org.lzh.compiler.parceler:parceler-api:0.5'
 
-//    compile 'org.lzh.nonview.router:router-api:0.4'
-//    apt 'org.lzh.nonview.router:router-compiler:0.4'
-    compile project(':routerlib')
-    apt project(':compiler')
+    compile 'org.lzh.nonview.router:router-api:0.5'
+    apt 'org.lzh.nonview.router:router-compiler:0.5'
+//    compile project(':routerlib')
+//    apt project(':compiler')
 }
