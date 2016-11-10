@@ -23,6 +23,7 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 
 public class RuleFactory {
 
@@ -52,7 +53,7 @@ public class RuleFactory {
     }
 
     private void appendMethod(Parser parser, MethodSpec.Builder methodCreator) {
-        Map<String, TypeName> map = parser.getMap();
+        Map<String, TypeMirror> map = parser.getMap();
         String target = parser.getType().getQualifiedName().toString();
         TypeElement actType = UtilMgr.getMgr().getElementUtils().getTypeElement(target);
         CodeBlock.Builder codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
@@ -65,7 +66,7 @@ public class RuleFactory {
         methodCreator.addCode(codeBuilder.build());
     }
 
-    private String getTypeFromName(TypeName name) {
+    private String getTypeFromName(TypeMirror name) {
         /*
         * public static final int STRING = -1;
     public static final int BYTE = 0;
@@ -104,6 +105,10 @@ public class RuleFactory {
                 return "RouteMap.DOUBLE";
             case "java.lang.String":
                 return "RouteMap.STRING";
+            case "java.util.ArrayList<java.lang.String>":
+                return "RouteMap.STRING_LIST";
+            case "java.util.ArrayList<java.lang.Integer>":
+                return "RouteMap.INT_LIST";
         }
         return "RouteMap.STRING";
     }

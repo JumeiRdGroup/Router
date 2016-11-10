@@ -10,8 +10,12 @@ import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.parser.BundleWrapper;
+import com.lzh.nonview.router.parser.ListBundle;
+import com.lzh.nonview.router.parser.SimpleBundle;
 import com.lzh.nonview.router.parser.URIParser;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,6 +44,8 @@ public class ActivityRoute implements IActivityRoute, IRoute {
      * route callback,will not be null
      */
     private RouteCallback callback;
+
+    Map<String,BundleWrapper> wrappers;
 
     public void setCallback (RouteCallback callback) {
         if (callback != null) {
@@ -107,45 +113,23 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         bundle = new Bundle();
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
-        for (String key : keySet) {
+        wrappers = new HashMap<>();
+        for (String key : keySet) {;
             Integer type = keyMap.get(key);
-            putExtraByType(bundle, params, key, type == null ? RouteMap.STRING : type);
+            type = type == null ? RouteMap.STRING : type;
+
+            BundleWrapper wrapper = wrappers.get(key);
+            if (wrapper == null) {
+                wrapper = createBundleWrapper(type);
+                wrappers.put(key,wrapper);
+            }
+            wrapper.set(params.get(key));
+        }
+        keySet = wrappers.keySet();
+        for (String key : keySet) {
+            wrappers.get(key).put(bundle,key);
         }
         return this;
-    }
-
-    private static void putExtraByType(Bundle extras, Map<String, String> params, String key, int type) {
-        // when not set this key in router.json,reset type to string
-        switch (type) {
-            case RouteMap.BYTE:
-                extras.putByte(key,Byte.parseByte(params.get(key)));
-                break;
-            case RouteMap.SHORT:
-                extras.putShort(key,Short.parseShort(params.get(key)));
-                break;
-            case RouteMap.INT:
-                extras.putInt(key,Integer.parseInt(params.get(key)));
-                break;
-            case RouteMap.LONG:
-                extras.putLong(key,Long.parseLong(params.get(key)));
-                break;
-            case RouteMap.FLOAT:
-                extras.putFloat(key,Float.parseFloat(params.get(key)));
-                break;
-            case RouteMap.DOUBLE:
-                extras.putDouble(key,Double.parseDouble(params.get(key)));
-                break;
-            case RouteMap.CHAR:
-                extras.putChar(key,params.get(key).charAt(0));
-                break;
-            case RouteMap.BOOLEAN:
-                extras.putBoolean(key,Boolean.parseBoolean(params.get(key)));
-                break;
-            case RouteMap.STRING:
-            default://string
-                extras.putString(key,params.get(key));
-                break;
-        }
     }
 
     @Override
@@ -216,6 +200,26 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     public IActivityRoute addFlags(int flag) {
         this.extras.flags |= flag;
         return this;
+    }
+
+    BundleWrapper createBundleWrapper (int type) {
+        switch (type) {
+            case RouteMap.STRING:
+            case RouteMap.BYTE:
+            case RouteMap.SHORT:
+            case RouteMap.INT:
+            case RouteMap.LONG:
+            case RouteMap.FLOAT:
+            case RouteMap.DOUBLE:
+            case RouteMap.BOOLEAN:
+            case RouteMap.CHAR:
+                return new SimpleBundle(type);
+            case RouteMap.INT_LIST:
+            case RouteMap.STRING_LIST:
+                return new ListBundle(type);
+            default:
+                return new SimpleBundle(RouteMap.STRING);
+        }
     }
 
 }

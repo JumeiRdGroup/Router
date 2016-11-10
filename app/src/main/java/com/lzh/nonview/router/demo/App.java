@@ -68,6 +68,8 @@ public class App extends Application {
                     new RouteMap(ParamsActivity.class)
                     .addParam("price",RouteMap.FLOAT)
                     .addParam("bookName",RouteMap.STRING)
+                    .addParam("books",RouteMap.STRING_LIST)
+                    .addParam("prices",RouteMap.INT_LIST)
             );
             return routes;
         }

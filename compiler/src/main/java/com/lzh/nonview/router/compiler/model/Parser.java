@@ -18,12 +18,13 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeMirror;
 
 public class Parser {
     private static Map<String,TypeElement> parsed = new HashMap<>();
     private String scheme;
     private TypeElement type;
-    private Map<String,TypeName> map = new HashMap<>();
+    private Map<String,TypeMirror> map = new HashMap<>();
 
     public static Parser create (TypeElement element) {
         Parser parser = new Parser();
@@ -62,11 +63,11 @@ public class Parser {
             if (arg == null) continue;
 
             String key = Utils.getKeyFromArg(arg,ele.getSimpleName().toString());
-            map.put(key,TypeName.get(ele.asType()));
+            map.put(key,ele.asType());
         }
     }
 
-    public Map<String, TypeName> getMap() {
+    public Map<String, TypeMirror> getMap() {
         return map;
     }
 

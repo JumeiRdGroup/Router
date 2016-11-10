@@ -2,6 +2,7 @@ package com.lzh.nonview.router.module;
 
 import android.app.Activity;
 
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ public class RouteMap {
     public static final int BOOLEAN = 6;
     public static final int CHAR = 7;
 
+    public static final int INT_LIST = 17;
+    public static final int STRING_LIST = 18;
 
     /**
      * @param clzName clzName must be a activity total name

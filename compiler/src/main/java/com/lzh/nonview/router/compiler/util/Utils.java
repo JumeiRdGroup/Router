@@ -85,6 +85,8 @@ public class Utils {
             case "double":
             case "java.lang.Double":
             case "java.lang.String":
+            case "java.util.ArrayList<java.lang.String>":
+            case "java.util.ArrayList<java.lang.Integer>":
                 return true;
         }
         return false;

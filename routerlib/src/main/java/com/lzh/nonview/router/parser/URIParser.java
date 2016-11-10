@@ -1,8 +1,10 @@
 package com.lzh.nonview.router.parser;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,14 +31,28 @@ public class URIParser {
         if (host.endsWith("/")) {
             host = host.substring(0,host.lastIndexOf("/"));
         }
-        params = parseParams();
+        String query = uri.getQuery();
+        if (!TextUtils.isEmpty(query)) {
+            params = parseParams(uri.getQuery());
+        } else {
+            params = new HashMap<>();
+        }
     }
 
-    Map<String,String> parseParams() {
-        Map<String,String> params = new HashMap<>();
-        Set<String> names = uri.getQueryParameterNames();
-        for (String name : names) {
-            params.put(name,uri.getQueryParameter(name));
+    /**
+     * Parse params form query string
+     * <p>
+     * To support parse list to bundle,use {@link IdentityHashMap} to hold key-value
+     * </p>
+     * @param query query in uri
+     * @return a map contains key-value data parsed by query in uri
+     */
+    static Map<String,String> parseParams(String query) {
+        Map<String,String> params = new IdentityHashMap<>();
+        String[] split = query.split("&");
+        for (String param : split) {
+            String[] keyValue = param.split("=");
+            params.put(new String(keyValue[0]),keyValue[1]);
         }
         return params;
     }

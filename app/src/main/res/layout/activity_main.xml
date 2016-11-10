@@ -17,14 +17,14 @@
 
         <Button
             android:id="@+id/use_simple_router"
-            android:text="jumei://main?username=Haoge&amp;password=123456"
+            android:text="jumei://main?username=Haoge&amp;password=123456&amp;books=Android从入门到放弃&amp;books=颈椎病康复指南&amp;prices=9"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/to_parceler_router"
-            android:text="haoge://haoge.cn/parceler/?username=haoge&amp;address=China"
+            android:text="haoge://haoge.cn/parceler/?username=haoge&amp;address=China&amp;strList=hello&amp;strList=world"
             android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
