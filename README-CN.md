@@ -45,8 +45,10 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 
 ## ChangeLog
 - 0.6
+
 ```
 部分优化。增加框架健壮性
+
 url传递参数支持ArrayList<String>,ArrayList<Integer>格式
 ```
 

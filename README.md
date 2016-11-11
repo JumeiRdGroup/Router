@@ -40,7 +40,9 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 [Usage Docs](./Usage-en.md)
 
 ###ChangeLog
+
  - 0.6
+
  ```
  add upport tpyes List<String> and List<Integer> with url
  some optimizes makes Router more strongger and safe
