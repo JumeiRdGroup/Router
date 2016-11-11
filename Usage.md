@@ -77,7 +77,7 @@ Router.create(url).setCallback(callback).open(context);
 Router.create(url).open(context);
 ```
 
-*此种方式跳转的.url的传参数只能为基本数据类型与String类型.*
+*此种方式跳转的.url的传参数只能为基本数据类型与String类型.使用0.6版本及以上。添加ArrayList<String>/ArrayList<Integer>类型支持*
 
 2.通过添加额外数据进行各种跳转操作:
 

@@ -1,4 +1,4 @@
-#Router ![svg](https://travis-ci.org/yjfnypeu/Router.svg?branch=master)   [ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion) <a href="http://www.methodscount.com/?lib=org.lzh.nonview.router%3Arouter-api%3A0.5"><img src="https://img.shields.io/badge/Methods count-core: 180 | deps: 2-e91e63.svg"/></a>
+#Router ![svg](https://travis-ci.org/yjfnypeu/Router.svg?branch=master)  <a href="http://www.methodscount.com/?lib=org.lzh.nonview.router%3Arouter-api%3A0.6"><img src="https://img.shields.io/badge/Methods count-core: 197 | deps: 2-e91e63.svg"/></a>
 
 
 This is a framework for starting activity by url*(“Scheme”)* on Android.
@@ -7,17 +7,19 @@ This is a framework for starting activity by url*(“Scheme”)* on Android.
 
 ###Dependencies
 
+LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion)
+
 Basic config:
 ```Groovy
 // add it to your build.gradle on app project
-compile 'org.lzh.nonview.router:router-api:0.5'
+compile 'org.lzh.nonview.router:router-api:$LatestVersion'
 ```
 
 If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app, the best practice is to add a Compile-time framework to create route rules with annotations *RouterRule* to make *Parceler* more convenient:
 
 ```Groovy
 // add it to your build.gradle on app project
-apt 'org.lzh.nonview.router:router-compiler:0.5'
+apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 ```
 
 ###Features
@@ -36,6 +38,14 @@ apt 'org.lzh.nonview.router:router-compiler:0.5'
 
 [中文使用文档](./Usage.md)  
 [Usage Docs](./Usage-en.md)
+
+###ChangeLog
+ - 0.6
+ ```
+ add upport tpyes List<String> and List<Integer> with url
+ some optimizes makes Router more strongger and safe
+ ```
+
 
 ###Contacts
 

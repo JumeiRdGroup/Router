@@ -82,6 +82,7 @@ Router.create(url).open(context);
 
 *in this way,you call only carry base type of java and String to pass,like int/boolean/String .etc*
 
+*In version 0.6.it also support types of ArrayList<String> & ArrayList<Integer>*
 2.Open with some extras data with Router
 
 ```java
