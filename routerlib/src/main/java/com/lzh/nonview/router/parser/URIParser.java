@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -25,7 +24,7 @@ public class URIParser {
         parse();
     }
 
-    void parse() {
+    private void parse() {
         scheme = this.uri.getScheme();
         host = this.uri.getHost() + this.uri.getPath();
         if (host.endsWith("/")) {
@@ -52,6 +51,7 @@ public class URIParser {
         String[] split = query.split("&");
         for (String param : split) {
             String[] keyValue = param.split("=");
+            //noinspection RedundantStringConstructorCall
             params.put(new String(keyValue[0]),keyValue[1]);
         }
         return params;

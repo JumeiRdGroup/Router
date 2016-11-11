@@ -11,9 +11,10 @@ import java.util.ArrayList;
  * A subclass of {@link BundleWrapper} to package data with List
  * @author lzh
  */
-public class ListBundle extends BundleWrapper {
-    ArrayList datas;
+public final class ListBundle extends BundleWrapper {
+    private ArrayList datas;
 
+    @SuppressWarnings("Convert2Diamond")
     public ListBundle(int type) {
         super(type);
         switch (type) {
@@ -26,6 +27,7 @@ public class ListBundle extends BundleWrapper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void set(String data) {
         // filter empty data
@@ -41,6 +43,7 @@ public class ListBundle extends BundleWrapper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void put(Bundle extras, String key) {
         switch (type) {

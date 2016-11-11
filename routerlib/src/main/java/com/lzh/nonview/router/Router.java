@@ -102,7 +102,7 @@ public class Router {
                 new NotFoundException(String.format("find route by uri %s failed:",uri),
                         NotFoundException.NotFoundType.SCHEME,uri.toString()));
         // return a empty route to avoid NullPointException
-        return new EmptyActivityRoute();
+        return EmptyActivityRoute.get();
     }
 
     /**

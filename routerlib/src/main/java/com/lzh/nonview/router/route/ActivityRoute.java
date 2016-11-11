@@ -45,7 +45,6 @@ public class ActivityRoute implements IActivityRoute, IRoute {
      */
     private RouteCallback callback;
 
-    Map<String,BundleWrapper> wrappers;
 
     public void setCallback (RouteCallback callback) {
         if (callback != null) {
@@ -103,6 +102,15 @@ public class ActivityRoute implements IActivityRoute, IRoute {
 
     @Override
     public IRoute getRoute(Uri uri) {
+        try {
+            return getRouteInternal(uri);
+        } catch (Exception e) {
+            callback.onOpenFailed(uri,e);
+            return EmptyActivityRoute.get();
+        }
+    }
+
+    private IRoute getRouteInternal(Uri uri) {
         this.uri = uri;
         this.extras = new ActivityRouteBundleExtras();
 
@@ -113,8 +121,8 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         bundle = new Bundle();
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
-        wrappers = new HashMap<>();
-        for (String key : keySet) {;
+        Map<String,BundleWrapper> wrappers = new HashMap<>();
+        for (String key : keySet) {
             Integer type = keyMap.get(key);
             type = type == null ? RouteMap.STRING : type;
 
@@ -202,6 +210,15 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return this;
     }
 
+    /**
+     * create {@link BundleWrapper} instance by type.
+     * <p>
+     *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
+     *     When <i>type</i> between 8 and 9,should create subclass of {@link ListBundle}with type <br>
+     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteMap#STRING}
+     * </p>
+     * @return The type to indicate how tyce should be use to create wrapper instance
+     */
     BundleWrapper createBundleWrapper (int type) {
         switch (type) {
             case RouteMap.STRING:

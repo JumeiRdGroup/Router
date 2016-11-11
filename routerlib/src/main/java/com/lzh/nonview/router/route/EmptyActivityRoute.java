@@ -5,7 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class EmptyActivityRoute implements IActivityRoute,IRoute{
+public final class EmptyActivityRoute implements IActivityRoute,IRoute{
+    private static EmptyActivityRoute EMPTY = new EmptyActivityRoute();
+    private EmptyActivityRoute(){}
+    public static EmptyActivityRoute get () {
+        return EMPTY;
+    }
 
     @Override
     public void open(Context context) {
@@ -14,6 +19,7 @@ public class EmptyActivityRoute implements IActivityRoute,IRoute{
 
     @Override
     public Intent createIntent(Context context) {
+        // avoid NullPointException
         return new Intent();
     }
 

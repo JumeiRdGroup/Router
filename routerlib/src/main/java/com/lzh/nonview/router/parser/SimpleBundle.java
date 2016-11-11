@@ -8,7 +8,7 @@ import com.lzh.nonview.router.module.RouteMap;
  * A subclass of {@link BundleWrapper} to package data with baseType
  * @author lzh
  */
-public class SimpleBundle extends BundleWrapper {
+public final class SimpleBundle extends BundleWrapper {
     private String data;
 
     public SimpleBundle(int type) {

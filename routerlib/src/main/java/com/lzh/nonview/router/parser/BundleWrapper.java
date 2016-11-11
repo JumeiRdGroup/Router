@@ -7,13 +7,13 @@ import android.os.Bundle;
  * Created by lzh on 16/11/10.
  */
 public abstract class BundleWrapper {
-    protected int type;
+    int type;
 
     /**
      * Create a wrapper instance form specially type.
      * @param type The type value defined in {@link com.lzh.nonview.router.module.RouteMap}
      */
-    public BundleWrapper(int type) {
+    BundleWrapper(int type) {
         this.type = type;
     }
 
