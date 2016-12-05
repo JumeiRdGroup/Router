@@ -13,17 +13,6 @@ import com.lzh.nonview.router.exception.NotFoundException;
 public interface RouteCallback {
 
     /**
-     * Whether or not be interrupted when open activity by uri
-     * @param uri uri the uri to open
-     * @param context context
-     * @param extras some extras data for route,
-     *               sometimes is null when you not use
-     *               {@link Router#getActivityRoute()}  to set some extras data
-     * @return true if should be intercepted
-     */
-    boolean interceptOpen(Uri uri, Context context,ActivityRouteBundleExtras extras);
-
-    /**
      * There are two types of not found exception:<br>
      *     <i>route rule</i> not found<br>
      *     <i>activity</i> not found
@@ -46,4 +35,22 @@ public interface RouteCallback {
      * @param e the exception
      */
     void onOpenFailed(Uri uri,Exception e);
+
+    RouteCallback EMPTY = new RouteCallback() {
+
+        @Override
+        public void notFound(Uri uri, NotFoundException e) {
+
+        }
+
+        @Override
+        public void onOpenSuccess(Uri uri, String clzName) {
+
+        }
+
+        @Override
+        public void onOpenFailed(Uri uri, Exception e) {
+
+        }
+    };
 }

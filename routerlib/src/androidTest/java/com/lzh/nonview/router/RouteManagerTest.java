@@ -17,7 +17,7 @@ public class RouteManagerTest {
 
     @Test
     public void testGetRouteMap() throws Exception {
-        RouteManager.INSTANCE.addCreator(new RouteCreator() {
+        RouteManager.get().addCreator(new RouteCreator() {
             @Override
             public Map<String, RouteMap> createRouteRules() {
                 Map<String, RouteMap> routes = new HashMap<>();
@@ -26,7 +26,7 @@ public class RouteManagerTest {
             }
         });
 
-        RouteManager.INSTANCE.addCreator(new RouteCreator() {
+        RouteManager.get().addCreator(new RouteCreator() {
             @Override
             public Map<String, RouteMap> createRouteRules() {
                 Map<String, RouteMap> routes = new HashMap<>();
@@ -35,7 +35,7 @@ public class RouteManagerTest {
             }
         });
 
-        Map<String, RouteMap> routeMap = RouteManager.INSTANCE.getRouteMap();
+        Map<String, RouteMap> routeMap = RouteManager.get().getRouteMap();
         Assert.assertTrue(routeMap.containsKey("jumei://main"));
         Assert.assertTrue(routeMap.containsKey("jumei://test"));
     }

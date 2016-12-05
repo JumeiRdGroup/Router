@@ -12,6 +12,7 @@ import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.nonview.router.route.RouteInterceptor;
 import com.lzh.router.RouterRuleCreator;
 
 import java.util.HashMap;
@@ -25,21 +26,23 @@ public class App extends Application {
         // 添加route规则创建器
         Router.addRouteCreator(new RouteInit());
         Router.addRouteCreator(new RouterRuleCreator());
-        // 对Router设置Activity Route Callback,作辅助功能
-        Router.setGlobalRouteCallback(new RouteCallback() {
+        Router.setGlobalRouteInterceptor(new RouteInterceptor() {
+            @Override
+            public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+                return !DataManager.INSTANCE.isLogin();
+            }
 
             @Override
-            public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {
-                // 拦截方法,返回true.表示此open事件被拦截.不继续运行,false不拦截
-                if (DataManager.INSTANCE.isLogin()) return false;
-
+            public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
                 Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
                 Intent loginIntent = new Intent(context,LoginActivity.class);
                 loginIntent.putExtra("uri",uri);
                 loginIntent.putExtra("extras",extras);
                 context.startActivity(loginIntent);
-                return true;
             }
+        });
+        // 对Router设置Activity Route Callback,作辅助功能
+        Router.setGlobalRouteCallback(new RouteCallback() {
 
             @Override
             public void notFound(Uri uri, NotFoundException e) {

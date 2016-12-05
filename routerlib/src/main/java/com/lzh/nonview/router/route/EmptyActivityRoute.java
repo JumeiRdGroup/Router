@@ -13,6 +13,11 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     }
 
     @Override
+    public void setCallback(RouteCallback callback) {
+
+    }
+
+    @Override
     public void open(Context context) {
         // empty
     }
@@ -64,5 +69,20 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     @Override
     public IRoute getRoute(Uri uri) {
         return this;
+    }
+
+    @Override
+    public void addInterceptor(RouteInterceptor interceptor) {
+        // empty
+    }
+
+    @Override
+    public void removeInterceptor(RouteInterceptor interceptor) {
+        // empty
+    }
+
+    @Override
+    public void removeAllInterceptors() {
+        // empty
     }
 }

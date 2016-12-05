@@ -4,7 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-public interface IActivityRoute{
+public interface IActivityRoute extends RouteInterceptorAction{
+
+    /**
+     * Set a callback to be invoked with route open
+     * @param callback callback
+     */
+    void setCallback (RouteCallback callback);
 
     /**
      * launch activity

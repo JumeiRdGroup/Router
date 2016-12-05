@@ -2,8 +2,8 @@ package com.lzh.nonview.router;
 
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.route.EmptyCallback;
 import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.nonview.router.route.RouteInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,31 +14,49 @@ import java.util.Map;
  * A container to manage some global config.
  * Created by lzh on 16/9/8.
  */
-public enum RouteManager {
-    INSTANCE;
+public final class RouteManager {
+    private static RouteManager manager;
+    private RouteManager() {}
+    public static RouteManager get() {
+        return manager;
+    }
+
+    /**
+     * A global route interceptor
+     */
+    private RouteInterceptor globalInterceptor;
     /**
      * global route callback
      */
-    RouteCallback GlobalCallback;
+    private RouteCallback globalCallback;
     // provide a empty callback to make it more safely
-    RouteCallback EmptyCallback = new EmptyCallback();
-    boolean shouldReload;// if should be reload routeMap.
+    private RouteCallback EmptyCallback = RouteCallback.EMPTY;
+    private boolean shouldReload;// if should be reload routeMap.
     /**
      * A container to contains all of route rule creator,compat with some complex scene;
      */
-    List<RouteCreator> creatorList = new ArrayList<>();
+    private List<RouteCreator> creatorList = new ArrayList<>();
     /**
      * A map to contains all of route rule created by creatorList
      */
-    Map<String,RouteMap> routeMap = new HashMap<>();
-    public void setCallback (RouteCallback callback) {
+    private Map<String,RouteMap> routeMap = new HashMap<>();
+
+    void setCallback (RouteCallback callback) {
         if (callback == null) {
             throw new IllegalArgumentException("callback should not be null");
         }
-        this.GlobalCallback = callback;
+        this.globalCallback = callback;
     }
 
-    public void addCreator (RouteCreator creator) {
+    void setInterceptor (RouteInterceptor interceptor) {
+        this.globalInterceptor = interceptor;
+    }
+
+    RouteInterceptor getInterceptor () {
+        return this.globalInterceptor;
+    }
+
+    void addCreator (RouteCreator creator) {
         if (creator == null) {
             throw new IllegalArgumentException("Route creator should not be null");
         }
@@ -50,8 +68,8 @@ public enum RouteManager {
      * Get a global callback you had set before,if not set,this should be a empty callback returns
      * @return a global callback to use,if not set ,it should be a empty callback instead.will not be null
      */
-    public RouteCallback getCallback() {
-        return GlobalCallback == null ? EmptyCallback : GlobalCallback;
+    RouteCallback getCallback() {
+        return globalCallback == null ? EmptyCallback : globalCallback;
     }
 
     public Map<String,RouteMap> getRouteMap() {

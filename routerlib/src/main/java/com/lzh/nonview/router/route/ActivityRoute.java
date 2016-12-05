@@ -15,6 +15,7 @@ import com.lzh.nonview.router.parser.ListBundle;
 import com.lzh.nonview.router.parser.SimpleBundle;
 import com.lzh.nonview.router.parser.URIParser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -45,7 +46,12 @@ public class ActivityRoute implements IActivityRoute, IRoute {
      */
     private RouteCallback callback;
 
+    /**
+     * A container to pack all interceptors
+     */
+    private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
 
+    @Override
     public void setCallback (RouteCallback callback) {
         if (callback != null) {
             this.callback = callback;
@@ -64,7 +70,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context, Uri uri) {
         try {
-            if (callback.interceptOpen(uri,context,extras)) return;
+            if (isInterceptOpen(uri,extras,context)) return;
 
             ActivityRoute route = (ActivityRoute) getRoute(uri);
             route.openInternal(context);
@@ -91,7 +97,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
      */
     private RouteMap getRouteMapByUri (URIParser parser) {
         String route = parser.getScheme() + "://" + parser.getHost();
-        Map<String, RouteMap> routes = RouteManager.INSTANCE.getRouteMap();
+        Map<String, RouteMap> routes = RouteManager.get().getRouteMap();
         String wrap = Utils.wrapScheme(route);
         if (routes.containsKey(wrap)) {
             return routes.get(wrap);
@@ -143,7 +149,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context) {
         try {
-            if (callback.interceptOpen(uri,context,extras)) return;
+            if (isInterceptOpen(uri,extras,context)) return;
             openInternal(context);
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
@@ -154,6 +160,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
             }
         }
     }
+
 
     public Intent createIntent(Context context) {
         Intent intent = new Intent();
@@ -239,4 +246,32 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         }
     }
 
+    @Override
+    public void addInterceptor(RouteInterceptor interceptor) {
+        if (interceptor != null && !interceptors.contains(interceptor)) {
+            interceptors.add(interceptor);
+        }
+    }
+
+    @Override
+    public void removeInterceptor(RouteInterceptor interceptor) {
+        if (interceptor != null && interceptors.contains(interceptor)) {
+            interceptors.remove(interceptor);
+        }
+    }
+
+    @Override
+    public void removeAllInterceptors() {
+        interceptors.clear();
+    }
+
+    private boolean isInterceptOpen(Uri uri,ActivityRouteBundleExtras extras,Context context) {
+        for (RouteInterceptor interceptor : interceptors) {
+            if (interceptor.intercept(uri,extras,context)) {
+                interceptor.onIntercepted(uri,extras,context);
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -6,19 +6,22 @@ import android.text.TextUtils;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteCreator;
+import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
 import com.lzh.nonview.router.route.EmptyActivityRoute;
 import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.route.RouteInterceptorAction;
 
 
 /**
  * Entry of router lib,you can call open to open immediately or getRoute to set some extra data later;
  * Created by lzh on 16/9/5.
  */
-public class Router {
+public final class Router implements RouteInterceptorAction{
 
     private Uri uri;
     private RouteCallback callback;
@@ -64,7 +67,7 @@ public class Router {
     public void open(Context context) {
         ActivityRoute activityRoute;
 
-        callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
+        callback = callback == null ? RouteManager.get().getCallback() : callback;
         if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             BrowserRoute.getInstance().open(context,uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
@@ -93,9 +96,10 @@ public class Router {
      */
     public IActivityRoute getActivityRoute () {
         ActivityRoute activityRoute;
-        callback = callback == null ? RouteManager.INSTANCE.getCallback() : callback;
+        callback = callback == null ? RouteManager.get().getCallback() : callback;
         if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
             activityRoute.setCallback(callback);
+            activityRoute.addInterceptor(RouteManager.get().getInterceptor());
             return (IActivityRoute) activityRoute.getRoute(uri);
         }
         callback.notFound(uri,
@@ -110,7 +114,11 @@ public class Router {
      * @param callback can't be null
      */
     public static void setGlobalRouteCallback (RouteCallback callback) {
-        RouteManager.INSTANCE.setCallback(callback);
+        RouteManager.get().setCallback(callback);
+    }
+
+    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {
+        RouteManager.get().setInterceptor(interceptor);
     }
 
     /**
@@ -118,7 +126,21 @@ public class Router {
      * @param creator Route rules creator.can't be null
      */
     public static void addRouteCreator(RouteCreator creator) {
-        RouteManager.INSTANCE.addCreator(creator);
+        RouteManager.get().addCreator(creator);
     }
 
+    @Override
+    public void addInterceptor(RouteInterceptor interceptor) {
+
+    }
+
+    @Override
+    public void removeInterceptor(RouteInterceptor interceptor) {
+
+    }
+
+    @Override
+    public void removeAllInterceptors() {
+
+    }
 }
