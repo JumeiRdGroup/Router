@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by lzh on 16/9/8.
  */
 public final class RouteManager {
-    private static RouteManager manager;
+    private static RouteManager manager = new RouteManager();
     private RouteManager() {}
     public static RouteManager get() {
         return manager;

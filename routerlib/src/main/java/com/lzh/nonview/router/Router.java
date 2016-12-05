@@ -72,6 +72,7 @@ public final class Router implements RouteInterceptorAction{
             BrowserRoute.getInstance().open(context,uri);
         } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
             activityRoute.setCallback(callback);
+            activityRoute.addInterceptor(RouteManager.get().getInterceptor());
             activityRoute.open(context,uri);
         } else {
             callback.notFound(uri,new NotFoundException(String.format("find route by uri %s failed:",uri),
