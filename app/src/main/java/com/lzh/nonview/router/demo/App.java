@@ -41,6 +41,7 @@ public class App extends Application {
                 context.startActivity(loginIntent);
             }
         });
+
         // 对Router设置Activity Route Callback,作辅助功能
         Router.setGlobalRouteCallback(new RouteCallback() {
 

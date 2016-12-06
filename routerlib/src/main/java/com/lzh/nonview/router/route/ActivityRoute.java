@@ -87,7 +87,11 @@ public class ActivityRoute implements IActivityRoute, IRoute {
 
     @Override
     public boolean canOpenRouter(Uri uri) {
-        return getRouteMapByUri(new URIParser(uri)) != null;
+        try {
+            return getRouteMapByUri(new URIParser(uri)) != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**

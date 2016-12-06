@@ -21,7 +21,7 @@ import com.lzh.nonview.router.route.RouteInterceptorAction;
  * Entry of router lib,you can call open to open immediately or getRoute to set some extra data later;
  * Created by lzh on 16/9/5.
  */
-public final class Router implements RouteInterceptorAction{
+public final class Router{
 
     private Uri uri;
     private RouteCallback callback;
@@ -128,20 +128,5 @@ public final class Router implements RouteInterceptorAction{
      */
     public static void addRouteCreator(RouteCreator creator) {
         RouteManager.get().addCreator(creator);
-    }
-
-    @Override
-    public void addInterceptor(RouteInterceptor interceptor) {
-
-    }
-
-    @Override
-    public void removeInterceptor(RouteInterceptor interceptor) {
-
-    }
-
-    @Override
-    public void removeAllInterceptors() {
-
     }
 }
