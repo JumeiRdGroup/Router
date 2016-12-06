@@ -5,3 +5,7 @@
 .DS_Store
 /build
 /captures
+/routerlib/build
+/compiler/build
+/app/build
+/annotation/build
