@@ -25,26 +25,32 @@ Router.addRouteCreator(new RouteCreator {
 ```
 
 - config interceptor & callback
+Set a global interceptor for Router:
 
+```
+Router.setGlobalRouteInterceptor(new RouteInterceptor() {
+
+    @Override
+    public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        // The open route event should be intercepted with return true
+        return !DataManager.INSTANCE.isLogin();
+    }
+
+    @Override
+    public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        // As the method intercept returns true,it will be interrupted and this method will be invoked
+        Toast.makeText(App.this, "Please login first", Toast.LENGTH_SHORT).show();
+        Intent loginIntent = new Intent(context,LoginActivity.class);
+        loginIntent.putExtra("uri",uri);
+        loginIntent.putExtra("extras",extras);
+        context.startActivity(loginIntent);
+    }
+});
+```
 set a global configuration for Router:
 ```java
 // create a subclass of RouterCallback and add it to Router
 Router.setRouteCallback(new RouteCallback() {
-
-    @Override
-    public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {
-        // intercept method: if return true,to indicate this url should be intercepted,
-        // if is intercepted,open activity will be not effective
-        // eg:
-        if (DataManager.INSTANCE.isLogin()) return false;
-
-        Toast.makeText(App.this, "Please login first", Toast.LENGTH_SHORT).show();
-        Intent loginIntent = new Intent(context,LoginActivity.class);
-        loginIntent.putExtra("uri",uri);
-        loginIntent.putExtra("extra",extras);
-        context.startActivity(loginIntent);
-        return true;
-    }
 
     @Override
     public void notFound(Uri uri, NotFoundException e) {
@@ -65,7 +71,11 @@ Router.setRouteCallback(new RouteCallback() {
 });
 ```
 
-Or you need config a callback with a special url
+Or you need config it with a special url
+
+```java
+Router.create(url).getActivityRoute().addInterceptor(interceptor);
+```
 
 ```java
 Router.create(url).setCallback(callback).open(context);
@@ -90,6 +100,7 @@ Bundle extras = new Bundle();
 ...
 Router.create("jumei://main").getActivityRoute()
         .addExtras(extras)// add extras data
+        .addInterceptor(interceptor)
         .requestCode(100)
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         .setAnim(R.anim.anim_fade_in,R.anim.anim_fade_out)

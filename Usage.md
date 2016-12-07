@@ -26,24 +26,32 @@ Router.addRouteCreator(new RouteCreator {
 
 - 配置监听回调,拦截方法:
 
+设置全局的拦截器。
+```
+Router.setGlobalRouteInterceptor(new RouteInterceptor() {
+
+    @Override
+    public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        // return true。代表此次Route事件被拦截
+        return !DataManager.INSTANCE.isLogin();
+    }
+
+    @Override
+    public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        // 当intercept方法返回true。拦截掉Route跳转事件并在此通知。可在此进行额外操作。
+        Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
+        Intent loginIntent = new Intent(context,LoginActivity.class);
+        loginIntent.putExtra("uri",uri);
+        loginIntent.putExtra("extras",extras);
+        context.startActivity(loginIntent);
+    }
+});
+```
+
 设置全局的监听器。
 ```java
 // 对Router设置Activity Route Callback,作辅助功能
 Router.setRouteCallback(new RouteCallback() {
-
-    @Override
-    public boolean interceptOpen(Uri uri, Context context, ActivityRouteBundleExtras extras) {
-        // 拦截方法,返回true.表示此open事件被拦截.不继续运行,false不拦截.可在此进行登录状态判断等
-        // 示例代码:
-        if (DataManager.INSTANCE.isLogin()) return false;
-
-        Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
-        Intent loginIntent = new Intent(context,LoginActivity.class);
-        loginIntent.putExtra("uri",uri);
-        loginIntent.putExtra("extra",extras);
-        context.startActivity(loginIntent);
-        return true;
-    }
 
     @Override
     public void notFound(Uri uri, NotFoundException e) {
@@ -64,8 +72,14 @@ Router.setRouteCallback(new RouteCallback() {
 });
 ```
 或者对某个url设置单独的监听器:
+
 ```java
 Router.create(url).setCallback(callback).open(context);
+```
+对某个url设置添加额外的拦截器：
+
+```
+Router.create(url).getActivityRoute().addInterceptor(interceptor).open();
 ```
 
 - 使用Router进行跳转
@@ -86,6 +100,7 @@ Router.create(url).open(context);
 Bundle extras = new Bundle();
 ...
 Router.create("jumei://main").getActivityRoute()
+        .addInterceptor(interceptor)
         .addExtras(extras)// 添加额外参数
         .requestCode(100)
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

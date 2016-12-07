@@ -41,10 +41,19 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 
 ###ChangeLog
 
+ - 0.8
+
+ ```
+ Take out interceptor from RouteCallback.
+ Support multy interceptor
+ Support pass interceptors who is inherited with Parcelable & Serializable infer components
+ Adaptive min version to 8
+ ```
+
  - 0.6
 
  ```
- add upport tpyes List<String> and List<Integer> with url
+ add support tpyes List<String> and List<Integer> with url
  some optimizes makes Router more strongger and safe
  ```
 

@@ -44,6 +44,15 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 [Usage docs](./Usage-en.md)
 
 ## ChangeLog
+- 0.8
+
+```
+ 将拦截器从原有的RouteCallback中抽离。作为单独接口进行设置。
+ 支持设置多个拦截器
+ 支持对于继承自Serializable和Parcelable接口的Interceptor在系统组件之间传递。
+ 最低版本兼容到8
+```
+
 - 0.6
 
 ```
