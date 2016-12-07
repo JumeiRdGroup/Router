@@ -278,7 +278,9 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         if (interceptor != null) {
             list.add(interceptor);
         }
-        list.addAll(extras.getInterceptors());
+        if (extras != null && extras.getInterceptors() != null) {
+            list.addAll(extras.getInterceptors());
+        }
         return list;
     }
 

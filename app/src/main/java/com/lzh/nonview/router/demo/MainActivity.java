@@ -44,8 +44,8 @@ public class MainActivity extends BaseActivity {
         extras.putString("password","lzh");
         extras.putString("usertype","VIP");
         Router.create("jumei://main").getActivityRoute()
-                .addInterceptor(new SerialInterceptor())
-                .addInterceptor(new ParcelableInterceptor())
+//                .addInterceptor(new SerialInterceptor())
+//                .addInterceptor(new ParcelableInterceptor())
                 .addExtras(extras)// 添加额外参数
                 .requestCode(100)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
