@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     private static EmptyActivityRoute EMPTY = new EmptyActivityRoute();
     private EmptyActivityRoute(){}
@@ -72,17 +75,26 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     }
 
     @Override
-    public void addInterceptor(RouteInterceptor interceptor) {
+    public IActivityRoute addInterceptor(RouteInterceptor interceptor) {
         // empty
+        return this;
     }
 
     @Override
-    public void removeInterceptor(RouteInterceptor interceptor) {
+    public IActivityRoute removeInterceptor(RouteInterceptor interceptor) {
         // empty
+        return this;
     }
 
     @Override
-    public void removeAllInterceptors() {
+    public IActivityRoute removeAllInterceptors() {
         // empty
+        return this;
+    }
+
+    @Override
+    public List<RouteInterceptor> getInterceptors() {
+        // Avoid cause NullPointException
+        return new ArrayList<>();
     }
 }

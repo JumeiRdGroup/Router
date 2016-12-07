@@ -9,7 +9,7 @@ import com.lzh.nonview.router.Router;
  * A interceptor interface
  * @author lzh
  */
-public interface RouteInterceptor {
+public interface RouteInterceptor{
 
     /**
      * Whether or not be interrupted when open activity by uri

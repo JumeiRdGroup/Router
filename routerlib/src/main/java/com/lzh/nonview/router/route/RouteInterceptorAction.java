@@ -1,21 +1,27 @@
 package com.lzh.nonview.router.route;
 
-public interface RouteInterceptorAction {
+import java.util.List;
+
+public interface RouteInterceptorAction<T> {
 
     /**
      * Add a interceptor to container
      * @param interceptor interceptor instance
      */
-    void addInterceptor (RouteInterceptor interceptor);
+    T addInterceptor (RouteInterceptor interceptor);
 
     /**
      * Remove a interceptor from container
      * @param interceptor interceptor instance
      */
-    void removeInterceptor (RouteInterceptor interceptor);
+    T removeInterceptor (RouteInterceptor interceptor);
 
     /**
      * remove all of interceptors you has set before
      */
-    void removeAllInterceptors ();
+    T removeAllInterceptors ();
+
+    List<RouteInterceptor> getInterceptors ();
 }
+
+
