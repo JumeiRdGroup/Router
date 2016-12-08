@@ -9,6 +9,8 @@ This is a framework for starting activity by url*(“Scheme”)* on Android.
 
 LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion)
 
+*ps:we trace a mistake with jcenter.The new versions of Router does not sync to it's repository automatically,so the lastest versions in jcenter is still 0.6*
+
 Basic config:
 ```Groovy
 // add it to your build.gradle on app project

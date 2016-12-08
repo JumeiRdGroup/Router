@@ -28,6 +28,9 @@
 基本配置:
 
 LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion)
+
+*jcenter突然抽风。0.8版本未能正常同步到仓库中。请暂时继续使用0.6版本*
+
 ```Groovy
 // add it to your build.gradle on app project
 compile 'org.lzh.nonview.router:router-api:$LatestVersion'
