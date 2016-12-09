@@ -25,15 +25,17 @@ android {
     }
 }
 
+def PARCELER_VERSION="0.5"
+def ROUTER_VERSION="0.9"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.0'
-    apt 'org.lzh.compiler.parceler:parceler-compiler:0.5'
-    compile 'org.lzh.compiler.parceler:parceler-api:0.5'
+    apt "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
+    compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
 
-//    compile 'com.github.yjfnypeu.Router:router-api:0.8-test'
-//    apt 'com.github.yjfnypeu.Router:router-compiler:0.8-test'
+    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
+    apt "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
     compile project(':routerlib')
     apt project(':compiler')
