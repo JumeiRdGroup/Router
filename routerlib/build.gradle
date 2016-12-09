@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'//添加
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.yjfnypeu'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -47,3 +49,6 @@ publish {
     website = rootProject.website
     licences = rootProject.licences
 }
+
+
+apply from: '../javadoc.gradle'
