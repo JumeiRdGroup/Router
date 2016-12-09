@@ -55,6 +55,12 @@ apt 'com.github.yjfnypeu:Router:router-compiler:$LatestVersion'
 
 ###ChangeLog
 
+ - 0.9
+
+ ```
+ Support multiple schema rules with @RouteRule
+ ```
+
  - 0.8
 
  ```

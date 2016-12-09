@@ -59,6 +59,12 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 [Usage docs](./Usage-en.md)
 
 ## ChangeLog
+- 0.9
+
+```
+RouteRule注解支持添加多schema rule
+```
+
 - 0.8
 
 ```
