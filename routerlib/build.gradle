@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'//添加
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.yjfnypeu'
+group='com.github.haoge'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
