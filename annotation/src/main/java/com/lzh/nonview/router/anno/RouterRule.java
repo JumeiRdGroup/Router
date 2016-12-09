@@ -12,7 +12,7 @@ public @interface RouterRule {
      * value of scheme.should be unique and nonNull
      * @return scheme
      */
-    String value();
+    String[] value();
 
     /**
      * Set a package name of generate class.if not set,it'll be <i>com.lzh.router</i>

@@ -22,7 +22,7 @@ import javax.lang.model.type.TypeMirror;
 
 public class Parser {
     private static Map<String,TypeElement> parsed = new HashMap<>();
-    private String scheme;
+    private String[] schemaes;
     private TypeElement type;
     private Map<String,TypeMirror> map = new HashMap<>();
 
@@ -34,22 +34,24 @@ public class Parser {
 
     public void parse () {
         parseEffectField (type);
-        checkIsDuplicate();
+        schemaes = type.getAnnotation(RouterRule.class).value();
+        for (String schema : schemaes) {
+            checkIsDuplicate(schema);
+        }
     }
 
-    private void checkIsDuplicate() {
-        scheme = type.getAnnotation(RouterRule.class).value();
-        if (Utils.isEmpty(scheme)) {
+    private void checkIsDuplicate(String schema) {
+        if (Utils.isEmpty(schema)) {
             throw new RouterException("value of annotation RouteRule can not be null!",type);
         }
-        if (scheme.endsWith("/")) {
-            scheme = scheme.substring(0,scheme.lastIndexOf("/"));
+        if (schema.endsWith("/")) {
+            schema = schema.substring(0,schema.lastIndexOf("/"));
         }
 
-        if (parsed.containsKey(scheme)) {
-            throw new RouterException(String.format("A same scheme was double defined on another class %s", parsed.get(scheme)),type);
+        if (parsed.containsKey(schema)) {
+            throw new RouterException(String.format("A same scheme was double defined on another class %s", parsed.get(schema)),type);
         }
-        parsed.put(scheme,type);
+        parsed.put(schema,type);
     }
 
     private void parseEffectField(TypeElement type) {
@@ -71,8 +73,8 @@ public class Parser {
         return map;
     }
 
-    public String getScheme() {
-        return scheme;
+    public String[] getScheme() {
+        return schemaes;
     }
 
     public TypeElement getType() {

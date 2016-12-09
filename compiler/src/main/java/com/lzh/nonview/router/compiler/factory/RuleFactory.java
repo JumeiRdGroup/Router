@@ -8,11 +8,9 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +42,10 @@ public class RuleFactory {
         MethodSpec.Builder methodCreator = MethodSpec.overriding(getOverrideMethod (creator));
         methodCreator.addStatement("$T<String,RouteMap> routes = new $T<>()",Map.class, HashMap.class);
         for (Parser parser : parserList ) {
-            appendMethod(parser,methodCreator);
+            String[] schemaes = parser.getScheme();
+            for (String schema : schemaes) {
+                appendMethod(parser,methodCreator,schema);
+            }
         }
         methodCreator.addStatement("return routes");
         typeBuilder.addMethod(methodCreator.build());
@@ -52,12 +53,12 @@ public class RuleFactory {
         javaBuilder.build().writeTo(UtilMgr.getMgr().getFiler());
     }
 
-    private void appendMethod(Parser parser, MethodSpec.Builder methodCreator) {
+    private void appendMethod(Parser parser, MethodSpec.Builder methodCreator,String schema) {
         Map<String, TypeMirror> map = parser.getMap();
         String target = parser.getType().getQualifiedName().toString();
         TypeElement actType = UtilMgr.getMgr().getElementUtils().getTypeElement(target);
         CodeBlock.Builder codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
-                parser.getScheme(), Utils.getClassName(Constants.CLASSNAME_ROUTE_MAP), actType);
+                schema, Utils.getClassName(Constants.CLASSNAME_ROUTE_MAP), actType);
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             codeBuilder.add(".addParam($S,$L)",key,getTypeFromName (map.get(key)));
