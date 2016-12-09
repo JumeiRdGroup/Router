@@ -25,11 +25,23 @@
 ### Usage
 
 - 添加gradle依赖:
+
+添加JitPack仓库到root project下的build.gradle中：
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
 基本配置:
 
-LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router/_latestVersion)
+LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
 
-*jcenter突然抽风。0.8版本未能正常同步到仓库中。请暂时继续使用0.6版本*
+*因为jCenter突然抽风的原因。现将新版本移至JitPack仓库中。请注意新版的groupId*
 
 ```Groovy
 // add it to your build.gradle on app project

@@ -21,6 +21,8 @@ allprojects {
 
 LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
 
+*attention: because of the mistake of jCenter.we changed the repository from jCenter to JitPack.You should to change the groupId when you upgrade the new versions*
+
 Basic config:
 ```Groovy
 // add it to your build.gradle on app project
