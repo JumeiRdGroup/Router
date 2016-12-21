@@ -7,18 +7,20 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.widget.Toast;
 
+import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
 import com.lzh.nonview.router.route.RouteInterceptor;
-import com.lzh.router.RouterRuleCreator;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@RouteConfig(schema = "haoge",pack = "com.haoge.studio")
 public class App extends Application {
 
     @Override

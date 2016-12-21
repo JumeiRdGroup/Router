@@ -2,6 +2,7 @@ package com.lzh.nonview.router.compiler;
 
 public class Constants {
 
+    public static final String CLASSNAME_APPLICATION = "android.app.Application";
     public static final String[] CLASSNAME_ACTIVITY = {"android.app","Activity"};
     public static final String[] CLASSNAME_ROUTE_MAP = {"com.lzh.nonview.router.module","RouteMap"};
     public static final String[] CLASSNAME_ROUTE_CREATOR = {"com.lzh.nonview.router.module","RouteCreator"};

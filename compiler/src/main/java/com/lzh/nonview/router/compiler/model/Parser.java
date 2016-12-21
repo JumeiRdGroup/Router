@@ -3,12 +3,8 @@ package com.lzh.nonview.router.compiler.model;
 import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.compiler.exception.RouterException;
-import com.lzh.nonview.router.compiler.factory.RuleFactory;
 import com.lzh.nonview.router.compiler.util.Utils;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeName;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
@@ -22,36 +18,55 @@ import javax.lang.model.type.TypeMirror;
 
 public class Parser {
     private static Map<String,TypeElement> parsed = new HashMap<>();
-    private String[] schemaes;
+    private String[] routers;
     private TypeElement type;
+    private BasicConfigurations configurations;
     private Map<String,TypeMirror> map = new HashMap<>();
 
-    public static Parser create (TypeElement element) {
+    public static Parser create (TypeElement element,BasicConfigurations configurations) {
         Parser parser = new Parser();
         parser.type = element;
+        parser.configurations = configurations;
         return parser;
     }
 
     public void parse () {
         parseEffectField (type);
-        schemaes = type.getAnnotation(RouterRule.class).value();
-        for (String schema : schemaes) {
-            checkIsDuplicate(schema);
+        routers = type.getAnnotation(RouterRule.class).value();
+        for (int i = 0; i < routers.length; i++) {
+            String route = routers[i];
+            route = completeRoute(route,configurations.getSchema());
+            routers[i] = route;
+            checkIsDuplicate(route);
         }
     }
 
-    private void checkIsDuplicate(String schema) {
-        if (Utils.isEmpty(schema)) {
+    private String completeRoute(String route, String basicSchema) {
+        if (Utils.isEmpty(route)) {
             throw new RouterException("value of annotation RouteRule can not be null!",type);
         }
-        if (schema.endsWith("/")) {
-            schema = schema.substring(0,schema.lastIndexOf("/"));
+        URI uri = URI.create(route);
+        String scheme = uri.getScheme();
+        if (Utils.isEmpty(scheme)) {
+            if (Utils.isEmpty(basicSchema)) {
+                throw new RouterException("Could not find a basic schema set by RouteConfig to join with the route:" + route,type);
+            }
+            route = basicSchema + "://" + route;
+        }
+        return route;
+    }
+
+    private void checkIsDuplicate(String route) {
+
+
+        if (route.endsWith("/")) {
+            route = route.substring(0,route.lastIndexOf("/"));
         }
 
-        if (parsed.containsKey(schema)) {
-            throw new RouterException(String.format("A same scheme was double defined on another class %s", parsed.get(schema)),type);
+        if (parsed.containsKey(route)) {
+            throw new RouterException(String.format("A same scheme was double defined on another class %s", parsed.get(route)),type);
         }
-        parsed.put(schema,type);
+        parsed.put(route,type);
     }
 
     private void parseEffectField(TypeElement type) {
@@ -74,7 +89,7 @@ public class Parser {
     }
 
     public String[] getScheme() {
-        return schemaes;
+        return routers;
     }
 
     public TypeElement getType() {

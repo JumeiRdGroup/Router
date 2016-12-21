@@ -1,8 +1,10 @@
 package com.lzh.nonview.router.compiler;
 
+import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.compiler.exception.RouterException;
 import com.lzh.nonview.router.compiler.factory.RuleFactory;
+import com.lzh.nonview.router.compiler.model.BasicConfigurations;
 import com.lzh.nonview.router.compiler.model.Parser;
 import com.lzh.nonview.router.compiler.util.LogUtil;
 import com.lzh.nonview.router.compiler.util.UtilMgr;
@@ -10,9 +12,9 @@ import com.lzh.nonview.router.compiler.util.Utils;
 import com.squareup.javapoet.ClassName;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +31,46 @@ public class Compiler extends AbstractProcessor{
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         LogUtil.debug = true;
-        Map<String,List<Parser>> map = new HashMap<>();
+
+        try {
+            BasicConfigurations config = processRouteConfig(roundEnv);
+            processRouteRules(roundEnv, new HashMap<String,List<Parser>>(),config);
+            return false;
+        } catch (RouterException e) {
+            e.printStackTrace();
+            error(e.getElement(),e.getMessage());
+            return true;
+        }
+    }
+
+    private BasicConfigurations processRouteConfig(RoundEnvironment roundEnv) throws RouterException{
+        TypeElement type = null;
+        try {
+            Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(RouteConfig.class);
+            Iterator<? extends Element> iterator = elements.iterator();
+            BasicConfigurations configurations = null;
+            while (iterator.hasNext()) {
+                type = (TypeElement) iterator.next();
+                if (configurations != null) {
+                    throw new RouterException("The RouteConfig in this module was defined duplicated!",type);
+                }
+                if (!Utils.isSuperClass(type,Constants.CLASSNAME_APPLICATION)) {
+                    throw new RouterException("The class you had annotated by RouteConfig must be a Application",type);
+                }
+                RouteConfig config = type.getAnnotation(RouteConfig.class);
+                configurations = new BasicConfigurations(config.schema(),config.pack());
+            }
+            return configurations == null ? new BasicConfigurations("","") : configurations;
+        } catch (RouterException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw new RouterException(e.getMessage(),e,type);
+        }
+    }
+
+    private void processRouteRules(RoundEnvironment roundEnv, Map<String, List<Parser>> map,BasicConfigurations config) throws RouterException{
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(RouterRule.class);
         TypeElement type = null;
         try {
@@ -37,11 +78,14 @@ public class Compiler extends AbstractProcessor{
                 type = (TypeElement) ele;
                 if (!Utils.checkTypeValid(type)) continue;
 
-                Parser parser = Parser.create(type);
+                Parser parser = Parser.create(type,config);
                 parser.parse();
 
                 RouterRule rule = type.getAnnotation(RouterRule.class);
-                String packName = Utils.isEmpty(rule.pack()) ? "com.lzh.router" : rule.pack();
+                String packName = Utils.isEmpty(rule.pack())
+                        ? Utils.isEmpty(config.getPack())
+                        ? "com.lzh.router" : config.getPack() : rule.pack();
+
                 if (!map.containsKey(packName)) {
                     map.put(packName,new ArrayList<Parser>());
                 }
@@ -54,14 +98,11 @@ public class Compiler extends AbstractProcessor{
             }
         } catch (RouterException e) {
             e.printStackTrace();
-            error(e.getElement(),e.getMessage());
-            return true;
+            throw e;
         } catch (Throwable e) {
-            error(type,e.getMessage());
             e.printStackTrace();
-            return true;
+            throw new RouterException(e.getMessage(),e,type);
         }
-        return false;
     }
 
     /**
@@ -87,6 +128,7 @@ public class Compiler extends AbstractProcessor{
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new HashSet<>();
         set.add(RouterRule.class.getCanonicalName());
+        set.add(RouteConfig.class.getCanonicalName());
         return set;
     }
 
@@ -95,4 +137,6 @@ public class Compiler extends AbstractProcessor{
         super.init(processingEnv);
         UtilMgr.getMgr().init(processingEnv);
     }
+
+
 }

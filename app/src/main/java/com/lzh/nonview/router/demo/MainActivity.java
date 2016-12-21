@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteInterceptor;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@RouterRule("haoge.com/main")
 public class MainActivity extends BaseActivity {
 
     @Override
