@@ -52,7 +52,7 @@ public class URIParser {
         for (String param : split) {
             String[] keyValue = param.split("=");
             //noinspection RedundantStringConstructorCall
-            params.put(new String(keyValue[0]),keyValue[1]);
+            params.put(new String(keyValue[0]),keyValue.length >= 2 ? keyValue[1] : "");
         }
         return params;
     }
