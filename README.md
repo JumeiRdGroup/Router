@@ -33,7 +33,7 @@ If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app
 
 ```Groovy
 // add it to your build.gradle on app project
-apt 'com.github.yjfnypeu:Router:router-compiler:$LatestVersion'
+apt 'com.github.yjfnypeu.Router:router-compiler:$LatestVersion'
 ```
 
 ###Features
