@@ -59,6 +59,16 @@ apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
 [Usage docs](./Usage-en.md)
 
 ## ChangeLog
+
+- 1.0
+```
+修复由于url传参为空的情况下导致的异常。如：'username=&password='
+添加新注解@RouteConfig。这个注解只能用于Application的子类上。并且允许你定义一些基本配置来让生成路由规则更加方便:
+RouteConfig#schema():定义默认使用的shcema。当你使用RouterRule生成路由规则时。若没有设置schema。将会加入默认schema并生成规则
+RouteConfig#pack():定义默认路由表生成类的包名。示例：
+@RouteConfig(schema="test",pack="com.haoge.route") + RouterRule(value="hello.world") ==> RouterRule(value = "test://hello.world",pack="com.haoge.route")
+```
+
 - 0.9
 
 ```

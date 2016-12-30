@@ -55,6 +55,19 @@ apt 'com.github.yjfnypeu.Router:router-compiler:$LatestVersion'
 
 ###ChangeLog
 
+ - 1.0
+
+
+ ```
+ Fixed bug cause by parsing a empty value with url,such as 'username=&password='
+ Added new annotation @RouteConfig,This annotation should only annotated on subclass of *Application*,
+ and allows you to define some basic configrations to make route rules more convenient:
+
+ RouteConfig#schema():The default schema value.if has set,when you define you route mapping on @RouterRule without a schema value,this should be used to complete.
+ RouteConfig#pack():The default package name for generated class.eg:
+ @RouteConfig(schema="test",pack="com.haoge.route") + RouterRule(value="hello.world") ==> RouterRule(value = "test://hello.world",pack="com.haoge.route")
+ ```
+
  - 0.9
 
  ```
