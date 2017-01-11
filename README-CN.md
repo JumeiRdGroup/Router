@@ -45,13 +45,13 @@ LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io
 
 ```Groovy
 // add it to your build.gradle on app project
-compile 'org.lzh.nonview.router:router-api:$LatestVersion'
+compile 'com.github.yjfnypeu.Router:router-api:$LatestVersion'
 ```
 
 如果你也使用了我的另一个框架*[Parceler](https://github.com/yjfnypeu/Parceler)*,建议可以添加一个编译时注解处理器去更好的使用此框架。可很方便的结合*Parceler*框架生成对应的路由规则
 ```Groovy
 // add it to your build.gradle on app project
-apt 'org.lzh.nonview.router:router-compiler:$LatestVersion'
+apt 'com.github.yjfnypeu.Router:router-compiler:$LatestVersion'
 ```
 
 [查看具体使用姿势](./Usage.md)
