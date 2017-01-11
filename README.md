@@ -26,14 +26,14 @@ LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io
 Basic config:
 ```Groovy
 // add it to your build.gradle on app project
-compile 'com.github.yjfnypeu.Router:router-api:$LatestVersion'
+compile "com.github.yjfnypeu.Router:router-api:$LatestVersion"
 ```
 
 If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app, the best practice is to add a Compile-time framework to create route rules with annotations *RouterRule* to make *Parceler* more convenient:
 
 ```Groovy
 // add it to your build.gradle on app project
-apt 'com.github.yjfnypeu.Router:router-compiler:$LatestVersion'
+apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ```
 
 ###Features
