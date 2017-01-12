@@ -4,7 +4,7 @@ apply plugin: 'com.novoda.bintray-release'//添加
 dependencies {
     compile 'com.squareup:javapoet:1.7.0'
     compile project(':annotation')
-    compile 'org.lzh.compiler.parceler:parceler-anno:0.3'
+    compile 'org.lzh.compiler.parceler:parceler-anno:+'
 }
 
 sourceCompatibility = "1.7"
