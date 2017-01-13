@@ -1,7 +1,7 @@
 #Router ![svg](https://travis-ci.org/yjfnypeu/Router.svg?branch=master)
 <a href="http://www.methodscount.com/?lib=com.github.yjfnypeu.Router%3Arouter-api%3A0.9"><img src="https://img.shields.io/badge/Methods count-core: 239 | deps: 2-e91e63.svg"/></a>
 
-This is a framework for starting activity by url*(“Scheme”)* on Android.
+This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
 [中文README文档](./README-CN.md)
 
@@ -21,7 +21,7 @@ allprojects {
 
 LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
 
-*attention: because of the mistake of jCenter.we changed the repository from jCenter to JitPack.You should to change the groupId when you upgrade the new versions*
+*attention: because of the mistake of jCenter.we changed the repository from jCenter to JitPack.You should change the groupId when you upgrade the new versions*
 
 Basic config:
 ```Groovy
@@ -39,8 +39,8 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ###Features
 
 * Support all types of *Bundle*  
-* Support interceptor, for example, you can config a interceptor to **force request login** before open a activity that requires login.
-* Support open with browser when your scheme were **http/https**  
+* Support interceptor, for example, you can config an interceptor to **force request login** before open an activity that requires a login.
+* Support open with browser when your scheme is **http/https**
 * Support add extras while open an Activity  
 * Support set request code and launch mode and animation when open activity by route*  
 * Flexible config: You can config your route rules automatically*(by use RouteRule annotation)* or manually
