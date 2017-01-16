@@ -65,12 +65,12 @@ public final class Router{
         ActivityRoute activityRoute;
 
         callback = callback == null ? RouteManager.get().getCallback() : callback;
-        if (BrowserRoute.getInstance().canOpenRouter(uri)) {
-            BrowserRoute.getInstance().open(context,uri);
-        } else if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
+        if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
             activityRoute.setCallback(callback);
             activityRoute.setGlobalInterceptor(RouteManager.get().getInterceptor());
             activityRoute.open(context,uri);
+        } else if (BrowserRoute.getInstance().canOpenRouter(uri)) {
+            BrowserRoute.getInstance().open(context,uri);
         } else {
             callback.notFound(uri,new NotFoundException(String.format("find route by uri %s failed:",uri),
                     NotFoundException.NotFoundType.SCHEME,uri.toString()));
