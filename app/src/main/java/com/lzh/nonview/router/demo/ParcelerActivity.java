@@ -13,7 +13,7 @@ import com.lzh.nonview.router.route.RouteInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 
-@RouterRule("haoge://haoge.cn/parceler")
+@RouterRule({"haoge://haoge.cn/parceler","http://haoge.cn/parceler"})
 public class ParcelerActivity extends BaseActivity {
 
     @Arg

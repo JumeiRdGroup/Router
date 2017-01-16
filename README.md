@@ -55,41 +55,10 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 
 ###ChangeLog
 
+see [releases](./releases)
+
+
  - 1.0
-
-
- ```
- Fixed bug cause by parsing a empty value with url,such as 'username=&password='
- Added new annotation @RouteConfig,This annotation should only annotated on subclass of *Application*,
- and allows you to define some basic configrations to make route rules more convenient:
-
- RouteConfig#schema():The default schema value.if has set,when you define you route mapping on @RouterRule without a schema value,this should be used to complete.
- RouteConfig#pack():The default package name for generated class.eg:
- @RouteConfig(schema="test",pack="com.haoge.route") + RouterRule(value="hello.world") ==> RouterRule(value = "test://hello.world",pack="com.haoge.route")
- ```
-
- - 0.9
-
- ```
- Support multiple schema rules with @RouteRule
- ```
-
- - 0.8
-
- ```
- Take out interceptor from RouteCallback.
- Support multy interceptor
- Support pass interceptors who is inherited with Parcelable & Serializable infer components
- Adaptive min version to 8
- ```
-
- - 0.6
-
- ```
- add support tpyes List<String> and List<Integer> with url
- some optimizes makes Router more strongger and safe
- ```
-
 
 ###Contacts
 
