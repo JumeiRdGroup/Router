@@ -55,10 +55,7 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 
 ###ChangeLog
 
-see [releases](./releases)
-
-
- - 1.0
+see [releases](https://github.com/yjfnypeu/Router/releases)
 
 ###Contacts
 

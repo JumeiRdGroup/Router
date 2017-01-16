@@ -60,37 +60,7 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 
 ## ChangeLog
 
-- 1.0
-```
-修复由于url传参为空的情况下导致的异常。如：'username=&password='
-添加新注解@RouteConfig。这个注解只能用于Application的子类上。并且允许你定义一些基本配置来让生成路由规则更加方便:
-RouteConfig#schema():定义默认使用的shcema。当你使用RouterRule生成路由规则时。若没有设置schema。将会加入默认schema并生成规则
-RouteConfig#pack():定义默认路由表生成类的包名。示例：
-@RouteConfig(schema="test",pack="com.haoge.route") + RouterRule(value="hello.world") ==> RouterRule(value = "test://hello.world",pack="com.haoge.route")
-```
-
-- 0.9
-
-```
-RouteRule注解支持添加多schema rule
-```
-
-- 0.8
-
-```
- 将拦截器从原有的RouteCallback中抽离。作为单独接口进行设置。
- 支持设置多个拦截器
- 支持对于继承自Serializable和Parcelable接口的Interceptor在系统组件之间传递。
- 最低版本兼容到8
-```
-
-- 0.6
-
-```
-部分优化。增加框架健壮性
-
-url传递参数支持ArrayList<String>,ArrayList<Integer>格式
-```
+see [releases](https://github.com/yjfnypeu/Router/releases)
 
 ## License
 ```
