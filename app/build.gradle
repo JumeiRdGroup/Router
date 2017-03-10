@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -15,7 +14,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -31,11 +30,11 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.0'
-    apt "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
+    annotationProcessor "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
     compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
 
     compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
-    apt "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
+    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
 //    compile project(':routerlib')
 //    apt project(':compiler')
