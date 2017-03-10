@@ -3,8 +3,6 @@
 
 This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
-[中文README文档](./README-CN.md)
-
 ###Dependencies
 
 add JitPack to your root project build.gradle:
@@ -50,7 +48,7 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ![route](./pics/route.gif)
 ###Usage
 
-[访问wiki](https://github.com/yjfnypeu/Router/wiki)
+[Router wiki](https://github.com/yjfnypeu/Router/wiki)
 
 ###ChangeLog
 
