@@ -50,8 +50,7 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ![route](./pics/route.gif)
 ###Usage
 
-[中文使用文档](./Usage.md)  
-[Usage Docs](./Usage-en.md)
+[访问wiki](https://github.com/yjfnypeu/Router/wiki)
 
 ###ChangeLog
 
