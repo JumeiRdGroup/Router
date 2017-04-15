@@ -3,7 +3,7 @@
 
 This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
-###Dependencies
+### Dependencies
 
 add JitPack to your root project build.gradle:
 
@@ -34,7 +34,7 @@ If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app
 apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ```
 
-###Features
+### Features
 
 * Support all types of *Bundle*  
 * Support interceptor, for example, you can config an interceptor to **force request login** before open an activity that requires a login.
@@ -46,15 +46,15 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ### Picture
 
 ![route](./pics/route.gif)
-###Usage
+### Usage
 
 [Router wiki](https://github.com/yjfnypeu/Router/wiki)
 
-###ChangeLog
+### ChangeLog
 
 see [releases](https://github.com/yjfnypeu/Router/releases)
 
-###Contacts
+### Contacts
 
 Email:470368500@qq.com  
 QQ group:108895031
