@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.exception.InterceptorException;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.BundleWrapper;
@@ -74,7 +75,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context, Uri uri) {
         try {
-            if (isInterceptOpen(uri,extras,context,getInterceptors())) return;
+            checkInterceptor(uri,extras,context,getInterceptors());
 
             ActivityRoute route = (ActivityRoute) getRoute(uri);
             route.openInternal(context);
@@ -158,7 +159,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context) {
         try {
-            if (isInterceptOpen(uri,extras,context,getInterceptors())) return;
+            if (checkInterceptor(uri,extras,context,getInterceptors())) return;
             openInternal(context);
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
@@ -284,11 +285,11 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return list;
     }
 
-    private static boolean isInterceptOpen(Uri uri, ActivityRouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
+    private static boolean checkInterceptor(Uri uri, ActivityRouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
         for (RouteInterceptor interceptor : interceptors) {
             if (interceptor.intercept(uri,extras,context)) {
                 interceptor.onIntercepted(uri,extras,context);
-                return true;
+                throw new InterceptorException(interceptor);
             }
         }
         return false;

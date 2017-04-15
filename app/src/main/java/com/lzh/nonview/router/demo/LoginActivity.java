@@ -8,6 +8,9 @@ import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
 
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {

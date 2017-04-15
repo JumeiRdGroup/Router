@@ -62,7 +62,7 @@ public class App extends Application {
 
             @Override
             public void onOpenFailed(Uri uri, Exception e) {
-
+                Toast.makeText(App.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
