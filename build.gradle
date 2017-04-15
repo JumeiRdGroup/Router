@@ -29,7 +29,7 @@ ext {
     userOrg = 'yjfnypeu'
     groupId = 'org.lzh.tools.router'//jcenter上的路径
     uploadName = 'Router'
-    publishVersion = '0.7'
+    publishVersion = '1.2'
     desc = 'A simple router lib to android'
     website = 'https://github.com/yjfnypeu/Parceler'
     licences = ['Apache-2.0']
