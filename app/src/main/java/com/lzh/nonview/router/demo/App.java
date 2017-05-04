@@ -6,15 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,16 +26,16 @@ public class App extends Application {
         super.onCreate();
         // 添加route规则创建器
         Router.addRouteCreator(new RouteInit());
-        Router.addRouteCreator(new RouterRuleCreator());
+//        Router.addRouteCreator(new RouterRuleCreator());
         Router.setGlobalRouteInterceptor(new RouteInterceptor() {
 
             @Override
-            public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+            public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
                 return !DataManager.INSTANCE.isLogin();
             }
 
             @Override
-            public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+            public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
                 Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
                 Intent loginIntent = new Intent(context,LoginActivity.class);
                 loginIntent.putExtra("uri",uri);
@@ -60,7 +59,7 @@ public class App extends Application {
             }
 
             @Override
-            public void onOpenFailed(Uri uri, Exception e) {
+            public void onOpenFailed(Uri uri, Throwable e) {
                 Toast.makeText(App.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

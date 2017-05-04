@@ -6,7 +6,7 @@ import com.lzh.nonview.router.module.RouteMap;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by haoge on 16/11/11.

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 /**
  * A route tool to open uri by browser
@@ -33,5 +34,10 @@ public class BrowserRoute implements IRoute {
     @Override
     public IRoute getRoute(Uri uri) {
         return this;
+    }
+
+    @Override
+    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
+
     }
 }

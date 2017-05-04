@@ -3,11 +3,11 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 
-/**
- * Created by haoge on 2017/5/3.
- */
+import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 
-public class ActionRoute implements IRoute{
+public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras> implements IActionRoute{
     @Override
     public void open(Context context, Uri uri) {
 
@@ -21,5 +21,15 @@ public class ActionRoute implements IRoute{
     @Override
     public IRoute getRoute(Uri uri) {
         return null;
+    }
+
+    @Override
+    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
+
+    }
+
+    @Override
+    protected ActionRouteBundleExtras createExtras() {
+        return new ActionRouteBundleExtras();
     }
 }

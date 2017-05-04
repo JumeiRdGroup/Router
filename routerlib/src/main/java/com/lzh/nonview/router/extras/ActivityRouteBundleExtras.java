@@ -18,23 +18,10 @@ public class ActivityRouteBundleExtras extends RouteBundleExtras {
 
     protected ActivityRouteBundleExtras(Parcel in) {
         super(in);
-        extras = in.readBundle(getClass().getClassLoader());
         requestCode = in.readInt();
         inAnimation = in.readInt();
         outAnimation = in.readInt();
         flags = in.readInt();
-        int parcelableInterceptorSize = in.readInt();
-        for (int i = 0; i < parcelableInterceptorSize; i++) {
-            int type = in.readInt();
-            RouteInterceptor interceptor;
-            if (type == 0) {
-                interceptor = in.readParcelable(getClass().getClassLoader());
-            } else {
-                interceptor = (RouteInterceptor) in.readSerializable();
-            }
-            addInterceptor(interceptor);
-        }
-
     }
 
     public static final Creator<ActivityRouteBundleExtras> CREATOR = new Creator<ActivityRouteBundleExtras>() {

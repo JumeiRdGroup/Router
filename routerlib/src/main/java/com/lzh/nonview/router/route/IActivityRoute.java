@@ -10,12 +10,6 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute> {
 
     /**
-     * Set a callback to be invoked with route open
-     * @param callback callback
-     */
-    void setCallback (RouteCallback callback);
-
-    /**
      * launch activity
      * @param context context
      */
@@ -57,10 +51,10 @@ public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute> {
      */
     IActivityRoute addFlags(int flag);
 
-    /**
-     * replace {@link ActivityRouteBundleExtras} to {@link ActivityRoute}
-     * @param extras {@link ActivityRouteBundleExtras}
-     * @return IActivityRoute
-     */
-    IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras);
+//    /**
+//     * replace {@link ActivityRouteBundleExtras} to {@link ActivityRoute}
+//     * @param extras {@link ActivityRouteBundleExtras}
+//     * @return IActivityRoute
+//     */
+//    IActivityRoute replaceExtras(ActivityRouteBundleExtras extras);
 }

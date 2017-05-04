@@ -1,10 +1,10 @@
 package com.lzh.nonview.router;
 
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.URIParser;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +77,7 @@ public final class RouteManager {
         return globalInterceptor;
     }
 
-    public Map<String,RouteMap> getRouteMap() {
+    Map<String,RouteMap> getRouteMap() {
         if (shouldReload) {
             routeMap.clear();
             int count = creatorList == null ? 0 : creatorList.size();

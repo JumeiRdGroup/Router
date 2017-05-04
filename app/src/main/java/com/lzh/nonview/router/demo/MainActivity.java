@@ -14,6 +14,7 @@ import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.io.Serializable;
@@ -57,12 +58,12 @@ public class MainActivity extends BaseActivity {
     static class SerialInterceptor implements RouteInterceptor,Serializable {
 
         @Override
-        public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
             return true;
         }
 
         @Override
-        public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
             Log.e("MainActivity","被Serializable的拦截器拦截");
         }
     }
@@ -92,12 +93,12 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public boolean intercept(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
             return true;
         }
 
         @Override
-        public void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context) {
+        public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
             Log.e("MainActivity","被Parcelable的拦截器拦截");
         }
     }

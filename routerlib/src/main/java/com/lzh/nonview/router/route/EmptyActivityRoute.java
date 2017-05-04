@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.ArrayList;
@@ -16,11 +16,6 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     private EmptyActivityRoute(){}
     public static EmptyActivityRoute get () {
         return EMPTY;
-    }
-
-    @Override
-    public void setCallback(RouteCallback callback) {
-
     }
 
     @Override
@@ -57,12 +52,6 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     }
 
     @Override
-    public IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras) {
-        // empty
-        return this;
-    }
-
-    @Override
     public void open(Context context, Uri uri) {
         // empty
     }
@@ -75,6 +64,11 @@ public final class EmptyActivityRoute implements IActivityRoute,IRoute{
     @Override
     public IRoute getRoute(Uri uri) {
         return this;
+    }
+
+    @Override
+    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
+        // empty
     }
 
     @Override

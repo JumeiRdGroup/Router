@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
-    protected Bundle extras = new Bundle();
-    protected ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
+    private Bundle extras = new Bundle();
+    private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
 
-    public RouteBundleExtras() {}
+    protected RouteBundleExtras() {}
 
     protected RouteBundleExtras(Parcel in) {
         extras = in.readBundle(getClass().getClassLoader());

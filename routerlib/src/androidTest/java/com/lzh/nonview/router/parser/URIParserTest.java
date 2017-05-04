@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class URIParserTest {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
@@ -11,7 +12,6 @@ import com.lzh.nonview.router.route.EmptyActivityRoute;
 import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 
 /**

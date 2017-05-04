@@ -3,6 +3,8 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 
+import com.lzh.nonview.router.extras.RouteBundleExtras;
+
 public interface IRoute {
 
     /**
@@ -26,6 +28,8 @@ public interface IRoute {
      */
     IRoute getRoute(Uri uri);
 
+    void resumeRoute(Context context, Uri uri, RouteBundleExtras extras);
+
     IRoute EMPTY = new IRoute() {
         @Override
         public void open(Context context, Uri uri) {
@@ -41,5 +45,8 @@ public interface IRoute {
         public IRoute getRoute(Uri uri) {
             return this;
         }
+
+        @Override
+        public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {}
     };
 }

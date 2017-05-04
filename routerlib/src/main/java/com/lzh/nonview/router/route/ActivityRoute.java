@@ -10,71 +10,25 @@ import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.parser.BundleWrapper;
-import com.lzh.nonview.router.parser.ListBundle;
-import com.lzh.nonview.router.parser.SimpleBundle;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.parser.URIParser;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * A route tool to check route rule by uri and launch activity
  * Created by lzh on 16/9/5.
  */
-public class ActivityRoute implements IActivityRoute, IRoute {
-    /**
-     * Uri to open
-     */
-    private Uri uri;
-    /**
-     * The bundle data that contains all of data parsed by uri
-     */
-    private Bundle bundle;
-    /**
-     * A entity to contains some extra data exclude uri parse
-     */
-    private ActivityRouteBundleExtras extras;
-    /**
-     * A routeMap entity that associated with uri
-     */
-    private RouteMap routeMap = null;
-    /**
-     * route callback,will not be null
-     */
-    private RouteCallback callback;
-
-    @Override
-    public void setCallback (RouteCallback callback) {
-        if (callback != null) {
-            this.callback = callback;
-        }
-    }
-
-    @Override
-    public IActivityRoute replaceBundleExtras(ActivityRouteBundleExtras extras) {
-        if (extras == null) {
-            extras = new ActivityRouteBundleExtras();
-        }
-        this.extras = extras;
-        return this;
-    }
+public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundleExtras> implements IActivityRoute {
 
     @Override
     public void open(Context context, Uri uri) {
         try {
-            Utils.checkInterceptor(uri,extras,context,getInterceptors());
+            Utils.checkInterceptor(uri, getExtras(),context,getInterceptors());
 
             ActivityRoute route = (ActivityRoute) getRoute(uri);
             route.openInternal(context);
 
             callback.onOpenSuccess(uri,routeMap.getClzName());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (e instanceof NotFoundException) {
                 callback.notFound(uri, (NotFoundException) e);
             } else {
@@ -83,12 +37,11 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         }
     }
 
-
     @Override
     public boolean canOpenRouter(Uri uri) {
         try {
             return RouteManager.get().getRouteMapByUri(new URIParser(uri)) != null;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return false;
         }
     }
@@ -97,46 +50,42 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     public IRoute getRoute(Uri uri) {
         try {
             return getRouteInternal(uri);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             callback.onOpenFailed(uri,e);
-            return EmptyActivityRoute.get();
+            return IRoute.EMPTY;
+        }
+    }
+
+    @Override
+    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
+        try {
+            this.extras = (ActivityRouteBundleExtras) extras;
+            ActivityRoute route = (ActivityRoute) getRoute(uri);
+            route.openInternal(context);
+            callback.onOpenSuccess(uri, routeMap.getClzName());
+        } catch (Throwable e) {
+            if (e instanceof NotFoundException) {
+                callback.notFound(uri, (NotFoundException) e);
+            } else {
+                callback.onOpenFailed(uri,e);
+            }
         }
     }
 
     private IRoute getRouteInternal(Uri uri) {
         this.uri = uri;
-        this.extras = new ActivityRouteBundleExtras();
-
+        this.parser = new URIParser(uri);
+        this.extras = getExtras();
         URIParser parser = new URIParser(uri);
         routeMap = RouteManager.get().getRouteMapByUri(parser);
-        Map<String, Integer> keyMap = routeMap.getParams();
-
-        bundle = new Bundle();
-        Map<String, String> params = parser.getParams();
-        Set<String> keySet = params.keySet();
-        Map<String,BundleWrapper> wrappers = new HashMap<>();
-        for (String key : keySet) {
-            Integer type = keyMap.get(key);
-            type = type == null ? RouteMap.STRING : type;
-
-            BundleWrapper wrapper = wrappers.get(key);
-            if (wrapper == null) {
-                wrapper = createBundleWrapper(type);
-                wrappers.put(key,wrapper);
-            }
-            wrapper.set(params.get(key));
-        }
-        keySet = wrappers.keySet();
-        for (String key : keySet) {
-            wrappers.get(key).put(bundle,key);
-        }
+        bundle = getBundle();
         return this;
     }
 
     @Override
     public void open(Context context) {
         try {
-            Utils.checkInterceptor(uri,extras,context,getInterceptors());
+            Utils.checkInterceptor(uri, extras,context,getInterceptors());
             openInternal(context);
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
@@ -153,7 +102,9 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         intent.setClassName(context,routeMap.getClzName());
         intent.putExtras(bundle);
         intent.putExtras(extras.getExtras());
-        intent.addFlags(extras.getFlags());
+        if (extras instanceof ActivityRouteBundleExtras) {
+            intent.addFlags(extras.getFlags());
+        }
         return intent;
     }
 
@@ -201,64 +152,8 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return this;
     }
 
-    /**
-     * create {@link BundleWrapper} instance by type.
-     * <p>
-     *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
-     *     When <i>type</i> between 8 and 9,should create subclass of {@link ListBundle}with type <br>
-     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteMap#STRING}
-     * </p>
-     * @return The type to indicate how tyce should be use to create wrapper instance
-     */
-    BundleWrapper createBundleWrapper (int type) {
-        switch (type) {
-            case RouteMap.STRING:
-            case RouteMap.BYTE:
-            case RouteMap.SHORT:
-            case RouteMap.INT:
-            case RouteMap.LONG:
-            case RouteMap.FLOAT:
-            case RouteMap.DOUBLE:
-            case RouteMap.BOOLEAN:
-            case RouteMap.CHAR:
-                return new SimpleBundle(type);
-            case RouteMap.INT_LIST:
-            case RouteMap.STRING_LIST:
-                return new ListBundle(type);
-            default:
-                return new SimpleBundle(RouteMap.STRING);
-        }
-    }
-
     @Override
-    public IActivityRoute addInterceptor(RouteInterceptor interceptor) {
-        extras.addInterceptor(interceptor);
-        return this;
+    protected ActivityRouteBundleExtras createExtras() {
+        return new ActivityRouteBundleExtras();
     }
-
-    @Override
-    public IActivityRoute removeInterceptor(RouteInterceptor interceptor) {
-        extras.removeInterceptor(interceptor);
-        return this;
-    }
-
-    @Override
-    public IActivityRoute removeAllInterceptors() {
-        extras.removeAllInterceptors();
-        return this;
-    }
-
-    @Override
-    public List<RouteInterceptor> getInterceptors() {
-        List<RouteInterceptor> list = new ArrayList<>();
-        RouteInterceptor global = RouteManager.get().getGlobalInterceptor();
-        if (global != null) {
-            list.add(global);
-        }
-        if (extras != null && extras.getInterceptors() != null) {
-            list.addAll(extras.getInterceptors());
-        }
-        return list;
-    }
-
 }

@@ -2,13 +2,23 @@ package com.lzh.nonview.router;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.lzh.nonview.router.exception.InterceptorException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.parser.BundleWrapper;
+import com.lzh.nonview.router.parser.ListBundle;
+import com.lzh.nonview.router.parser.SimpleBundle;
+import com.lzh.nonview.router.parser.URIParser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Utils {
 
@@ -58,7 +68,7 @@ public class Utils {
         return uri;
     }
 
-    public static boolean checkInterceptor(Uri uri, ActivityRouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
+    public static boolean checkInterceptor(Uri uri, RouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
         for (RouteInterceptor interceptor : interceptors) {
             if (interceptor.intercept(uri,extras,context)) {
                 interceptor.onIntercepted(uri,extras,context);
@@ -66,5 +76,58 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static Bundle parseRouteMapToBundle(URIParser parser, RouteMap routeMap) {
+        Map<String, Integer> keyMap = routeMap.getParams();
+        Bundle bundle = new Bundle();
+        Map<String, String> params = parser.getParams();
+        Set<String> keySet = params.keySet();
+        Map<String,BundleWrapper> wrappers = new HashMap<>();
+        for (String key : keySet) {
+            Integer type = keyMap.get(key);
+            type = type == null ? RouteMap.STRING : type;
+
+            BundleWrapper wrapper = wrappers.get(key);
+            if (wrapper == null) {
+                wrapper = createBundleWrapper(type);
+                wrappers.put(key,wrapper);
+            }
+            wrapper.set(params.get(key));
+        }
+        keySet = wrappers.keySet();
+        for (String key : keySet) {
+            wrappers.get(key).put(bundle,key);
+        }
+        return bundle;
+    }
+
+    /**
+     * create {@link BundleWrapper} instance by type.
+     * <p>
+     *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
+     *     When <i>type</i> between 8 and 9,should create subclass of {@link ListBundle}with type <br>
+     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteMap#STRING}
+     * </p>
+     * @return The type to indicate how tyce should be use to create wrapper instance
+     */
+    public static BundleWrapper createBundleWrapper (int type) {
+        switch (type) {
+            case RouteMap.STRING:
+            case RouteMap.BYTE:
+            case RouteMap.SHORT:
+            case RouteMap.INT:
+            case RouteMap.LONG:
+            case RouteMap.FLOAT:
+            case RouteMap.DOUBLE:
+            case RouteMap.BOOLEAN:
+            case RouteMap.CHAR:
+                return new SimpleBundle(type);
+            case RouteMap.INT_LIST:
+            case RouteMap.STRING_LIST:
+                return new ListBundle(type);
+            default:
+                return new SimpleBundle(RouteMap.STRING);
+        }
     }
 }

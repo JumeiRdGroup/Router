@@ -32,7 +32,7 @@ public interface RouteCallback {
      * @param uri the uri to open
      * @param e the exception
      */
-    void onOpenFailed(Uri uri,Exception e);
+    void onOpenFailed(Uri uri,Throwable e);
 
     RouteCallback EMPTY = new RouteCallback() {
 
@@ -43,6 +43,6 @@ public interface RouteCallback {
         public void onOpenSuccess(Uri uri, String clzName) {}
 
         @Override
-        public void onOpenFailed(Uri uri, Exception e) {}
+        public void onOpenFailed(Uri uri, Throwable e) {}
     };
 }

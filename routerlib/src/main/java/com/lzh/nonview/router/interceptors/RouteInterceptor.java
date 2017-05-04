@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 /**
  * A interceptor interface
@@ -21,7 +22,7 @@ public interface RouteInterceptor{
      *               {@link Router#getActivityRoute()}  to set some extras data into it
      * @return true if should be intercepted
      */
-    boolean intercept (Uri uri, ActivityRouteBundleExtras extras, Context context);
+    boolean intercept (Uri uri, RouteBundleExtras extras, Context context);
 
     /**
      * This method should be invoked when you has been intercepted
@@ -31,5 +32,5 @@ public interface RouteInterceptor{
      *               sometimes is null when you not use
      *               {@link Router#getActivityRoute()}  to set some extras data into it
      */
-    void onIntercepted(Uri uri, ActivityRouteBundleExtras extras, Context context);
+    void onIntercepted(Uri uri, RouteBundleExtras extras, Context context);
 }

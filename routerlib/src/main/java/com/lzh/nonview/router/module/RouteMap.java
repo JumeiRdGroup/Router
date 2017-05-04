@@ -27,18 +27,10 @@ public class RouteMap {
     public static final int STRING_LIST = 9;
 
     /**
-     * @param clzName clzName must be a activity total name
+     * @param clzName clzName must be a {@link Activity} or {@link ActionSupport} total name
      */
     public RouteMap(String clzName) {
         this.clzName = clzName;
-    }
-
-    /**
-     * @param clz class extends form activity
-     * @param <T> T extends form activity
-     */
-    public <T extends Activity> RouteMap (Class<T> clz) {
-        this.clzName = clz.getCanonicalName();
     }
 
     private String clzName;

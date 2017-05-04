@@ -1,15 +1,12 @@
 package com.lzh.nonview.router.parser;
 
 import android.os.Bundle;
-import android.webkit.WebResourceError;
 
-import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.module.RouteMap;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by haoge on 16/11/10.
