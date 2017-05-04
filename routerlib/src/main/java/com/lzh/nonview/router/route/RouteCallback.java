@@ -1,9 +1,7 @@
 package com.lzh.nonview.router.route;
 
-import android.content.Context;
 import android.net.Uri;
 
-import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.exception.NotFoundException;
 
 /**
@@ -17,7 +15,7 @@ public interface RouteCallback {
      *     <i>route rule</i> not found<br>
      *     <i>activity</i> not found
      * @param uri uri the uri to open
-     * @param e e
+     * @param e {@link NotFoundException}
      */
     void notFound(Uri uri, NotFoundException e);
 
@@ -39,18 +37,12 @@ public interface RouteCallback {
     RouteCallback EMPTY = new RouteCallback() {
 
         @Override
-        public void notFound(Uri uri, NotFoundException e) {
-
-        }
+        public void notFound(Uri uri, NotFoundException e) {}
 
         @Override
-        public void onOpenSuccess(Uri uri, String clzName) {
-
-        }
+        public void onOpenSuccess(Uri uri, String clzName) {}
 
         @Override
-        public void onOpenFailed(Uri uri, Exception e) {
-
-        }
+        public void onOpenFailed(Uri uri, Exception e) {}
     };
 }

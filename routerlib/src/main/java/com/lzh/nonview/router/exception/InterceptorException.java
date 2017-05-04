@@ -1,6 +1,6 @@
 package com.lzh.nonview.router.exception;
 
-import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 public class InterceptorException extends RuntimeException {
 

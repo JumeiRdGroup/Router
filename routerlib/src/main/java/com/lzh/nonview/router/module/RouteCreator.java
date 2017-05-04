@@ -13,4 +13,5 @@ public interface RouteCreator {
      * @return A map that contains of all route rules.
      */
     Map<String,RouteMap> createRouteRules();
+
 }

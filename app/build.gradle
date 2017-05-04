@@ -38,9 +38,9 @@ dependencies {
     annotationProcessor "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
     compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
 
-    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
-    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
+//    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
+//    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
-//    compile project(':routerlib')
+    compile project(':routerlib')
 //    annotationProcessor project(':compiler')
 }

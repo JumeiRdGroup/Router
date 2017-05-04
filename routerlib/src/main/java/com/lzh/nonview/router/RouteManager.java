@@ -2,8 +2,9 @@ package com.lzh.nonview.router;
 
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.parser.URIParser;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,10 @@ public final class RouteManager {
         return globalCallback == null ? EmptyCallback : globalCallback;
     }
 
+    public RouteInterceptor getGlobalInterceptor() {
+        return globalInterceptor;
+    }
+
     public Map<String,RouteMap> getRouteMap() {
         if (shouldReload) {
             routeMap.clear();
@@ -82,5 +87,16 @@ public final class RouteManager {
             shouldReload = false;
         }
         return routeMap;
+    }
+
+    public RouteMap getRouteMapByUri(URIParser parser) {
+        String route = parser.getScheme() + "://" + parser.getHost();
+        Map<String, RouteMap> routes = getRouteMap();
+        String wrap = Utils.wrapScheme(route);
+        if (routes.containsKey(wrap)) {
+            return routes.get(wrap);
+        }
+        String unWrap = Utils.unwrapScheme(wrap);
+        return routes.get(unWrap);
     }
 }

@@ -25,4 +25,21 @@ public interface IRoute {
      * @return route
      */
     IRoute getRoute(Uri uri);
+
+    IRoute EMPTY = new IRoute() {
+        @Override
+        public void open(Context context, Uri uri) {
+            // do empty
+        }
+
+        @Override
+        public boolean canOpenRouter(Uri uri) {
+            return false;
+        }
+
+        @Override
+        public IRoute getRoute(Uri uri) {
+            return this;
+        }
+    };
 }

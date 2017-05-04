@@ -11,7 +11,7 @@ import com.lzh.nonview.router.route.EmptyActivityRoute;
 import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 
 /**
@@ -67,7 +67,6 @@ public final class Router{
         callback = callback == null ? RouteManager.get().getCallback() : callback;
         if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
             activityRoute.setCallback(callback);
-            activityRoute.setGlobalInterceptor(RouteManager.get().getInterceptor());
             activityRoute.open(context,uri);
         } else if (BrowserRoute.getInstance().canOpenRouter(uri)) {
             BrowserRoute.getInstance().open(context,uri);
@@ -97,7 +96,6 @@ public final class Router{
         callback = callback == null ? RouteManager.get().getCallback() : callback;
         if ((activityRoute = new ActivityRoute()).canOpenRouter(uri)) {
             activityRoute.setCallback(callback);
-            activityRoute.setGlobalInterceptor(RouteManager.get().getInterceptor());
             return (IActivityRoute) activityRoute.getRoute(uri);
         }
         callback.notFound(uri,

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Parcel;
 import android.widget.Toast;
 
 import com.haoge.studio.RouterRuleCreator;
@@ -13,9 +12,9 @@ import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +72,7 @@ public class App extends Application {
         public Map<String, RouteMap> createRouteRules() {
             Map<String,RouteMap> routes = new HashMap<>();
             routes.put("jumei://main",
-                    new RouteMap(ParamsActivity.class)
+                    new RouteMap(ParamsActivity.class.getCanonicalName())
                     .addParam("price",RouteMap.FLOAT)
                     .addParam("bookName",RouteMap.STRING)
                     .addParam("books",RouteMap.STRING_LIST)

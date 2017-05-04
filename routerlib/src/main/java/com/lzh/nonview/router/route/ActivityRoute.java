@@ -8,8 +8,9 @@ import android.os.Bundle;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
-import com.lzh.nonview.router.exception.InterceptorException;
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.BundleWrapper;
 import com.lzh.nonview.router.parser.ListBundle;
@@ -47,20 +48,12 @@ public class ActivityRoute implements IActivityRoute, IRoute {
      * route callback,will not be null
      */
     private RouteCallback callback;
-    /**
-     * global route interceptor
-     */
-    private RouteInterceptor interceptor;
 
     @Override
     public void setCallback (RouteCallback callback) {
         if (callback != null) {
             this.callback = callback;
         }
-    }
-
-    public void setGlobalInterceptor(RouteInterceptor interceptor) {
-        this.interceptor = interceptor;
     }
 
     @Override
@@ -75,7 +68,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context, Uri uri) {
         try {
-            checkInterceptor(uri,extras,context,getInterceptors());
+            Utils.checkInterceptor(uri,extras,context,getInterceptors());
 
             ActivityRoute route = (ActivityRoute) getRoute(uri);
             route.openInternal(context);
@@ -94,26 +87,10 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public boolean canOpenRouter(Uri uri) {
         try {
-            return getRouteMapByUri(new URIParser(uri)) != null;
+            return RouteManager.get().getRouteMapByUri(new URIParser(uri)) != null;
         } catch (Exception e) {
             return false;
         }
-    }
-
-    /**
-     * find route by scheme of URIParser.
-     * @param parser uri parser
-     * @return routeMap associate with scheme of parser
-     */
-    private RouteMap getRouteMapByUri (URIParser parser) {
-        String route = parser.getScheme() + "://" + parser.getHost();
-        Map<String, RouteMap> routes = RouteManager.get().getRouteMap();
-        String wrap = Utils.wrapScheme(route);
-        if (routes.containsKey(wrap)) {
-            return routes.get(wrap);
-        }
-        String unWrap = Utils.unwrapScheme(wrap);
-        return routes.get(unWrap);
     }
 
     @Override
@@ -131,7 +108,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         this.extras = new ActivityRouteBundleExtras();
 
         URIParser parser = new URIParser(uri);
-        routeMap = getRouteMapByUri(parser);
+        routeMap = RouteManager.get().getRouteMapByUri(parser);
         Map<String, Integer> keyMap = routeMap.getParams();
 
         bundle = new Bundle();
@@ -159,7 +136,7 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public void open(Context context) {
         try {
-            if (checkInterceptor(uri,extras,context,getInterceptors())) return;
+            Utils.checkInterceptor(uri,extras,context,getInterceptors());
             openInternal(context);
             callback.onOpenSuccess(uri,routeMap.getClzName());
         } catch (Exception e) {
@@ -175,8 +152,8 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         Intent intent = new Intent();
         intent.setClassName(context,routeMap.getClzName());
         intent.putExtras(bundle);
-        intent.putExtras(extras.extras);
-        intent.addFlags(extras.flags);
+        intent.putExtras(extras.getExtras());
+        intent.addFlags(extras.getFlags());
         return intent;
     }
 
@@ -187,9 +164,9 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         }
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,extras.requestCode);
-            int inAnimation = extras.inAnimation;
-            int outAnimation = extras.outAnimation;
+            ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
+            int inAnimation = extras.getInAnimation();
+            int outAnimation = extras.getOutAnimation();
             if (inAnimation >= 0 && outAnimation >= 0) {
                 ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
             }
@@ -201,28 +178,26 @@ public class ActivityRoute implements IActivityRoute, IRoute {
 
     @Override
     public IActivityRoute requestCode(int requestCode) {
-        this.extras.requestCode = requestCode;
+        this.extras.setRequestCode(requestCode);
         return this;
     }
 
     @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.extras.inAnimation = enterAnim;
-        this.extras.outAnimation = exitAnim;
+        this.extras.setInAnimation(enterAnim);
+        this.extras.setOutAnimation(exitAnim);
         return this;
     }
 
     @Override
     public IActivityRoute addExtras(Bundle extras) {
-        if (extras != null) {
-            this.extras.extras.putAll(extras);
-        }
+        this.extras.setExtras(extras);
         return this;
     }
 
     @Override
     public IActivityRoute addFlags(int flag) {
-        this.extras.flags |= flag;
+        this.extras.addFlags(flag);
         return this;
     }
 
@@ -276,8 +251,9 @@ public class ActivityRoute implements IActivityRoute, IRoute {
     @Override
     public List<RouteInterceptor> getInterceptors() {
         List<RouteInterceptor> list = new ArrayList<>();
-        if (interceptor != null) {
-            list.add(interceptor);
+        RouteInterceptor global = RouteManager.get().getGlobalInterceptor();
+        if (global != null) {
+            list.add(global);
         }
         if (extras != null && extras.getInterceptors() != null) {
             list.addAll(extras.getInterceptors());
@@ -285,13 +261,4 @@ public class ActivityRoute implements IActivityRoute, IRoute {
         return list;
     }
 
-    private static boolean checkInterceptor(Uri uri, ActivityRouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
-        for (RouteInterceptor interceptor : interceptors) {
-            if (interceptor.intercept(uri,extras,context)) {
-                interceptor.onIntercepted(uri,extras,context);
-                throw new InterceptorException(interceptor);
-            }
-        }
-        return false;
-    }
 }

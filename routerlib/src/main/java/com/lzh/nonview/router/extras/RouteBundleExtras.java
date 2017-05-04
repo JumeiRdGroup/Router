@@ -1,37 +1,24 @@
-package com.lzh.nonview.router.route;
+package com.lzh.nonview.router.extras;
 
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A container to contains some extra data for intent
- * Created by lzh on 16/9/6.
- */
-public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAction<ActivityRouteBundleExtras>{
-    Bundle extras = new Bundle();
-    int requestCode = -1;
-    int inAnimation = -1;
-    int outAnimation = -1;
-    int flags;
-    ArrayList<RouteInterceptor> interceptors;
+public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
+    protected Bundle extras = new Bundle();
+    protected ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
 
-    ActivityRouteBundleExtras(){
-        interceptors = new ArrayList<>();
-    }
+    public RouteBundleExtras() {}
 
-    protected ActivityRouteBundleExtras(Parcel in) {
-        this();
+    protected RouteBundleExtras(Parcel in) {
         extras = in.readBundle(getClass().getClassLoader());
-        requestCode = in.readInt();
-        inAnimation = in.readInt();
-        outAnimation = in.readInt();
-        flags = in.readInt();
         int parcelableInterceptorSize = in.readInt();
         for (int i = 0; i < parcelableInterceptorSize; i++) {
             int type = in.readInt();
@@ -43,18 +30,17 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
             }
             addInterceptor(interceptor);
         }
-
     }
 
-    public static final Creator<ActivityRouteBundleExtras> CREATOR = new Creator<ActivityRouteBundleExtras>() {
+    public static final Creator<RouteBundleExtras> CREATOR = new Creator<RouteBundleExtras>() {
         @Override
-        public ActivityRouteBundleExtras createFromParcel(Parcel in) {
-            return new ActivityRouteBundleExtras(in);
+        public RouteBundleExtras createFromParcel(Parcel in) {
+            return new RouteBundleExtras(in);
         }
 
         @Override
-        public ActivityRouteBundleExtras[] newArray(int size) {
-            return new ActivityRouteBundleExtras[size];
+        public RouteBundleExtras[] newArray(int size) {
+            return new RouteBundleExtras[size];
         }
     };
 
@@ -66,10 +52,6 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeBundle(extras);
-        dest.writeInt(requestCode);
-        dest.writeInt(inAnimation);
-        dest.writeInt(outAnimation);
-        dest.writeInt(flags);
         List<RouteInterceptor> parcelInterceptors = new ArrayList<>();
 
         for (RouteInterceptor interceptor : interceptors) {
@@ -90,12 +72,23 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
                 dest.writeSerializable(serializable);
             }
         }
-        Log.e("RouteBundleExtras","Parcel success");
+    }
+
+    public Bundle getExtras() {
+        return extras;
+    }
+
+    public void setExtras(Bundle extras) {
+        this.extras = extras;
+    }
+
+    public void setInterceptors(ArrayList<RouteInterceptor> interceptors) {
+        this.interceptors = interceptors;
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public ActivityRouteBundleExtras addInterceptor(RouteInterceptor interceptor) {
+    public RouteBundleExtras addInterceptor(RouteInterceptor interceptor) {
         if (interceptor != null && !interceptors.contains(interceptor)) {
             interceptors.add(interceptor);
         }
@@ -103,7 +96,7 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
     }
 
     @Override
-    public ActivityRouteBundleExtras removeInterceptor(RouteInterceptor interceptor) {
+    public RouteBundleExtras removeInterceptor(RouteInterceptor interceptor) {
         if (interceptor != null) {
             interceptors.remove(interceptor);
         }
@@ -111,7 +104,7 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
     }
 
     @Override
-    public ActivityRouteBundleExtras removeAllInterceptors() {
+    public RouteBundleExtras removeAllInterceptors() {
         interceptors.clear();
         return this;
     }
@@ -120,5 +113,4 @@ public class ActivityRouteBundleExtras implements Parcelable,RouteInterceptorAct
     public List<RouteInterceptor> getInterceptors() {
         return interceptors;
     }
-
 }

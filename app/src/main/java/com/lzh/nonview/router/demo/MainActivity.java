@@ -9,13 +9,12 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
-import com.lzh.nonview.router.route.ActivityRouteBundleExtras;
-import com.lzh.nonview.router.route.RouteInterceptor;
+import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.io.Serializable;
 

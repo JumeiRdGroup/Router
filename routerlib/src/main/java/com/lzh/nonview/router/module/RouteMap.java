@@ -2,6 +2,8 @@ package com.lzh.nonview.router.module;
 
 import android.app.Activity;
 
+import com.lzh.nonview.router.route.ActionSupport;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class RouteMap {
 
     /**
      * @param clz class extends form activity
-     * @param <T> class extends form activity
+     * @param <T> T extends form activity
      */
     public <T extends Activity> RouteMap (Class<T> clz) {
         this.clzName = clz.getCanonicalName();

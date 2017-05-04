@@ -1,7 +1,14 @@
 package com.lzh.nonview.router;
 
+import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import com.lzh.nonview.router.exception.InterceptorException;
+import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
+
+import java.util.List;
 
 public class Utils {
 
@@ -49,5 +56,15 @@ public class Utils {
             return Uri.parse("http://" + url);
         }
         return uri;
+    }
+
+    public static boolean checkInterceptor(Uri uri, ActivityRouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
+        for (RouteInterceptor interceptor : interceptors) {
+            if (interceptor.intercept(uri,extras,context)) {
+                interceptor.onIntercepted(uri,extras,context);
+                throw new InterceptorException(interceptor);
+            }
+        }
+        return false;
     }
 }
