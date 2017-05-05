@@ -94,7 +94,7 @@ public class RuleFactory {
         for (String key : keySet) {
             codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));
         }
-        codeBuilder.addStatement(");");
+        codeBuilder.addStatement(")");
         methodCreator.addCode(codeBuilder.build());
     }
 

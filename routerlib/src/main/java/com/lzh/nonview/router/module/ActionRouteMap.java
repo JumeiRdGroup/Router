@@ -4,7 +4,7 @@ import com.lzh.nonview.router.route.ActionSupport;
 
 public class ActionRouteMap extends RouteMap<ActionRouteMap>{
 
-    private ActionSupport target;
+    private final ActionSupport target;
 
     public ActionRouteMap(ActionSupport target) {
         super(target.getClass().getCanonicalName());

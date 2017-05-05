@@ -16,7 +16,7 @@ public class ActivityRouteBundleExtras extends RouteBundleExtras {
 
     public ActivityRouteBundleExtras() {}
 
-    protected ActivityRouteBundleExtras(Parcel in) {
+    private ActivityRouteBundleExtras(Parcel in) {
         super(in);
         requestCode = in.readInt();
         inAnimation = in.readInt();

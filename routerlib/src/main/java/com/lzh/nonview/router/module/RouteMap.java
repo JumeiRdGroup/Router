@@ -46,6 +46,7 @@ public class RouteMap<R> {
 
     public R addParam (String key,int type) {
         params.put(key,type);
+        //noinspection unchecked
         return (R) this;
     }
 

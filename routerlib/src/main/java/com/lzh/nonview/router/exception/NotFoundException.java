@@ -8,8 +8,8 @@ package com.lzh.nonview.router.exception;
  */
 public class NotFoundException extends RuntimeException {
 
-    private NotFoundType type;
-    private String notFoundName;
+    private final NotFoundType type;
+    private final String notFoundName;
 
     public NotFoundException(String detailMessage, NotFoundType type,String notFoundName) {
         super(detailMessage);

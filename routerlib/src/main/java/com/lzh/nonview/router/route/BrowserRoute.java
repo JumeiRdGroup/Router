@@ -14,7 +14,7 @@ public class BrowserRoute implements IRoute {
 
     Uri uri;
 
-    private static BrowserRoute route = new BrowserRoute();
+    private static final BrowserRoute route = new BrowserRoute();
 
     public static BrowserRoute getInstance () {
         return route;

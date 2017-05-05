@@ -6,7 +6,7 @@ public class ActionRouteBundleExtras extends RouteBundleExtras {
 
     public ActionRouteBundleExtras() {}
 
-    protected ActionRouteBundleExtras(Parcel in) {
+    private ActionRouteBundleExtras(Parcel in) {
         super(in);
     }
 

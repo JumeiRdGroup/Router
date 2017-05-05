@@ -7,7 +7,7 @@ import android.os.Bundle;
  * Created by lzh on 16/11/10.
  */
 public abstract class BundleWrapper {
-    int type;
+    final int type;
 
     /**
      * Create a wrapper instance form specially type.

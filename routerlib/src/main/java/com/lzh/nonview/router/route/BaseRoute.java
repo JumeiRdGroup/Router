@@ -3,7 +3,6 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.RouteManager;
@@ -19,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
-    protected URIParser parser;
-    protected Bundle bundle;
-    protected E extras;
-    protected RouteCallback callback = RouteCallback.EMPTY;
-    protected Uri uri;
-    protected RouteMap routeMap = null;
+    URIParser parser;
+    Bundle bundle;
+    E extras;
+    RouteCallback callback = RouteCallback.EMPTY;
+    Uri uri;
+    RouteMap routeMap = null;
 
     public final IRoute create(Uri uri, RouteCallback callback) {
         try {
@@ -60,6 +59,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     @Override
     public T addExtras(Bundle extras) {
         this.extras.addExtras(extras);
+        //noinspection unchecked
         return (T) this;
     }
 
@@ -68,6 +68,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         if (extras != null) {
             extras.addInterceptor(interceptor);
         }
+        //noinspection unchecked
         return (T) this;
     }
 
@@ -76,6 +77,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         if (extras != null) {
             extras.removeInterceptor(interceptor);
         }
+        //noinspection unchecked
         return (T) this;
     }
 
@@ -84,6 +86,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         if (extras != null) {
             extras.removeAllInterceptors();
         }
+        //noinspection unchecked
         return (T) this;
     }
 
@@ -104,15 +107,14 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     }
 
     // ========getter/setter============
-    public T replaceExtras(E extras) {
+    public void replaceExtras(E extras) {
         if (extras != null) {
             this.extras = extras;
         }
-        return (T) this;
     }
 
     // ============abstract methods============
-    protected abstract @NonNull E createExtras();
+    protected abstract E createExtras();
 
     protected abstract @Nullable RouteMap obtainRouteMap();
 
