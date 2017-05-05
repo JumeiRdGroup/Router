@@ -78,8 +78,10 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
         return extras;
     }
 
-    public void setExtras(Bundle extras) {
-        this.extras = extras;
+    public void addExtras(Bundle extras) {
+        if (extras != null) {
+            this.extras.putAll(extras);
+        }
     }
 
     public void setInterceptors(ArrayList<RouteInterceptor> interceptors) {

@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
-import com.lzh.nonview.router.extras.RouteBundleExtras;
+import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.URIParser;
 
 /**
@@ -20,83 +19,6 @@ import com.lzh.nonview.router.parser.URIParser;
 public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundleExtras> implements IActivityRoute {
 
     @Override
-    public void open(Context context, Uri uri) {
-        try {
-            Utils.checkInterceptor(uri, getExtras(),context,getInterceptors());
-
-            ActivityRoute route = (ActivityRoute) getRoute(uri);
-            route.openInternal(context);
-
-            callback.onOpenSuccess(uri,routeMap.getClzName());
-        } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
-            } else {
-                callback.onOpenFailed(uri,e);
-            }
-        }
-    }
-
-    @Override
-    public boolean canOpenRouter(Uri uri) {
-        try {
-            return RouteManager.get().getRouteMapByUri(new URIParser(uri)) != null;
-        } catch (Throwable e) {
-            return false;
-        }
-    }
-
-    @Override
-    public IRoute getRoute(Uri uri) {
-        try {
-            return getRouteInternal(uri);
-        } catch (Throwable e) {
-            callback.onOpenFailed(uri,e);
-            return IRoute.EMPTY;
-        }
-    }
-
-    @Override
-    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
-        try {
-            this.extras = (ActivityRouteBundleExtras) extras;
-            ActivityRoute route = (ActivityRoute) getRoute(uri);
-            route.openInternal(context);
-            callback.onOpenSuccess(uri, routeMap.getClzName());
-        } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
-            } else {
-                callback.onOpenFailed(uri,e);
-            }
-        }
-    }
-
-    private IRoute getRouteInternal(Uri uri) {
-        this.uri = uri;
-        this.parser = new URIParser(uri);
-        this.extras = getExtras();
-        URIParser parser = new URIParser(uri);
-        routeMap = RouteManager.get().getRouteMapByUri(parser);
-        bundle = getBundle();
-        return this;
-    }
-
-    @Override
-    public void open(Context context) {
-        try {
-            Utils.checkInterceptor(uri, extras,context,getInterceptors());
-            openInternal(context);
-            callback.onOpenSuccess(uri,routeMap.getClzName());
-        } catch (Exception e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
-            } else {
-                callback.onOpenFailed(this.uri,e);
-            }
-        }
-    }
-
     public Intent createIntent(Context context) {
         Intent intent = new Intent();
         intent.setClassName(context,routeMap.getClzName());
@@ -108,7 +30,37 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
         return intent;
     }
 
-    private void openInternal(Context context) {
+    @Override
+    public IActivityRoute requestCode(int requestCode) {
+        this.extras.setRequestCode(requestCode);
+        return this;
+    }
+
+    @Override
+    public IActivityRoute setAnim(int enterAnim, int exitAnim) {
+        this.extras.setInAnimation(enterAnim);
+        this.extras.setOutAnimation(exitAnim);
+        return this;
+    }
+
+    @Override
+    public IActivityRoute addFlags(int flag) {
+        this.extras.addFlags(flag);
+        return this;
+    }
+
+    @Override
+    protected ActivityRouteBundleExtras createExtras() {
+        return new ActivityRouteBundleExtras();
+    }
+
+    @Override
+    protected RouteMap getRouteMap(Uri uri) {
+        return RouteManager.get().getRouteMapByUri(new URIParser(uri), RouteManager.TYPE_ACTIVITY_ROUTE);
+    }
+
+    @Override
+    protected void realOpen(Context context) throws Throwable {
         String clzName = routeMap.getClzName();
         if (!Utils.isClassSupport(clzName)) {
             throw new NotFoundException(String.format("target activity is not found : %s",clzName), NotFoundException.NotFoundType.CLZ,clzName);
@@ -127,33 +79,4 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
         }
     }
 
-    @Override
-    public IActivityRoute requestCode(int requestCode) {
-        this.extras.setRequestCode(requestCode);
-        return this;
-    }
-
-    @Override
-    public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.extras.setInAnimation(enterAnim);
-        this.extras.setOutAnimation(exitAnim);
-        return this;
-    }
-
-    @Override
-    public IActivityRoute addExtras(Bundle extras) {
-        this.extras.setExtras(extras);
-        return this;
-    }
-
-    @Override
-    public IActivityRoute addFlags(int flag) {
-        this.extras.addFlags(flag);
-        return this;
-    }
-
-    @Override
-    protected ActivityRouteBundleExtras createExtras() {
-        return new ActivityRouteBundleExtras();
-    }
 }

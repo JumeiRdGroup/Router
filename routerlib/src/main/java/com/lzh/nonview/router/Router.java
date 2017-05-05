@@ -8,7 +8,7 @@ import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
-import com.lzh.nonview.router.route.EmptyActivityRoute;
+import com.lzh.nonview.router.route.EmptyRoute;
 import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
@@ -102,7 +102,7 @@ public final class Router{
                 new NotFoundException(String.format("find route by uri %s failed:",uri),
                         NotFoundException.NotFoundType.SCHEME,uri.toString()));
         // return a empty route to avoid NullPointException
-        return EmptyActivityRoute.get();
+        return EmptyRoute.get();
     }
 
     /**

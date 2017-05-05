@@ -36,8 +36,4 @@ public class BrowserRoute implements IRoute {
         return this;
     }
 
-    @Override
-    public void resumeRoute(Context context, Uri uri, RouteBundleExtras extras) {
-
-    }
 }

@@ -7,13 +7,7 @@ import android.os.Bundle;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 
-public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute> {
-
-    /**
-     * launch activity
-     * @param context context
-     */
-    void open (Context context);
+public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute>, IBaseRoute<IActivityRoute> {
 
     /**
      * Create intent by extras data and bundle that parsed by uri
@@ -36,13 +30,6 @@ public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute> {
      * @return IActivityRoute
      */
     IActivityRoute setAnim (int enterAnim, int exitAnim);
-
-    /**
-     * reset bundle to {@link ActivityRouteBundleExtras}
-     * @param extras bundle data
-     * @return IActivityRoute
-     */
-    IActivityRoute addExtras(Bundle extras);
 
     /**
      * {@link Intent#addFlags(int)}

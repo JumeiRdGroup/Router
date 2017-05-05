@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouteConfig;
+import com.lzh.nonview.router.demo.action.SayHelloAction;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -15,6 +16,7 @@ import com.lzh.nonview.router.module.ActionRouteMap;
 import com.lzh.nonview.router.module.ActivityRouteMap;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.HashMap;
@@ -84,7 +86,9 @@ public class App extends Application {
 
         @Override
         public Map<String, ActionRouteMap> createActionRouteRules() {
-            return new HashMap<>();
+            Map<String, ActionRouteMap> routes = new HashMap<>();
+            routes.put("haoge://action/support", new ActionRouteMap(new SayHelloAction()));
+            return routes;
         }
     }
 }
