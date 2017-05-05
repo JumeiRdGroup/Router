@@ -1,9 +1,12 @@
 package com.lzh.nonview.router;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.module.ActionRouteMap;
+import com.lzh.nonview.router.module.ActivityRouteMap;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.URIParser;
+import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.ArrayList;
@@ -40,7 +43,8 @@ public final class RouteManager {
     /**
      * A map to contains all of route rule created by creatorList
      */
-    private Map<String,RouteMap> routeMap = new HashMap<>();
+    private Map<String,ActivityRouteMap> activityRouteMap = new HashMap<>();
+    private Map<String,ActionRouteMap> actionRouteMap = new HashMap<>();
 
     void setCallback (RouteCallback callback) {
         if (callback == null) {
@@ -77,26 +81,43 @@ public final class RouteManager {
         return globalInterceptor;
     }
 
-    Map<String,RouteMap> getRouteMap() {
-        if (shouldReload) {
-            routeMap.clear();
-            int count = creatorList == null ? 0 : creatorList.size();
-            for (int i = 0; i < count; i++) {
-                routeMap.putAll(creatorList.get(i).createRouteRules());
-            }
-            shouldReload = false;
-        }
-        return routeMap;
+    Map<String,ActivityRouteMap> getActivityRouteMap() {
+        obtainRouteRulesIfNeed();
+        return activityRouteMap;
+    }
+
+    Map<String, ActionRouteMap> getActionRouteMap() {
+        obtainRouteRulesIfNeed();
+        return actionRouteMap;
     }
 
     public RouteMap getRouteMapByUri(URIParser parser) {
         String route = parser.getScheme() + "://" + parser.getHost();
-        Map<String, RouteMap> routes = getRouteMap();
+        Map<String, ActivityRouteMap> routes = getActivityRouteMap();
         String wrap = Utils.wrapScheme(route);
         if (routes.containsKey(wrap)) {
             return routes.get(wrap);
         }
         String unWrap = Utils.unwrapScheme(wrap);
         return routes.get(unWrap);
+    }
+
+    private void obtainRouteRulesIfNeed() {
+        if (shouldReload) {
+            activityRouteMap.clear();
+            actionRouteMap.clear();
+            int count = creatorList == null ? 0 : creatorList.size();
+            for (int i = 0; i < count; i++) {
+                addAll(activityRouteMap, creatorList.get(i).createActivityRouteRules());
+                addAll(actionRouteMap, creatorList.get(i).createActionRouteRules());
+            }
+            shouldReload = false;
+        }
+    }
+
+    private <T,R> void addAll(Map<T,R> src, Map<T,R> target) {
+        if (target != null && src != null) {
+            src.putAll(target);
+        }
     }
 }

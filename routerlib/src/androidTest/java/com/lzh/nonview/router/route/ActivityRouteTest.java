@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.module.ActionRouteMap;
+import com.lzh.nonview.router.module.ActivityRouteMap;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.parser.BundleWrapper;
@@ -27,11 +29,21 @@ public class ActivityRouteTest {
         route = new ActivityRoute();
         Router.addRouteCreator(new RouteCreator() {
             @Override
-            public Map<String, RouteMap> createRouteRules() {
-                Map<String,RouteMap> routes = new HashMap<>();
-                routes.put("haoge://main",new RouteMap("xxx"));
-                return routes;
+            public Map<String, ActivityRouteMap> createActivityRouteRules() {
+                return null;
             }
+
+            @Override
+            public Map<String, ActionRouteMap> createActionRouteRules() {
+                return null;
+            }
+
+//            @Override
+//            public Map<String, RouteMap> createRouteRules() {
+//                Map<String,RouteMap> routes = new HashMap<>();
+//                routes.put("haoge://main",new RouteMap("xxx"));
+//                return routes;
+//            }
         });
     }
 

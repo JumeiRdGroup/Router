@@ -11,6 +11,8 @@ import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.module.ActionRouteMap;
+import com.lzh.nonview.router.module.ActivityRouteMap;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
 import com.lzh.nonview.router.route.RouteCallback;
@@ -68,16 +70,21 @@ public class App extends Application {
     class RouteInit implements RouteCreator {
 
         @Override
-        public Map<String, RouteMap> createRouteRules() {
-            Map<String,RouteMap> routes = new HashMap<>();
+        public Map<String, ActivityRouteMap> createActivityRouteRules() {
+            Map<String,ActivityRouteMap> routes = new HashMap<>();
             routes.put("jumei://main",
-                    new RouteMap(ParamsActivity.class.getCanonicalName())
-                    .addParam("price",RouteMap.FLOAT)
-                    .addParam("bookName",RouteMap.STRING)
-                    .addParam("books",RouteMap.STRING_LIST)
-                    .addParam("prices",RouteMap.INT_LIST)
+                    new ActivityRouteMap(ParamsActivity.class)
+                            .addParam("price",RouteMap.FLOAT)
+                            .addParam("bookName",RouteMap.STRING)
+                            .addParam("books",RouteMap.STRING_LIST)
+                            .addParam("prices",RouteMap.INT_LIST)
             );
             return routes;
+        }
+
+        @Override
+        public Map<String, ActionRouteMap> createActionRouteRules() {
+            return new HashMap<>();
         }
     }
 }

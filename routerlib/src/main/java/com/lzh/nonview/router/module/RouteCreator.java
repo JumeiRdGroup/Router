@@ -10,8 +10,14 @@ public interface RouteCreator {
 
     /**
      * create route rules for ActivityRoute
-     * @return A map that contains of all route rules.
+     * @return A map that contains of all Activity route rules.
      */
-    Map<String,RouteMap> createRouteRules();
+    Map<String, ActivityRouteMap> createActivityRouteRules();
+
+    /**
+     * create route rules for ActionRoute
+     * @return A map that contains of all Action route rules.
+     */
+    Map<String, ActionRouteMap> createActionRouteRules();
 
 }

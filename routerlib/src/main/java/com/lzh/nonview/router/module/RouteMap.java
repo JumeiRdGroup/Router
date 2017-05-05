@@ -11,7 +11,7 @@ import java.util.Map;
  * A entity to contains some data for route
  * Created by lzh on 16/9/6.
  */
-public class RouteMap {
+public class RouteMap<R> {
     // type for bundle
     public static final int STRING = -1;
     public static final int BYTE = 0;
@@ -44,8 +44,10 @@ public class RouteMap {
         return params;
     }
 
-    public RouteMap addParam (String key,int type) {
+    public R addParam (String key,int type) {
         params.put(key,type);
-        return this;
+        return (R) this;
     }
+
+
 }
