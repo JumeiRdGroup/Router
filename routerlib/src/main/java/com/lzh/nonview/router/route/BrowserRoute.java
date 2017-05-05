@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.Utils;
-import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 /**
  * A route tool to open uri by browser

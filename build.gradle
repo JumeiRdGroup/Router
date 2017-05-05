@@ -27,7 +27,7 @@ task clean(type: Delete) {
 //添加
 ext {
     userOrg = 'yjfnypeu'
-    groupId = 'org.lzh.tools.router'//jcenter上的路径
+    groupId = 'org.lzh.tools.router2'//jcenter上的路径
     uploadName = 'Router'
     publishVersion = '1.2'
     desc = 'A simple router lib to android'

@@ -34,8 +34,9 @@ public class Utils {
         } else if (modifiers.contains(Modifier.ABSTRACT)) {
             // skip it
             return false;
-        } else if (!isSuperClass(type, getClassName(Constants.CLASSNAME_ACTIVITY).toString())) {
-            throw new RouterException(String.format("The class %s you annotated by RouterRule should be a subclass of Activity",type.getSimpleName()),type);
+        } else if (!isSuperClass(type, Constants.CLASSNAME_ACTIVITY)
+                && !isSuperClass(type, Constants.CLASSNAME_ACTION_SUPPORT)) {
+            throw new RouterException(String.format("The class %s you annotated by RouterRule should be a subclass of Activity or ActionSupport",type.getSimpleName()),type);
         }
         return true;
     }
@@ -47,14 +48,11 @@ public class Utils {
      * @return true if is subclass
      */
     public static boolean isSuperClass (TypeElement type,String superClass) {
+        System.out.println("type = [" + type + "], superClass = [" + superClass + "]");
         return !(type == null || "java.lang.Object".equals(type.getQualifiedName().toString()))
                 && (type.getQualifiedName().toString().equals(superClass)
                         || isSuperClass((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass()), superClass));
 
-    }
-
-    public static ClassName getClassName (String[] clzName) {
-        return ClassName.get(clzName[0],clzName[1]);
     }
 
     public static String getKeyFromArg(Arg arg, String def) {

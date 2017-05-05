@@ -26,7 +26,6 @@ public class LoginActivity extends BaseActivity {
     void onLoginClick () {
         DataManager.INSTANCE.setLogin(true);
         Router.resume(uri,extras).open(this);
-//        Router.create(uri).getActivityRoute().replaceBundleExtras(extras).open(this);
         finish();
     }
 }

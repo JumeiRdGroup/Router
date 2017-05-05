@@ -42,5 +42,5 @@ dependencies {
 //    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
     compile project(':routerlib')
-//    annotationProcessor project(':compiler')
+    annotationProcessor project(':compiler')
 }

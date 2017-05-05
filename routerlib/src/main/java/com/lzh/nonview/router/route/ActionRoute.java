@@ -29,7 +29,7 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
         Bundle data = new Bundle();
         data.putAll(bundle);
         data.putAll(extras.getExtras());
-        target.onRouteTrigger(data);
+        target.onRouteTrigger(context, data);
     }
 
     public static boolean canOpenRouter(Uri uri) {

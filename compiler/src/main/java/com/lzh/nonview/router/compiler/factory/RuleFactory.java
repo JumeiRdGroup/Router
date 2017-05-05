@@ -11,6 +11,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,100 +27,119 @@ import javax.lang.model.type.TypeMirror;
 public class RuleFactory {
 
     private ClassName clzName;
-    private List<Parser> parserList;
+    private List<Parser> activityParser = new ArrayList<>();
+    private List<Parser> actionParser = new ArrayList<>();
+//    private List<Parser> parserList;
+    ClassName routeMap = ClassName.bestGuess(Constants.CLASSNAME_ROUTE_MAP);
+    ClassName activityRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTIVITY_ROUTE_MAP);
+    ClassName actionRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTION_ROUTE_MAP);
 
     public RuleFactory(ClassName name, List<Parser> parserList) {
         this.clzName = name;
-        this.parserList = parserList;
+//        this.parserList = parserList;
+        for (Parser item :  parserList) {
+            if (Utils.isSuperClass(item.getType(), Constants.CLASSNAME_ACTIVITY)) {
+                activityParser.add(item);
+            } else {
+                actionParser.add(item);
+            }
+        }
     }
 
     public void generateCode () throws IOException {
-        ClassName creator = Utils.getClassName(Constants.CLASSNAME_ROUTE_CREATOR);
+        ClassName creator = ClassName.bestGuess(Constants.CLASSNAME_ROUTE_CREATOR);
         TypeSpec.Builder typeBuilder = TypeSpec.classBuilder(clzName)
-                .addSuperinterface(Utils.getClassName(Constants.CLASSNAME_ROUTE_CREATOR))
+                .addSuperinterface(creator)
                 .addModifiers(Modifier.PUBLIC);
 
-        MethodSpec.Builder methodCreator = MethodSpec.overriding(getOverrideMethod (creator));
-        methodCreator.addStatement("$T<String,RouteMap> routes = new $T<>()",Map.class, HashMap.class);
-        for (Parser parser : parserList ) {
+        MethodSpec.Builder methodActivityRulesCreator = MethodSpec.overriding(getOverrideMethod(creator, Constants.METHODNAME_CREATE_ACTIVITY_ROUTER));
+        methodActivityRulesCreator.addStatement("$T<String,$T> routes = new $T<>()",Map.class, activityRouteMap, HashMap.class);
+        for (Parser parser : activityParser ) {
             String[] schemaes = parser.getScheme();
             for (String schema : schemaes) {
-                appendMethod(parser,methodCreator,schema);
+                appendMethod(parser,methodActivityRulesCreator,schema, Constants.CLASSNAME_ACTIVITY_ROUTE_MAP);
             }
         }
-        methodCreator.addStatement("return routes");
-        typeBuilder.addMethod(methodCreator.build());
+        methodActivityRulesCreator.addStatement("return routes");
+
+        MethodSpec.Builder methodActionRulesCreator = MethodSpec.overriding(getOverrideMethod(creator, Constants.METHODNAME_CREATE_ACTION_ROUTER));
+        methodActionRulesCreator.addStatement("$T<String,$T> routes = new $T<>()",Map.class, actionRouteMap, HashMap.class);
+        for (Parser parser : actionParser ) {
+            String[] schemaes = parser.getScheme();
+            for (String schema : schemaes) {
+                appendMethod(parser,methodActionRulesCreator,schema, Constants.CLASSNAME_ACTION_ROUTE_MAP);
+            }
+        }
+        methodActionRulesCreator.addStatement("return routes");
+
+        typeBuilder.addMethod(methodActivityRulesCreator.build());
+        typeBuilder.addMethod(methodActionRulesCreator.build());
         JavaFile.Builder javaBuilder = JavaFile.builder(clzName.packageName(), typeBuilder.build());
         javaBuilder.build().writeTo(UtilMgr.getMgr().getFiler());
     }
 
-    private void appendMethod(Parser parser, MethodSpec.Builder methodCreator,String schema) {
+    private void appendMethod(Parser parser, MethodSpec.Builder methodCreator,String schema, String className) {
         Map<String, TypeMirror> map = parser.getMap();
         String target = parser.getType().getQualifiedName().toString();
         TypeElement actType = UtilMgr.getMgr().getElementUtils().getTypeElement(target);
-        CodeBlock.Builder codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
-                schema, Utils.getClassName(Constants.CLASSNAME_ROUTE_MAP), actType);
+        CodeBlock.Builder codeBuilder;
+        if (Constants.CLASSNAME_ACTION_ROUTE_MAP.equals(className)) {
+            codeBuilder = CodeBlock.builder().add("routes.put($S,new $T(new $T())",
+                    schema, ClassName.bestGuess(className), actType);
+        } else {
+            codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
+                    schema, ClassName.bestGuess(className), actType);
+        }
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
-            codeBuilder.add(".addParam($S,$L)",key,getTypeFromName (map.get(key)));
+            codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));
         }
         codeBuilder.addStatement(");");
         methodCreator.addCode(codeBuilder.build());
     }
 
     private String getTypeFromName(TypeMirror name) {
-        /*
-        * public static final int STRING = -1;
-    public static final int BYTE = 0;
-    public static final int SHORT = 1;
-    public static final int INT = 2;
-    public static final int LONG = 3;
-    public static final int FLOAT = 4;
-    public static final int DOUBLE = 5;
-    public static final int BOOLEAN = 6;
-    public static final int CHAR = 7;
-        * */
         switch (name.toString()) {
             case "boolean":
             case "java.lang.Boolean":
-                return "RouteMap.BOOLEAN";
+                return "BOOLEAN";
             case "byte":
             case "java.lang.Byte":
-                return "RouteMap.BYTE";
+                return "BYTE";
             case "char":
             case "java.lang.Character":
-                return "RouteMap.CHAR";
+                return "CHAR";
             case "short":
             case "java.lang.Short":
-                return "RouteMap.SHORT";
+                return "SHORT";
             case "int":
             case "java.lang.Integer":
-                return "RouteMap.INT";
+                return "INT";
             case "long":
             case "java.lang.Long":
-                return "RouteMap.LONG";
+                return "LONG";
             case "float":
             case "java.lang.Float":
-                return "RouteMap.FLOAT";
+                return "FLOAT";
             case "double":
             case "java.lang.Double":
-                return "RouteMap.DOUBLE";
+                return "DOUBLE";
             case "java.lang.String":
-                return "RouteMap.STRING";
+                return "STRING";
             case "java.util.ArrayList<java.lang.String>":
-                return "RouteMap.STRING_LIST";
+                return "STRING_LIST";
             case "java.util.ArrayList<java.lang.Integer>":
-                return "RouteMap.INT_LIST";
+                return "INT_LIST";
         }
-        return "RouteMap.STRING";
+        return "STRING";
     }
 
-    private ExecutableElement getOverrideMethod(ClassName creator) {
+    private ExecutableElement getOverrideMethod(ClassName creator, String methodName) {
         TypeElement element = UtilMgr.getMgr().getElementUtils().getTypeElement(creator.toString());
         List<? extends Element> elements = element.getEnclosedElements();
         for (Element ele : elements) {
             if (ele.getKind() != ElementKind.METHOD) continue;
-            if (Constants.METHODNAME_CREATE_ROUTER_CREATOR.equals(ele.getSimpleName().toString())) {
+            if (methodName.equals(ele.getSimpleName().toString())) {
                 return (ExecutableElement) ele;
             }
         }

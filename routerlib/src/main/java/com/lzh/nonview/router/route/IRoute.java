@@ -1,9 +1,6 @@
 package com.lzh.nonview.router.route;
 
 import android.content.Context;
-import android.net.Uri;
-
-import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 public interface IRoute {
 

@@ -34,7 +34,7 @@ public final class Router{
     }
 
     /**
-     * create Router by url string
+     * Create Router by url string
      * @param url the url to create Router
      * @return new Router
      */
@@ -43,7 +43,7 @@ public final class Router{
     }
 
     /**
-     * create Router by uri
+     * Create Router by uri
      * @param uri the uri to create Router
      * @return new Router
      */
@@ -72,10 +72,10 @@ public final class Router{
     }
 
     /**
-     * Restore Route event with last uri and extras.
-     * @param uri
-     * @param extras
-     * @return
+     * Restore a Routing event from last uri and extras.
+     * @param uri last uri
+     * @param extras last extras
+     * @return The restored route
      */
     public static IRoute resume(Uri uri, RouteBundleExtras extras) {
         IRoute route = Router.create(uri).getRoute();
@@ -88,9 +88,7 @@ public final class Router{
     }
 
     /**
-     * Open route by rui.it checked scheme first.<br>
-     *     if scheme set is http or https.should be opened by {@link BrowserRoute},
-     *     or opened with {@link ActivityRoute} otherwise.
+     * launch routing task.
      * @param context context to startActivity
      */
     public void open(Context context) {
@@ -98,8 +96,8 @@ public final class Router{
     }
 
     /**
-     * Get route by uri,you should get a route by this way and set some extras data before open
-     * @return A IRoute object.it would be {@link BrowserRoute} or {@link ActivityRoute}
+     * Get route by uri, you should get a route by this way and set some extras data before open
+     * @return A IRoute object.it would be {@link BrowserRoute} or {@link ActivityRoute} or {@link ActionRoute}
      */
     public @NonNull IRoute getRoute () {
         if (ActionRoute.canOpenRouter(uri)) {
@@ -120,6 +118,7 @@ public final class Router{
         if (route instanceof IBaseRoute) {
             return (IBaseRoute) route;
         }
+        getCallback().notFound(uri, new NotFoundException("Could not found BaseRoute", NotFoundException.NotFoundType.SCHEME, uri.toString()));
         return IBaseRoute.EMPTY;
     }
 

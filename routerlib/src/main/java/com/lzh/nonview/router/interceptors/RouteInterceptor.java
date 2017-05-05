@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.lzh.nonview.router.Router;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 /**

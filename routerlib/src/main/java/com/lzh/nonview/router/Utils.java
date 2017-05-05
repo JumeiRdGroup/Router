@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.lzh.nonview.router.exception.InterceptorException;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteMap;
@@ -111,7 +110,7 @@ public class Utils {
      * </p>
      * @return The type to indicate how tyce should be use to create wrapper instance
      */
-    public static BundleWrapper createBundleWrapper (int type) {
+    private static BundleWrapper createBundleWrapper (int type) {
         switch (type) {
             case RouteMap.STRING:
             case RouteMap.BYTE:

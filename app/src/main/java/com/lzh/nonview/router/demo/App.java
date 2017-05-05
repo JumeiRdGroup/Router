@@ -16,7 +16,6 @@ import com.lzh.nonview.router.module.ActionRouteMap;
 import com.lzh.nonview.router.module.ActivityRouteMap;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteMap;
-import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class App extends Application {
             @Override
             public void onOpenSuccess(Uri uri, String clzName) {
                 // 可在此进行route追踪
-                Toast.makeText(App.this, String.format("Launch activity %s success",clzName), Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.this, String.format("Launch routing task %s success",clzName), Toast.LENGTH_SHORT).show();
             }
 
             @Override
