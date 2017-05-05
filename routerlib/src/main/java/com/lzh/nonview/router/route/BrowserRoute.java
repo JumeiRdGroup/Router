@@ -13,6 +13,8 @@ import com.lzh.nonview.router.extras.RouteBundleExtras;
  */
 public class BrowserRoute implements IRoute {
 
+    Uri uri;
+
     private static BrowserRoute route = new BrowserRoute();
 
     public static BrowserRoute getInstance () {
@@ -20,19 +22,18 @@ public class BrowserRoute implements IRoute {
     }
 
     @Override
-    public void open(Context context, Uri uri) {
+    public void open(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    @Override
-    public boolean canOpenRouter(Uri uri) {
+    public static boolean canOpenRouter(Uri uri) {
         return Utils.isHttp(uri.getScheme());
     }
 
-    @Override
-    public IRoute getRoute(Uri uri) {
+    public IRoute setUri(Uri uri) {
+        this.uri = uri;
         return this;
     }
 

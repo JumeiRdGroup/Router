@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute>, IBaseRoute<IActivityRoute> {
 
@@ -38,10 +42,55 @@ public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute>, 
      */
     IActivityRoute addFlags(int flag);
 
-//    /**
-//     * replace {@link ActivityRouteBundleExtras} to {@link ActivityRoute}
-//     * @param extras {@link ActivityRouteBundleExtras}
-//     * @return IActivityRoute
-//     */
-//    IActivityRoute replaceExtras(ActivityRouteBundleExtras extras);
+    IActivityRoute EMPTY = new IActivityRoute() {
+        @Override
+        public Intent createIntent(Context context) {
+            return new Intent();
+        }
+
+        @Override
+        public IActivityRoute requestCode(int requestCode) {
+            return this;
+        }
+
+        @Override
+        public IActivityRoute setAnim(int enterAnim, int exitAnim) {
+            return this;
+        }
+
+        @Override
+        public IActivityRoute addFlags(int flag) {
+            return this;
+        }
+
+        @Override
+        public IActivityRoute addInterceptor(RouteInterceptor interceptor) {
+            return this;
+        }
+
+        @Override
+        public IActivityRoute removeInterceptor(RouteInterceptor interceptor) {
+            return this;
+        }
+
+        @Override
+        public IActivityRoute removeAllInterceptors() {
+            return this;
+        }
+
+        @Override
+        public List<RouteInterceptor> getInterceptors() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public void open(Context context) {
+
+        }
+
+        @Override
+        public IActivityRoute addExtras(Bundle extras) {
+            return this;
+        }
+    };
 }

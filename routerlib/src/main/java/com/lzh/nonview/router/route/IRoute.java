@@ -10,21 +10,11 @@ public interface IRoute {
     /**
      * open route with uri by context
      * @param context The context to invoked startActivity
-     * @param uri The uri to open
      */
-    void open(Context context, Uri uri);
+    void open(Context context);
 
-    /**
-     * if this uri should be opened by this route
-     * @param uri The uri to open
-     * @return whether or not can open this uri
-     */
-    boolean canOpenRouter(Uri uri);
-
-    /**
-     * get route by uri if route should be opened by this uri
-     * @param uri The uri to open
-     * @return route
-     */
-    IRoute getRoute(Uri uri);
+    IRoute EMPTY = new IRoute() {
+        @Override
+        public void open(Context context) {}
+    };
 }

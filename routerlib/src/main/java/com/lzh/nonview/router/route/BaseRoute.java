@@ -3,6 +3,8 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
@@ -24,54 +26,20 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     protected Uri uri;
     protected RouteMap routeMap = null;
 
-    // ========Unify method of IRoute=======
-    @Override
-    public final void open(Context context, Uri uri) {
+    public final IRoute create(Uri uri, RouteCallback callback) {
         try {
-            Utils.checkInterceptor(uri, getExtras(),context,getInterceptors());
-
-            BaseRoute route = (BaseRoute) getRoute(uri);
-            route.realOpen(context);
-
-            callback.onOpenSuccess(uri,routeMap.getClzName());
-        } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
-            } else {
-                callback.onOpenFailed(uri,e);
-            }
-        }
-    }
-
-    @Override
-    public final boolean canOpenRouter(Uri uri) {
-        try {
-            return getRouteMap(uri) != null;
-        } catch (Throwable e) {
-            return false;
-        }
-    }
-
-    @Override
-    public final IRoute getRoute(Uri uri) {
-        try {
-            return getRouteInternal(uri);
+            this.uri = uri;
+            this.callback = callback;
+            this.parser = new URIParser(uri);
+            this.extras = createExtras();
+            this.routeMap = obtainRouteMap();
+            this.bundle = Utils.parseRouteMapToBundle(parser, routeMap);
+            return this;
         } catch (Throwable e) {
             callback.onOpenFailed(uri,e);
-            return EmptyRoute.get();
+            return IRoute.EMPTY;
         }
     }
-
-    private IRoute getRouteInternal(Uri uri) {
-        this.uri = uri;
-        this.parser = new URIParser(uri);
-        this.extras = getExtras();
-        this.parser = new URIParser(uri);
-        this.routeMap = getRouteMap(uri);
-        this.bundle = getBundle();
-        return this;
-    }
-
 
     // =========Unify method of IBaseRoute
     @Override
@@ -97,7 +65,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
 
     // =============RouteInterceptor operation===============
     public T addInterceptor(RouteInterceptor interceptor) {
-        if (getExtras() != null) {
+        if (extras != null) {
             extras.addInterceptor(interceptor);
         }
         return (T) this;
@@ -105,7 +73,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
 
     @Override
     public T removeInterceptor(RouteInterceptor interceptor) {
-        if (getExtras() != null) {
+        if (extras != null) {
             extras.removeInterceptor(interceptor);
         }
         return (T) this;
@@ -113,7 +81,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
 
     @Override
     public T removeAllInterceptors() {
-        if (getExtras() != null) {
+        if (extras != null) {
             extras.removeAllInterceptors();
         }
         return (T) this;
@@ -128,7 +96,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         }
 
         // add extra interceptors
-        if (getExtras() != null) {
+        if (extras != null) {
             interceptors.addAll(extras.getInterceptors());
         }
 
@@ -136,37 +104,17 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     }
 
     // ========getter/setter============
-    public void setCallback (RouteCallback callback) {
-        if (callback != null) {
-            this.callback = callback;
-        }
-    }
-
-    public Bundle getBundle() {
-        if (bundle == null) {
-            bundle = Utils.parseRouteMapToBundle(parser, routeMap);
-        }
-        return bundle;
-    }
-
-    public T setExtras(E extras) {
+    public T replaceExtras(E extras) {
         if (extras != null) {
             this.extras = extras;
         }
         return (T) this;
     }
 
-    protected E getExtras() {
-        if (extras == null) {
-            extras = createExtras();
-        }
-        return extras;
-    }
-
     // ============abstract methods============
-    protected abstract E createExtras();
+    protected abstract @NonNull E createExtras();
 
-    protected abstract RouteMap getRouteMap(Uri uri);
+    protected abstract @Nullable RouteMap obtainRouteMap();
 
     protected abstract void realOpen(Context context) throws Throwable;
 

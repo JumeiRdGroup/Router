@@ -69,8 +69,8 @@ public final class RouteManager {
     }
 
     /**
-     * Get a global callback you had set before,if not set,this should be a empty callback returns
-     * @return a global callback to use,if not set ,it should be a empty callback instead.will not be null
+     * obtain a callback put to use. will not be null.
+     * @return if you had not set yet, it will returns {@link RouteCallback#EMPTY}
      */
     RouteCallback getCallback() {
         return globalCallback == null ? EmptyCallback : globalCallback;

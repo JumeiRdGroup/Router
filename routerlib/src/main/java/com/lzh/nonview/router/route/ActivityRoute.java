@@ -55,8 +55,8 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     }
 
     @Override
-    protected RouteMap getRouteMap(Uri uri) {
-        return RouteManager.get().getRouteMapByUri(new URIParser(uri), RouteManager.TYPE_ACTIVITY_ROUTE);
+    protected RouteMap obtainRouteMap() {
+        return RouteManager.get().getRouteMapByUri(parser, RouteManager.TYPE_ACTIVITY_ROUTE);
     }
 
     @Override
@@ -79,4 +79,11 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
         }
     }
 
+    public static boolean canOpenRouter(Uri uri) {
+        try {
+            return RouteManager.get().getRouteMapByUri(new URIParser(uri), RouteManager.TYPE_ACTIVITY_ROUTE) != null;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
 }
