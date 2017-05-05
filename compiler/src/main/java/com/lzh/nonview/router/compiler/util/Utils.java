@@ -48,7 +48,6 @@ public class Utils {
      * @return true if is subclass
      */
     public static boolean isSuperClass (TypeElement type,String superClass) {
-        System.out.println("type = [" + type + "], superClass = [" + superClass + "]");
         return !(type == null || "java.lang.Object".equals(type.getQualifiedName().toString()))
                 && (type.getQualifiedName().toString().equals(superClass)
                         || isSuperClass((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass()), superClass));

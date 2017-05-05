@@ -27,10 +27,10 @@ task clean(type: Delete) {
 //添加
 ext {
     userOrg = 'yjfnypeu'
-    groupId = 'org.lzh.tools.router2'//jcenter上的路径
-    uploadName = 'Router'
-    publishVersion = '1.2'
+    groupId = 'org.haoge.router2'//jcenter上的路径
+    uploadName = 'Router2'
+    publishVersion = '2.0-beta0'
     desc = 'A simple router lib to android'
-    website = 'https://github.com/yjfnypeu/Parceler'
+    website = 'https://github.com/yjfnypeu/Router'
     licences = ['Apache-2.0']
 }

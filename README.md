@@ -5,33 +5,21 @@ This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
 ### Dependencies
 
-add JitPack to your root project build.gradle:
-
-```
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-```
-
-LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
+LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router2/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router2/_latestVersion)
 
 *attention: because of the mistake of jCenter.we changed the repository from jCenter to JitPack.You should change the groupId when you upgrade the new versions*
 
 Basic config:
 ```Groovy
 // add it to your build.gradle on app project
-compile "com.github.yjfnypeu.Router:router-api:$LatestVersion"
+compile "org.haoge.router2:router-api:$LatestVersion"
 ```
 
 If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app, the best practice is to add a Compile-time framework to create route rules with annotations *RouterRule* to make *Parceler* more convenient:
 
 ```Groovy
 // add it to your build.gradle on app project
-apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
+annotationProcessor "org.haoge.router2:router-compiler:$LatestVersion"
 ```
 
 ### Features
