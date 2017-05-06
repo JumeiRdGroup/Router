@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
@@ -29,7 +30,7 @@ public class App extends Application {
         super.onCreate();
         // 添加route规则创建器
         Router.addRouteCreator(new RouteInit());
-//        Router.addRouteCreator(new RouterRuleCreator());
+        Router.addRouteCreator(new RouterRuleCreator());
         Router.setGlobalRouteInterceptor(new RouteInterceptor() {
 
             @Override
@@ -56,9 +57,9 @@ public class App extends Application {
             }
 
             @Override
-            public void onOpenSuccess(Uri uri, String clzName) {
+            public void onOpenSuccess(Uri uri, RouteRule rule) {
                 // 可在此进行route追踪
-                Toast.makeText(App.this, String.format("Launch routing task %s success",clzName), Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.this, String.format("Launch routing task %s success", rule.getClzName()), Toast.LENGTH_SHORT).show();
             }
 
             @Override

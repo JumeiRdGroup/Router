@@ -4,6 +4,9 @@ import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.exception.NotFoundException.NotFoundType;
+import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.module.ActionRouteRule;
+import com.lzh.nonview.router.module.ActivityRouteRule;
 
 /**
  * The route callback to notify the status of routing event.
@@ -26,13 +29,13 @@ public interface RouteCallback {
      * This method will be invoked when the routing task opened successful
      *
      * @param uri the uri to open
-     * @param clzName the activity class name that had opened
+     * @param rule The uri matching rule, it could be {@link ActionRouteRule} or {@link ActivityRouteRule}
      */
-    void onOpenSuccess(Uri uri,String clzName);
+    void onOpenSuccess(Uri uri,RouteRule rule);
 
     /**
      * A callback method to notice that you occurs some exception.<br>
-     *     exclude <i>not found</i> exception
+     *     exclude <i>{@link NotFoundException}</i>
      * @param uri the uri to open
      * @param e the exception
      */
@@ -44,7 +47,7 @@ public interface RouteCallback {
         public void notFound(Uri uri, NotFoundException e) {}
 
         @Override
-        public void onOpenSuccess(Uri uri, String clzName) {}
+        public void onOpenSuccess(Uri uri, RouteRule rule) {}
 
         @Override
         public void onOpenFailed(Uri uri, Throwable e) {}

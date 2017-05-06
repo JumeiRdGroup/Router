@@ -48,7 +48,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         try {
             Utils.checkInterceptor(uri, extras,context,getInterceptors());
             realOpen(context);
-            callback.onOpenSuccess(uri, routeRule.getClzName());
+            callback.onOpenSuccess(uri, routeRule);
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
                 callback.notFound(uri, (NotFoundException) e);
