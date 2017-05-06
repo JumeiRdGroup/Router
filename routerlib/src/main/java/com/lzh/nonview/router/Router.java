@@ -26,6 +26,12 @@ import com.lzh.nonview.router.route.RouteCallback;
  */
 public final class Router{
 
+    /**
+     * The key of raw uri. you can obtains the uri by this key:
+     *      <li>bundle.getParcelable(Router.RAW_URI)</li>
+     */
+    public static final String RAW_URI = "_ROUTER_RAW_URI_KEY_";
+
     private Uri uri;
     private RouteCallback callback;
 
@@ -35,7 +41,7 @@ public final class Router{
 
     /**
      * Create Router by url string
-     * @param url the url to create Router
+     * @param url The url to create Router
      * @return new Router
      */
     public static Router create(String url) {

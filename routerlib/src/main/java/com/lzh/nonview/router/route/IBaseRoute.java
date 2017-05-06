@@ -3,7 +3,7 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
     /**
-     * reset bundle to {@link ActivityRouteBundleExtras}
+     * add bundle to {@link RouteBundleExtras}
      * @param extras bundle data
      * @return IActivityRoute
      */
@@ -25,9 +25,7 @@ public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
         }
 
         @Override
-        public void open(Context context) {
-
-        }
+        public void open(Context context) {}
 
         @Override
         public IBaseRoute addInterceptor(RouteInterceptor interceptor) {

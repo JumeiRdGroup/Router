@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
@@ -33,6 +34,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
             this.extras = createExtras();
             this.routeMap = obtainRouteMap();
             this.bundle = Utils.parseRouteMapToBundle(parser, routeMap);
+            this.bundle.putParcelable(Router.RAW_URI, uri);
             return this;
         } catch (Throwable e) {
             callback.onOpenFailed(uri,e);
