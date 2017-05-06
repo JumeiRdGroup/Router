@@ -7,8 +7,8 @@ import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 /**
- * A interceptor interface
- * @author lzh
+ * An interceptor interface
+ * @author haoge
  */
 public interface RouteInterceptor{
 
@@ -18,7 +18,7 @@ public interface RouteInterceptor{
      * @param context context
      * @param extras some extras data for route,
      *               sometimes is null when you not use
-     *               {@link Router#getActivityRoute()}  to set some extras data into it
+     *               {@link Router#getBaseRoute()} to set some extras data into it
      * @return true if should be intercepted
      */
     boolean intercept (Uri uri, RouteBundleExtras extras, Context context);
@@ -29,7 +29,7 @@ public interface RouteInterceptor{
      * @param context context
      * @param extras some extras data for route,
      *               sometimes is null when you not use
-     *               {@link Router#getActivityRoute()}  to set some extras data into it
+     *               {@link Router#getBaseRoute()} to set some extras data into it
      */
     void onIntercepted(Uri uri, RouteBundleExtras extras, Context context);
 }

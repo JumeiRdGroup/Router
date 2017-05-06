@@ -1,14 +1,19 @@
 package com.lzh.nonview.router.extras;
 
+import android.content.Intent;
 import android.os.Parcel;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 /**
- * A container to contains some extra data for intent
- * Created by lzh on 16/9/6.
+ * An extra container associate with {@link com.lzh.nonview.router.route.ActivityRoute}
+ *
+ * @author haoge
  */
 public class ActivityRouteBundleExtras extends RouteBundleExtras {
+    /**
+     * Associate with {@link android.app.Activity#startActivityForResult(Intent, int)}
+     */
     private int requestCode = -1;
     private int inAnimation = -1;
     private int outAnimation = -1;

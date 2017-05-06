@@ -1,24 +1,13 @@
-#Router ![svg](https://travis-ci.org/yjfnypeu/Router.svg?branch=master)
-<a href="http://www.methodscount.com/?lib=com.github.yjfnypeu.Router%3Arouter-api%3A0.9"><img src="https://img.shields.io/badge/Methods count-core: 239 | deps: 2-e91e63.svg"/></a>
-
+# Router2 
 This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
 ### Dependencies
 
 LatestVersion=[ ![Download](https://api.bintray.com/packages/yjfnypeu/maven/Router2/images/download.svg) ](https://bintray.com/yjfnypeu/maven/Router2/_latestVersion)
 
-*attention: because of the mistake of jCenter.we changed the repository from jCenter to JitPack.You should change the groupId when you upgrade the new versions*
-
-Basic config:
 ```Groovy
 // add it to your build.gradle on app project
 compile "org.haoge.router2:router-api:$LatestVersion"
-```
-
-If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app, the best practice is to add a Compile-time framework to create route rules with annotations *RouterRule* to make *Parceler* more convenient:
-
-```Groovy
-// add it to your build.gradle on app project
 annotationProcessor "org.haoge.router2:router-compiler:$LatestVersion"
 ```
 
@@ -49,7 +38,7 @@ QQ group:108895031
 
 ## License
 ```
-Copyright 2015 
+Copyright 2015 Haoge
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

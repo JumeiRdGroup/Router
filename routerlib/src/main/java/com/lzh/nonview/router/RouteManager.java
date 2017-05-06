@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * A container to manage some global config.
- * Created by lzh on 16/9/8.
+ * @author haoge
  */
 public final class RouteManager {
     private final static RouteManager manager = new RouteManager();
@@ -26,7 +26,7 @@ public final class RouteManager {
     }
 
     /**
-     * A global route interceptor
+     * global route interceptor
      */
     private RouteInterceptor globalInterceptor;
     /**

@@ -3,7 +3,7 @@ package com.lzh.nonview.router.exception;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 /**
- * An Exception
+ * Throw this exception when routing events were intercepted。
  * @author haoge
  */
 public class InterceptorException extends RuntimeException {
@@ -14,6 +14,10 @@ public class InterceptorException extends RuntimeException {
         this.interceptor = interceptor;
     }
 
+    /**
+     * Provide users with access to the interceptor
+     * @return The interceptor who intercept the event
+     */
     public RouteInterceptor getInterceptor() {
         return interceptor;
     }

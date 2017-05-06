@@ -21,6 +21,10 @@ public interface RouteInterceptorAction<T> {
      */
     T removeAllInterceptors ();
 
+    /**
+     * get all interceptors you has set before
+     * @return all of interceptors
+     */
     List<RouteInterceptor> getInterceptors ();
 }
 

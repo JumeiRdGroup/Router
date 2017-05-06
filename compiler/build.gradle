@@ -4,7 +4,6 @@ apply plugin: 'com.novoda.bintray-release'//添加
 dependencies {
     compile 'com.squareup:javapoet:1.7.0'
     compile project(':annotation')
-    compileOnly project(':routerlib')
     compile 'org.lzh.compiler.parceler:parceler-anno:+'
 }
 

@@ -9,7 +9,7 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IActionRoute extends RouteInterceptorAction<IActionRoute>, IBaseRoute<IActionRoute>{
+public interface IActionRoute extends IBaseRoute<IActionRoute>{
 
     IActionRoute EMPTY = new IActionRoute() {
         @Override

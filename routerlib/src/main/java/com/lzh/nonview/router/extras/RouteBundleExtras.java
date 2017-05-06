@@ -6,20 +6,31 @@ import android.os.Parcelable;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
+import com.lzh.nonview.router.route.IBaseRoute;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An extra container contains {@link RouteBundleExtras#extras} and {@link RouteBundleExtras#interceptors}
+ * <p>
+ *      <li>extras: the extra bundle data set by {@link IBaseRoute#addExtras(Bundle)}</li>
+ *      <li>interceptors: the extra RouteInterceptor set by {@link IBaseRoute#addInterceptor(RouteInterceptor)}</li>
+ * </p>
+ *
+ * @author haoge
+ * @see com.lzh.nonview.router.route.IBaseRoute
+ */
 public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
     private Bundle extras = new Bundle();
     private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
-
     protected RouteBundleExtras() {}
 
     protected RouteBundleExtras(Parcel in) {
         extras = in.readBundle(getClass().getClassLoader());
         int parcelableInterceptorSize = in.readInt();
+        // restore interceptors
         for (int i = 0; i < parcelableInterceptorSize; i++) {
             int type = in.readInt();
             RouteInterceptor interceptor;
@@ -52,8 +63,8 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeBundle(extras);
-        List<RouteInterceptor> parcelInterceptors = new ArrayList<>();
 
+        List<RouteInterceptor> parcelInterceptors = new ArrayList<>();
         for (RouteInterceptor interceptor : interceptors) {
             if (interceptor instanceof Parcelable
                     || interceptor instanceof Serializable) {
@@ -82,10 +93,6 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
         if (extras != null) {
             this.extras.putAll(extras);
         }
-    }
-
-    public void setInterceptors(ArrayList<RouteInterceptor> interceptors) {
-        this.interceptors = interceptors;
     }
 
     @SuppressWarnings("ConstantConditions")

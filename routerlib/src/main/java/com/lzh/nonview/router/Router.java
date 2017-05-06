@@ -113,6 +113,13 @@ public final class Router{
         }
     }
 
+    /**
+     * <p>
+     * Get {@link IBaseRoute} by uri, it could be one of {@link IActivityRoute} or {@link IActionRoute}.
+     * and you can add some {@link android.os.Bundle} data and {@link RouteInterceptor} into it.
+     * </p>
+     * @return {@link IBaseRoute}
+     */
     public IBaseRoute getBaseRoute() {
         IRoute route = getRoute();
         if (route instanceof IBaseRoute) {
@@ -123,21 +130,25 @@ public final class Router{
     }
 
     /**
-     * Get {@link ActivityRoute} by uri,you should get a route by this way and set some extras data before open
-     * @return ActivityRoute
+     * Get {@link IActivityRoute} by uri,you should get a route by this way and set some extras data before open
+     * @return {@link IActivityRoute}
      */
     public IActivityRoute getActivityRoute() {
         if (ActivityRoute.canOpenRouter(uri)) {
             return (IActivityRoute) new ActivityRoute().create(uri, getCallback());
         }
 
-        // return a empty route to avoid NullPointException
+        // return an empty route to avoid NullPointException
         getCallback().notFound(uri,
                 new NotFoundException(String.format("find Activity Route by uri %s failed:",uri),
                         NotFoundException.NotFoundType.SCHEME,uri.toString()));
         return IActivityRoute.EMPTY;
     }
 
+    /**
+     * Get {@link IActionRoute} by uri,you should get a route by this way and set some extras data before open
+     * @return {@link IActionRoute}
+     */
     public IActionRoute getActionRoute() {
         if (ActionRoute.canOpenRouter(uri)) {
             return (ActionRoute) new ActionRoute().create(uri, getCallback());
@@ -151,7 +162,7 @@ public final class Router{
     }
 
     /**
-     * Set global route callback to invoked when open a uri
+     * Set a global route callback to invoked when open a uri
      * @param callback can't be null
      */
     public static void setGlobalRouteCallback (RouteCallback callback) {
@@ -163,7 +174,7 @@ public final class Router{
     }
 
     /**
-     * set to create route rules
+     * Set to create route rules
      * @param creator Route rules creator.can't be null
      */
     public static void addRouteCreator(RouteCreator creator) {

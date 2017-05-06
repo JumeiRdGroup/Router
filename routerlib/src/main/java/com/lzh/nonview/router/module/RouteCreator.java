@@ -3,8 +3,8 @@ package com.lzh.nonview.router.module;
 import java.util.Map;
 
 /**
- * A interface to define route rules to router lib
- * Created by lzh on 16/9/8.
+ * An interface to define route rules to router lib
+ * @author haoge
  */
 public interface RouteCreator {
 

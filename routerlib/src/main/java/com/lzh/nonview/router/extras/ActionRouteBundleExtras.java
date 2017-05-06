@@ -2,6 +2,14 @@ package com.lzh.nonview.router.extras;
 
 import android.os.Parcel;
 
+/**
+ * An extra container associate with {@link com.lzh.nonview.router.route.ActionRoute}
+ *
+ * @author haoge
+ *
+ * @see com.lzh.nonview.router.route.ActionRoute
+ * @see com.lzh.nonview.router.route.ActionSupport
+ */
 public class ActionRouteBundleExtras extends RouteBundleExtras {
 
     public ActionRouteBundleExtras() {}

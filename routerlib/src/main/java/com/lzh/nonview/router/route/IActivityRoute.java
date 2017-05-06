@@ -10,7 +10,7 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IActivityRoute extends RouteInterceptorAction<IActivityRoute>, IBaseRoute<IActivityRoute> {
+public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
     /**
      * Create intent by extras data and bundle that parsed by uri
