@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Base on {@link IRoute} and {@link RouteInterceptorAction}, it subclass could be one of the <br>
  *     {@link IActionRoute} and {@link IActivityRoute}
- * @param <T>
+ * @param <T> The real type
  */
 public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
     /**

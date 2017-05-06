@@ -68,7 +68,7 @@ public class RouteRule<R> {
      * @param type the required type. default is {@link RouteRule#STRING}
      * @return RouteRule
      */
-    public R addParam (String key,int type) {
+    public R addParam (String key, @TYPE int type) {
         params.put(key,type);
         //noinspection unchecked
         return (R) this;

@@ -16,10 +16,8 @@ public interface RouteCallback {
 
     /**
      * There are two types of not found exception:<br>
-     * <pre>
      *     <li><b>{@link NotFoundType#SCHEME}: </b>This uri can't match the corresponding routing</li><br>
      *     <li><b>{@link NotFoundType#CLZ}: </b>The special routing event that matched with uri does not exist.</li>
-     * </pre>
      * @param uri uri the uri to open
      * @param e {@link NotFoundException}
      */
