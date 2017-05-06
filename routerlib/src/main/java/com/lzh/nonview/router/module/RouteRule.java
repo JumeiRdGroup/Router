@@ -15,7 +15,7 @@ import java.util.Map;
  * An entity to contains some data for route
  * @author haoge
  */
-public class RouteMap<R> {
+public class RouteRule<R> {
     /** Associate with {@link android.os.Bundle#putString(String, String)}*/
     public static final int STRING = -1;
     /** Associate with {@link android.os.Bundle#putByte(String, byte)} */
@@ -47,7 +47,7 @@ public class RouteMap<R> {
     /**
      * @param clzName clzName must be a {@link Activity} or {@link ActionSupport} total name
      */
-    public RouteMap(String clzName) {
+    public RouteRule(String clzName) {
         this.clzName = clzName;
     }
 
@@ -65,8 +65,8 @@ public class RouteMap<R> {
     /**
      * Specify required type when parsing the Url parameters
      * @param key the key in Url params.
-     * @param type the required type. default is {@link RouteMap#STRING}
-     * @return RouteMap
+     * @param type the required type. default is {@link RouteRule#STRING}
+     * @return RouteRule
      */
     public R addParam (String key,int type) {
         params.put(key,type);

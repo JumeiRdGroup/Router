@@ -3,24 +3,28 @@ package com.lzh.nonview.router.route;
 import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.exception.NotFoundException.NotFoundType;
 
 /**
- * Callback of router
- * Created by lzh on 16/9/5.
+ * The route callback to notify the status of routing event.
+ * @author haoge
  */
 public interface RouteCallback {
 
     /**
      * There are two types of not found exception:<br>
-     *     <i>route rule</i> not found<br>
-     *     <i>activity</i> not found
+     * <pre>
+     *     <li><b>{@link NotFoundType#SCHEME}: </b>This uri can't match the corresponding routing</li><br>
+     *     <li><b>{@link NotFoundType#CLZ}: </b>The special routing event that matched with uri does not exist.</li>
+     * </pre>
      * @param uri uri the uri to open
      * @param e {@link NotFoundException}
      */
     void notFound(Uri uri, NotFoundException e);
 
     /**
-     * A callback method to notice that you had open a activity by route
+     * This method will be invoked when the routing task opened successful
+     *
      * @param uri the uri to open
      * @param clzName the activity class name that had opened
      */

@@ -3,6 +3,7 @@ package com.lzh.nonview.router;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
@@ -22,12 +23,13 @@ import com.lzh.nonview.router.route.RouteCallback;
 
 /**
  * Entry of Router。
+ *
  * @author haoge
  */
 public final class Router{
 
     /**
-     * The key of raw uri. you can obtains the uri by this key:
+     * The key of raw uri. you can obtains it uri by this key:
      *      <li>bundle.getParcelable(Router.RAW_URI)</li>
      */
     public static final String RAW_URI = "_ROUTER_RAW_URI_KEY_";
@@ -35,7 +37,7 @@ public final class Router{
     private Uri uri;
     private RouteCallback callback;
 
-    private Router(Uri uri) {
+    private Router(@NonNull Uri uri) {
         this.uri = Utils.completeUri(uri);
     }
 
@@ -44,7 +46,7 @@ public final class Router{
      * @param url The url to create Router
      * @return new Router
      */
-    public static Router create(String url) {
+    public static Router create(@NonNull String url) {
         return new Router(Uri.parse(url));
     }
 
@@ -53,7 +55,7 @@ public final class Router{
      * @param uri the uri to create Router
      * @return new Router
      */
-    public static Router create(Uri uri) {
+    public static Router create(@NonNull Uri uri) {
         return new Router(uri);
     }
 
@@ -64,7 +66,7 @@ public final class Router{
      *
      * @see Router#getCallback()
      */
-    public Router setCallback (RouteCallback callback) {
+    public Router setCallback (@Nullable RouteCallback callback) {
         this.callback = callback;
         return this;
     }
@@ -73,7 +75,7 @@ public final class Router{
      * Obtain a callback put to use. will not be null.
      * @return if you had not set yet, it will returns a global callback obtain from {@link RouteManager#getCallback()}
      */
-    private RouteCallback getCallback () {
+    private @NonNull RouteCallback getCallback () {
         return callback == null ? RouteManager.get().getCallback() : callback;
     }
 
@@ -81,9 +83,9 @@ public final class Router{
      * Restore a Routing event from last uri and extras.
      * @param uri last uri
      * @param extras last extras
-     * @return The restored route
+     * @return The restored routing find by {@link Router#getRoute()}
      */
-    public static IRoute resume(Uri uri, RouteBundleExtras extras) {
+    public static @NonNull IRoute resume(@NonNull Uri uri, @Nullable RouteBundleExtras extras) {
         IRoute route = Router.create(uri).getRoute();
         if (route instanceof ActivityRoute && extras instanceof ActivityRouteBundleExtras) {
             ((ActivityRoute) route).replaceExtras((ActivityRouteBundleExtras) extras);
@@ -95,15 +97,17 @@ public final class Router{
 
     /**
      * launch routing task.
-     * @param context context to startActivity
+     * @param context context to launched
      */
-    public void open(Context context) {
+    public void open(@NonNull Context context) {
         getRoute().open(context);
     }
 
     /**
      * Get route by uri, you should get a route by this way and set some extras data before open
-     * @return A IRoute object.it would be {@link BrowserRoute} or {@link ActivityRoute} or {@link ActionRoute}
+     * @return
+     *  An IRoute object.it will be {@link BrowserRoute}, {@link ActivityRoute} or {@link ActionRoute}.<br>
+     *  and it also will be {@link IRoute#EMPTY} if it not found
      */
     public @NonNull IRoute getRoute () {
         if (ActionRoute.canOpenRouter(uri)) {
@@ -113,7 +117,7 @@ public final class Router{
         } else if (BrowserRoute.canOpenRouter(uri)) {
             return BrowserRoute.getInstance().setUri(uri);
         } else {
-            getCallback().notFound(uri,new NotFoundException(String.format("find route by uri %s failed:",uri),
+            getCallback().notFound(uri,new NotFoundException(String.format("find Route by %s failed:",uri),
                     NotFoundException.NotFoundType.SCHEME,uri.toString()));
             return IRoute.EMPTY;
         }
@@ -124,45 +128,46 @@ public final class Router{
      * Get {@link IBaseRoute} by uri, it could be one of {@link IActivityRoute} or {@link IActionRoute}.
      * and you can add some {@link android.os.Bundle} data and {@link RouteInterceptor} into it.
      * </p>
-     * @return {@link IBaseRoute}
+     * @return returns an {@link IBaseRoute} finds by uri or {@link IBaseRoute#EMPTY} for not found
      */
-    public IBaseRoute getBaseRoute() {
+    public @NonNull IBaseRoute getBaseRoute() {
         IRoute route = getRoute();
         if (route instanceof IBaseRoute) {
             return (IBaseRoute) route;
         }
-        getCallback().notFound(uri, new NotFoundException("Could not found BaseRoute", NotFoundException.NotFoundType.SCHEME, uri.toString()));
+        getCallback().notFound(uri, new NotFoundException(String.format("find BaseRoute by %s failed:",uri),
+                NotFoundException.NotFoundType.SCHEME, uri.toString()));
         return IBaseRoute.EMPTY;
     }
 
     /**
      * Get {@link IActivityRoute} by uri,you should get a route by this way and set some extras data before open
-     * @return {@link IActivityRoute}
+     * @return returns an {@link IActivityRoute} finds by uri or {@link IActivityRoute#EMPTY} for not found.
      */
-    public IActivityRoute getActivityRoute() {
+    public @NonNull IActivityRoute getActivityRoute() {
         if (ActivityRoute.canOpenRouter(uri)) {
             return (IActivityRoute) new ActivityRoute().create(uri, getCallback());
         }
 
         // return an empty route to avoid NullPointException
         getCallback().notFound(uri,
-                new NotFoundException(String.format("find Activity Route by uri %s failed:",uri),
+                new NotFoundException(String.format("find Activity Route by %s failed:",uri),
                         NotFoundException.NotFoundType.SCHEME,uri.toString()));
         return IActivityRoute.EMPTY;
     }
 
     /**
      * Get {@link IActionRoute} by uri,you should get a route by this way and set some extras data before open
-     * @return {@link IActionRoute}
+     * @return returns an {@link IActionRoute} finds by uri or {@link IActionRoute#EMPTY} for not found.
      */
-    public IActionRoute getActionRoute() {
+    public @NonNull IActionRoute getActionRoute() {
         if (ActionRoute.canOpenRouter(uri)) {
             return (ActionRoute) new ActionRoute().create(uri, getCallback());
         }
 
         // return a empty route to avoid NullPointException
         getCallback().notFound(uri,
-                new NotFoundException(String.format("find Activity Route by uri %s failed:",uri),
+                new NotFoundException(String.format("find Action Route by %s failed:",uri),
                         NotFoundException.NotFoundType.SCHEME,uri.toString()));
         return IActionRoute.EMPTY;
     }
@@ -171,11 +176,11 @@ public final class Router{
      * Set a global route callback to invoked when open a uri
      * @param callback can't be null
      */
-    public static void setGlobalRouteCallback (RouteCallback callback) {
+    public static void setGlobalRouteCallback (@NonNull RouteCallback callback) {
         RouteManager.get().setCallback(callback);
     }
 
-    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {
+    public static void setGlobalRouteInterceptor (@NonNull RouteInterceptor interceptor) {
         RouteManager.get().setInterceptor(interceptor);
     }
 
@@ -183,7 +188,7 @@ public final class Router{
      * Set to create route rules
      * @param creator Route rules creator.can't be null
      */
-    public static void addRouteCreator(RouteCreator creator) {
+    public static void addRouteCreator(@NonNull RouteCreator creator) {
         RouteManager.get().addCreator(creator);
     }
 

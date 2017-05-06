@@ -9,7 +9,7 @@ import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
 /**
@@ -21,7 +21,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     @Override
     public Intent createIntent(Context context) {
         Intent intent = new Intent();
-        intent.setClassName(context,routeMap.getClzName());
+        intent.setClassName(context, routeRule.getClzName());
         intent.putExtras(bundle);
         intent.putExtras(extras.getExtras());
         if (extras instanceof ActivityRouteBundleExtras) {
@@ -55,13 +55,13 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     }
 
     @Override
-    protected RouteMap obtainRouteMap() {
+    protected RouteRule obtainRouteMap() {
         return RouteManager.get().getRouteMapByUri(parser, RouteManager.TYPE_ACTIVITY_ROUTE);
     }
 
     @Override
     protected void realOpen(Context context) throws Throwable {
-        String clzName = routeMap.getClzName();
+        String clzName = routeRule.getClzName();
         if (!Utils.isClassSupport(clzName)) {
             throw new NotFoundException(String.format("target activity is not found : %s",clzName), NotFoundException.NotFoundType.CLZ,clzName);
         }

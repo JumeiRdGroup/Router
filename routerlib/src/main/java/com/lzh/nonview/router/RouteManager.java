@@ -1,10 +1,10 @@
 package com.lzh.nonview.router;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.module.ActionRouteMap;
-import com.lzh.nonview.router.module.ActivityRouteMap;
+import com.lzh.nonview.router.module.ActionRouteRule;
+import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 import com.lzh.nonview.router.route.ActionSupport;
 import com.lzh.nonview.router.route.RouteCallback;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A container to manage some global config.
+ * A single data manager to manage some route configurations.
  * @author haoge
  */
 public final class RouteManager {
@@ -33,7 +33,7 @@ public final class RouteManager {
      * global route callback
      */
     private RouteCallback globalCallback;
-    // provide a empty callback to make it more safely
+    // provide a empty callback to make it more safer
     private RouteCallback EmptyCallback = RouteCallback.EMPTY;
     private boolean shouldReload;// if should be reload routeMap.
     /**
@@ -43,12 +43,17 @@ public final class RouteManager {
     /**
      * A map to contains all of route rule created by creatorList
      */
-    private Map<String,ActivityRouteMap> activityRouteMap = new HashMap<>();
-    private Map<String,ActionRouteMap> actionRouteMap = new HashMap<>();
+    private Map<String,ActivityRouteRule> activityRouteMap = new HashMap<>();
+    private Map<String,ActionRouteRule> actionRouteMap = new HashMap<>();
     public static final int TYPE_ACTIVITY_ROUTE = 0;
     public static final int TYPE_ACTION_ROUTE = 1;
     private Map<String, ActionSupport> supportMap = new HashMap<>();
 
+    /**
+     * Set a global route callback to notify users the status of routing event.
+     * @param callback route callback
+     * @see RouteCallback
+     */
     void setCallback (RouteCallback callback) {
         if (callback == null) {
             throw new IllegalArgumentException("callback should not be null");
@@ -56,10 +61,21 @@ public final class RouteManager {
         this.globalCallback = callback;
     }
 
+    /**
+     * Set a global route interceptor to handle routing event whether should be intercepted.
+     * @param interceptor {@link RouteInterceptor}
+     */
     void setInterceptor (RouteInterceptor interceptor) {
         this.globalInterceptor = interceptor;
     }
 
+    /**
+     * <p>
+     * Add a {@link RouteCreator} who contains some route rules to be used.
+     * this method could be invoked multiple-times. so that you can put multiple route rules from difference modules
+     * </p>
+     * @param creator {@link RouteCreator}
+     */
     void addCreator (RouteCreator creator) {
         if (creator == null) {
             throw new IllegalArgumentException("Route creator should not be null");
@@ -80,17 +96,17 @@ public final class RouteManager {
         return globalInterceptor;
     }
 
-    private Map<String, ActionRouteMap> getActionRouteMap() {
+    private Map<String, ActionRouteRule> getActionRouteMap() {
         obtainRouteRulesIfNeed();
         return actionRouteMap;
     }
 
-    private Map<String,ActivityRouteMap> getActivityRouteMap() {
+    private Map<String,ActivityRouteRule> getActivityRouteMap() {
         obtainRouteRulesIfNeed();
         return activityRouteMap;
     }
 
-    public RouteMap getRouteMapByUri(URIParser parser, int type) {
+    public RouteRule getRouteMapByUri(URIParser parser, int type) {
         String route = parser.getScheme() + "://" + parser.getHost();
         Map routes;
         if (type == TYPE_ACTIVITY_ROUTE) {
@@ -100,10 +116,10 @@ public final class RouteManager {
         }
         String wrap = Utils.wrapScheme(route);
         if (routes.containsKey(wrap)) {
-            return (RouteMap) routes.get(wrap);
+            return (RouteRule) routes.get(wrap);
         }
         String unWrap = Utils.unwrapScheme(wrap);
-        return (RouteMap) routes.get(unWrap);
+        return (RouteRule) routes.get(unWrap);
     }
 
     private void obtainRouteRulesIfNeed() {

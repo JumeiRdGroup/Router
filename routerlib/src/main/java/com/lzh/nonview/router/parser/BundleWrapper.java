@@ -2,6 +2,8 @@ package com.lzh.nonview.router.parser;
 
 import android.os.Bundle;
 
+import com.lzh.nonview.router.module.RouteRule;
+
 /**
  * A wrapper class for bundle
  * Created by lzh on 16/11/10.
@@ -11,7 +13,7 @@ public abstract class BundleWrapper {
 
     /**
      * Create a wrapper instance form specially type.
-     * @param type The type value defined in {@link com.lzh.nonview.router.module.RouteMap}
+     * @param type The type value defined in {@link RouteRule}
      */
     BundleWrapper(int type) {
         this.type = type;

@@ -3,7 +3,8 @@ package com.lzh.nonview.router.parser;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
+
 /**
  * A subclass of {@link BundleWrapper} to package data with baseType
  * @author lzh
@@ -28,31 +29,31 @@ public final class SimpleBundle extends BundleWrapper {
         if (TextUtils.isEmpty(data)) return;
 
         switch (type) {
-            case RouteMap.BYTE:
+            case RouteRule.BYTE:
                 extras.putByte(key,Byte.parseByte(data));
                 break;
-            case RouteMap.SHORT:
+            case RouteRule.SHORT:
                 extras.putShort(key,Short.parseShort(data));
                 break;
-            case RouteMap.INT:
+            case RouteRule.INT:
                 extras.putInt(key,Integer.parseInt(data));
                 break;
-            case RouteMap.LONG:
+            case RouteRule.LONG:
                 extras.putLong(key,Long.parseLong(data));
                 break;
-            case RouteMap.FLOAT:
+            case RouteRule.FLOAT:
                 extras.putFloat(key,Float.parseFloat(data));
                 break;
-            case RouteMap.DOUBLE:
+            case RouteRule.DOUBLE:
                 extras.putDouble(key,Double.parseDouble(data));
                 break;
-            case RouteMap.CHAR:
+            case RouteRule.CHAR:
                 extras.putChar(key,data.charAt(0));
                 break;
-            case RouteMap.BOOLEAN:
+            case RouteRule.BOOLEAN:
                 extras.putBoolean(key,Boolean.parseBoolean(data));
                 break;
-            case RouteMap.STRING:
+            case RouteRule.STRING:
             default://string
                 extras.putString(key,data);
                 break;

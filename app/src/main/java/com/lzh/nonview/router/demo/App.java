@@ -12,10 +12,10 @@ import com.lzh.nonview.router.demo.action.SayHelloAction;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.module.ActionRouteMap;
-import com.lzh.nonview.router.module.ActivityRouteMap;
+import com.lzh.nonview.router.module.ActionRouteRule;
+import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.HashMap;
@@ -71,22 +71,22 @@ public class App extends Application {
     class RouteInit implements RouteCreator {
 
         @Override
-        public Map<String, ActivityRouteMap> createActivityRouteRules() {
-            Map<String,ActivityRouteMap> routes = new HashMap<>();
+        public Map<String, ActivityRouteRule> createActivityRouteRules() {
+            Map<String,ActivityRouteRule> routes = new HashMap<>();
             routes.put("jumei://main",
-                    new ActivityRouteMap(ParamsActivity.class)
-                            .addParam("price",RouteMap.FLOAT)
-                            .addParam("bookName",RouteMap.STRING)
-                            .addParam("books",RouteMap.STRING_LIST)
-                            .addParam("prices",RouteMap.INT_LIST)
+                    new ActivityRouteRule(ParamsActivity.class)
+                            .addParam("price", RouteRule.FLOAT)
+                            .addParam("bookName", RouteRule.STRING)
+                            .addParam("books", RouteRule.STRING_LIST)
+                            .addParam("prices", RouteRule.INT_LIST)
             );
             return routes;
         }
 
         @Override
-        public Map<String, ActionRouteMap> createActionRouteRules() {
-            Map<String, ActionRouteMap> routes = new HashMap<>();
-            routes.put("haoge://action/support", new ActionRouteMap(new SayHelloAction()));
+        public Map<String, ActionRouteRule> createActionRouteRules() {
+            Map<String, ActionRouteRule> routes = new HashMap<>();
+            routes.put("haoge://action/support", new ActionRouteRule(new SayHelloAction()));
             return routes;
         }
     }

@@ -6,8 +6,8 @@ import android.os.Bundle;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
-import com.lzh.nonview.router.module.ActionRouteMap;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.ActionRouteRule;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
 public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras> implements IActionRoute {
@@ -18,13 +18,13 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
     }
 
     @Override
-    protected RouteMap obtainRouteMap() {
+    protected RouteRule obtainRouteMap() {
         return RouteManager.get().getRouteMapByUri(parser, RouteManager.TYPE_ACTION_ROUTE);
     }
 
     @Override
     protected void realOpen(Context context) throws Throwable {
-        ActionRouteMap real = (ActionRouteMap) routeMap;
+        ActionRouteRule real = (ActionRouteRule) routeRule;
         ActionSupport target = real.getTarget();
         Bundle data = new Bundle();
         data.putAll(bundle);

@@ -1,5 +1,5 @@
 # Router2 
-This is a framework for starting an activity by url*(“Scheme”)* on Android.
+
 
 ### Dependencies
 

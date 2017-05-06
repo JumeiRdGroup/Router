@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.lzh.nonview.router.exception.InterceptorException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.BundleWrapper;
 import com.lzh.nonview.router.parser.ListBundle;
 import com.lzh.nonview.router.parser.SimpleBundle;
@@ -77,15 +77,15 @@ public class Utils {
         return false;
     }
 
-    public static Bundle parseRouteMapToBundle(URIParser parser, RouteMap routeMap) {
-        Map<String, Integer> keyMap = routeMap.getParams();
+    public static Bundle parseRouteMapToBundle(URIParser parser, RouteRule routeRule) {
+        Map<String, Integer> keyMap = routeRule.getParams();
         Bundle bundle = new Bundle();
         Map<String, String> params = parser.getParams();
         Set<String> keySet = params.keySet();
         Map<String,BundleWrapper> wrappers = new HashMap<>();
         for (String key : keySet) {
             Integer type = keyMap.get(key);
-            type = type == null ? RouteMap.STRING : type;
+            type = type == null ? RouteRule.STRING : type;
 
             BundleWrapper wrapper = wrappers.get(key);
             if (wrapper == null) {
@@ -106,27 +106,27 @@ public class Utils {
      * <p>
      *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
      *     When <i>type</i> between 8 and 9,should create subclass of {@link ListBundle}with type <br>
-     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteMap#STRING}
+     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteRule#STRING}
      * </p>
      * @return The type to indicate how tyce should be use to create wrapper instance
      */
     private static BundleWrapper createBundleWrapper (int type) {
         switch (type) {
-            case RouteMap.STRING:
-            case RouteMap.BYTE:
-            case RouteMap.SHORT:
-            case RouteMap.INT:
-            case RouteMap.LONG:
-            case RouteMap.FLOAT:
-            case RouteMap.DOUBLE:
-            case RouteMap.BOOLEAN:
-            case RouteMap.CHAR:
+            case RouteRule.STRING:
+            case RouteRule.BYTE:
+            case RouteRule.SHORT:
+            case RouteRule.INT:
+            case RouteRule.LONG:
+            case RouteRule.FLOAT:
+            case RouteRule.DOUBLE:
+            case RouteRule.BOOLEAN:
+            case RouteRule.CHAR:
                 return new SimpleBundle(type);
-            case RouteMap.INT_LIST:
-            case RouteMap.STRING_LIST:
+            case RouteRule.INT_LIST:
+            case RouteRule.STRING_LIST:
                 return new ListBundle(type);
             default:
-                return new SimpleBundle(RouteMap.STRING);
+                return new SimpleBundle(RouteRule.STRING);
         }
     }
 }

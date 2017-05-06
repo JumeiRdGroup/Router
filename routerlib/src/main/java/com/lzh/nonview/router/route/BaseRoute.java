@@ -12,7 +12,7 @@ import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
-import com.lzh.nonview.router.module.RouteMap;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     E extras;
     RouteCallback callback = RouteCallback.EMPTY;
     Uri uri;
-    RouteMap routeMap = null;
+    RouteRule routeRule = null;
 
     public final IRoute create(Uri uri, RouteCallback callback) {
         try {
@@ -32,8 +32,8 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
             this.callback = callback;
             this.parser = new URIParser(uri);
             this.extras = createExtras();
-            this.routeMap = obtainRouteMap();
-            this.bundle = Utils.parseRouteMapToBundle(parser, routeMap);
+            this.routeRule = obtainRouteMap();
+            this.bundle = Utils.parseRouteMapToBundle(parser, routeRule);
             this.bundle.putParcelable(Router.RAW_URI, uri);
             return this;
         } catch (Throwable e) {
@@ -48,7 +48,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
         try {
             Utils.checkInterceptor(uri, extras,context,getInterceptors());
             realOpen(context);
-            callback.onOpenSuccess(uri,routeMap.getClzName());
+            callback.onOpenSuccess(uri, routeRule.getClzName());
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
                 callback.notFound(uri, (NotFoundException) e);
@@ -118,7 +118,8 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     // ============abstract methods============
     protected abstract E createExtras();
 
-    protected abstract @Nullable RouteMap obtainRouteMap();
+    protected abstract @Nullable
+    RouteRule obtainRouteMap();
 
     protected abstract void realOpen(Context context) throws Throwable;
 
