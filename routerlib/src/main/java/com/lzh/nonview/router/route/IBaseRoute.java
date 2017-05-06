@@ -10,11 +10,18 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base on {@link IRoute} and {@link RouteInterceptorAction}, it subclass could be one of the <br>
+ *     {@link IActionRoute} and {@link IActivityRoute}
+ * @param <T>
+ */
 public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
     /**
-     * add bundle to {@link RouteBundleExtras}
+     * add extra bundle data to {@link RouteBundleExtras}
      * @param extras bundle data
-     * @return IActivityRoute
+     * @return {@link IBaseRoute}
+     * @see IActionRoute
+     * @see IActivityRoute
      */
     T addExtras(Bundle extras);
 

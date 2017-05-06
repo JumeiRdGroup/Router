@@ -1,6 +1,7 @@
 package com.lzh.nonview.router.route;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -9,6 +10,11 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>
+ *  Base on the {@link IBaseRoute}
+ * </p>
+ */
 public interface IActionRoute extends IBaseRoute<IActionRoute>{
 
     IActionRoute EMPTY = new IActionRoute() {

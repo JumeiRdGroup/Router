@@ -4,30 +4,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>
+ * Base on the {@link IBaseRoute}, This interface provided some methods
+ * to set some extras data for used by {@link android.app.Activity#startActivityForResult(Intent, int)}
+ * </p>
+ */
 public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
     /**
-     * Create intent by extras data and bundle that parsed by uri
+     * Create intent by {@link ActivityRouteBundleExtras} and {@link Bundle} that parsed by uri
      * @param context The context to create intent
      * @return Intent that contains of extras data and bundle that parsed by uri
      */
     Intent createIntent (Context context);
 
     /**
-     * set request code for {@link android.app.Activity#startActivityForResult(Intent, int)}
+     * Set request code for {@link android.app.Activity#startActivityForResult(Intent, int)}
      * @param requestCode request code
      * @return IActivityRoute
      */
     IActivityRoute requestCode(int requestCode);
 
     /**
-     * set anim to apply to {@link android.app.Activity#overridePendingTransition(int, int)}
+     * Set anim to apply to {@link android.app.Activity#overridePendingTransition(int, int)}
      * @param enterAnim enter animation
      * @param exitAnim exit animation
      * @return IActivityRoute
@@ -35,7 +41,7 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
     IActivityRoute setAnim (int enterAnim, int exitAnim);
 
     /**
-     * {@link Intent#addFlags(int)}
+     * Associate with {@link Intent#addFlags(int)}
      * @param flag flag
      * @return IActivityRoute
      */
