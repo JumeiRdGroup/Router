@@ -26,7 +26,7 @@ android {
 
 def AAVersion = '4.3.0'
 def PARCELER_VERSION="0.9.1"
-def ROUTER_VERSION="2.0-beta0"
+def ROUTER_VERSION="72b537950c"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -39,8 +39,8 @@ dependencies {
     annotationProcessor "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
     compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
 
-//    compile "org.haoge.router2:router-api:$ROUTER_VERSION"
-//    annotationProcessor "org.haoge.router2:router-compiler:$ROUTER_VERSION"
+//    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
+//    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
     compile project(':routerlib')
     annotationProcessor project(':compiler')

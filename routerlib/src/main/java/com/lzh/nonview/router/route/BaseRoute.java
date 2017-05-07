@@ -3,7 +3,6 @@ package com.lzh.nonview.router.route;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.Router;
@@ -118,8 +117,7 @@ public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRout
     // ============abstract methods============
     protected abstract E createExtras();
 
-    protected abstract @Nullable
-    RouteRule obtainRouteMap();
+    protected abstract RouteRule obtainRouteMap();
 
     protected abstract void realOpen(Context context) throws Throwable;
 

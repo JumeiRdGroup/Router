@@ -2,8 +2,6 @@ package com.lzh.nonview.router;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
@@ -37,7 +35,7 @@ public final class Router{
     private Uri uri;
     private RouteCallback callback;
 
-    private Router(@NonNull Uri uri) {
+    private Router(Uri uri) {
         this.uri = Utils.completeUri(uri);
     }
 
@@ -46,7 +44,7 @@ public final class Router{
      * @param url The url to create Router
      * @return new Router
      */
-    public static Router create(@NonNull String url) {
+    public static Router create(String url) {
         return new Router(Uri.parse(url));
     }
 
@@ -55,7 +53,7 @@ public final class Router{
      * @param uri the uri to create Router
      * @return new Router
      */
-    public static Router create(@NonNull Uri uri) {
+    public static Router create(Uri uri) {
         return new Router(uri);
     }
 
@@ -66,7 +64,7 @@ public final class Router{
      *
      * @see Router#getCallback()
      */
-    public Router setCallback (@Nullable RouteCallback callback) {
+    public Router setCallback (RouteCallback callback) {
         this.callback = callback;
         return this;
     }
@@ -75,7 +73,7 @@ public final class Router{
      * Obtain a callback put to use. will not be null.
      * @return if you had not set yet, it will returns a global callback obtain from {@link RouteManager#getCallback()}
      */
-    private @NonNull RouteCallback getCallback () {
+    private RouteCallback getCallback () {
         return callback == null ? RouteManager.get().getCallback() : callback;
     }
 
@@ -85,7 +83,7 @@ public final class Router{
      * @param extras last extras
      * @return The restored routing find by {@link Router#getRoute()}
      */
-    public static @NonNull IRoute resume(@NonNull Uri uri, @Nullable RouteBundleExtras extras) {
+    public static IRoute resume(Uri uri, RouteBundleExtras extras) {
         IRoute route = Router.create(uri).getRoute();
         if (route instanceof ActivityRoute && extras instanceof ActivityRouteBundleExtras) {
             ((ActivityRoute) route).replaceExtras((ActivityRouteBundleExtras) extras);
@@ -99,7 +97,7 @@ public final class Router{
      * launch routing task.
      * @param context context to launched
      */
-    public void open(@NonNull Context context) {
+    public void open(Context context) {
         getRoute().open(context);
     }
 
@@ -109,7 +107,7 @@ public final class Router{
      *  An IRoute object.it will be {@link BrowserRoute}, {@link ActivityRoute} or {@link ActionRoute}.<br>
      *  and it also will be {@link IRoute#EMPTY} if it not found
      */
-    public @NonNull IRoute getRoute () {
+    public IRoute getRoute () {
         if (ActionRoute.canOpenRouter(uri)) {
             return new ActionRoute().create(uri, getCallback());
         } else if (ActivityRoute.canOpenRouter(uri)) {
@@ -130,7 +128,7 @@ public final class Router{
      * </p>
      * @return returns an {@link IBaseRoute} finds by uri or {@link IBaseRoute#EMPTY} for not found
      */
-    public @NonNull IBaseRoute getBaseRoute() {
+    public IBaseRoute getBaseRoute() {
         IRoute route = getRoute();
         if (route instanceof IBaseRoute) {
             return (IBaseRoute) route;
@@ -144,7 +142,7 @@ public final class Router{
      * Get {@link IActivityRoute} by uri,you should get a route by this way and set some extras data before open
      * @return returns an {@link IActivityRoute} finds by uri or {@link IActivityRoute#EMPTY} for not found.
      */
-    public @NonNull IActivityRoute getActivityRoute() {
+    public IActivityRoute getActivityRoute() {
         if (ActivityRoute.canOpenRouter(uri)) {
             return (IActivityRoute) new ActivityRoute().create(uri, getCallback());
         }
@@ -160,7 +158,7 @@ public final class Router{
      * Get {@link IActionRoute} by uri,you should get a route by this way and set some extras data before open
      * @return returns an {@link IActionRoute} finds by uri or {@link IActionRoute#EMPTY} for not found.
      */
-    public @NonNull IActionRoute getActionRoute() {
+    public IActionRoute getActionRoute() {
         if (ActionRoute.canOpenRouter(uri)) {
             return (ActionRoute) new ActionRoute().create(uri, getCallback());
         }
@@ -176,11 +174,11 @@ public final class Router{
      * Set a global route callback to invoked when open a uri
      * @param callback can't be null
      */
-    public static void setGlobalRouteCallback (@NonNull RouteCallback callback) {
+    public static void setGlobalRouteCallback (RouteCallback callback) {
         RouteManager.get().setCallback(callback);
     }
 
-    public static void setGlobalRouteInterceptor (@NonNull RouteInterceptor interceptor) {
+    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {
         RouteManager.get().setInterceptor(interceptor);
     }
 
@@ -188,7 +186,7 @@ public final class Router{
      * Set to create route rules
      * @param creator Route rules creator.can't be null
      */
-    public static void addRouteCreator(@NonNull RouteCreator creator) {
+    public static void addRouteCreator(RouteCreator creator) {
         RouteManager.get().addCreator(creator);
     }
 
