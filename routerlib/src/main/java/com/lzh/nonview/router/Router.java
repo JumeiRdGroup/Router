@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) HaoGe <a href="https://github.com/yjfnypeu"/>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.lzh.nonview.router;
 
 import android.content.Context;
@@ -118,7 +134,7 @@ public final class Router{
             return BrowserRoute.getInstance().setUri(uri);
         } else {
             getCallback().notFound(uri,new NotFoundException(String.format("find Route by %s failed:",uri),
-                    NotFoundException.NotFoundType.SCHEME,uri.toString()));
+                    NotFoundException.TYPE_SCHEMA,uri.toString()));
             return IRoute.EMPTY;
         }
     }
@@ -136,7 +152,7 @@ public final class Router{
             return (IBaseRoute) route;
         }
         getCallback().notFound(uri, new NotFoundException(String.format("find BaseRoute by %s failed:",uri),
-                NotFoundException.NotFoundType.SCHEME, uri.toString()));
+                NotFoundException.TYPE_SCHEMA, uri.toString()));
         return IBaseRoute.EMPTY;
     }
 
@@ -152,7 +168,7 @@ public final class Router{
         // return an empty route to avoid NullPointException
         getCallback().notFound(uri,
                 new NotFoundException(String.format("find Activity Route by %s failed:",uri),
-                        NotFoundException.NotFoundType.SCHEME,uri.toString()));
+                        NotFoundException.TYPE_SCHEMA,uri.toString()));
         return IActivityRoute.EMPTY;
     }
 
@@ -168,7 +184,7 @@ public final class Router{
         // return a empty route to avoid NullPointException
         getCallback().notFound(uri,
                 new NotFoundException(String.format("find Action Route by %s failed:",uri),
-                        NotFoundException.NotFoundType.SCHEME,uri.toString()));
+                        NotFoundException.TYPE_SCHEMA,uri.toString()));
         return IActionRoute.EMPTY;
     }
 
