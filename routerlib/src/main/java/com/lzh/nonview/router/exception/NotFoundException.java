@@ -1,10 +1,8 @@
 package com.lzh.nonview.router.exception;
 
 /**
- * Contains two types of not found<br>
- *     <li><i>route rule:</i> not found</li><br>
- *     <li><i>activity  :</i> not found</li><br>
  * @author haoge
+ * @see NotFoundType
  */
 public class NotFoundException extends RuntimeException {
 

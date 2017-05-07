@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import com.lzh.nonview.router.route.ActionSupport;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,7 @@ public class RouteRule<R> {
     /** Associate with {@link android.os.Bundle#putStringArrayList(String, ArrayList)} */
     public static final int STRING_LIST = 9;
 
+
     /**
      * @param clzName clzName must be a {@link Activity} or {@link ActionSupport} total name
      */
@@ -60,16 +63,6 @@ public class RouteRule<R> {
      * @param key the key in Url params.
      * @param type the required type. default is {@link RouteRule#STRING}
      * @return RouteRule
-     * @see RouteRule#STRING
-     * @see RouteRule#BYTE
-     * @see RouteRule#SHORT
-     * @see RouteRule#INT
-     * @see RouteRule#LONG
-     * @see RouteRule#FLOAT
-     * @see RouteRule#DOUBLE
-     * @see RouteRule#CHAR
-     * @see RouteRule#INT_LIST
-     * @see RouteRule#STRING_LIST
      */
     public R addParam (String key, int type) {
         params.put(key,type);

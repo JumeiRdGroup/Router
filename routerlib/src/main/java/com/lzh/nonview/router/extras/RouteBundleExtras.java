@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * An extra container contains {@link RouteBundleExtras#extras} and {@link RouteBundleExtras#interceptors}
  * <p>
- *      <li>extras: the extra bundle data set by {@link IBaseRoute#addExtras(Bundle)}</li>
- *      <li>interceptors: the extra RouteInterceptor set by {@link IBaseRoute#addInterceptor(RouteInterceptor)}</li>
+ *      <i>extras: the extra bundle data set by {@link IBaseRoute#addExtras(Bundle)}</i>
+ *      <i>interceptors: the extra RouteInterceptor set by {@link IBaseRoute#addInterceptor(RouteInterceptor)}</i>
  * </p>
  *
  * @author haoge

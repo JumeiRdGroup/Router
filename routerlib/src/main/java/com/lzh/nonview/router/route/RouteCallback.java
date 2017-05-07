@@ -4,9 +4,9 @@ import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.exception.NotFoundException.NotFoundType;
-import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
+import com.lzh.nonview.router.module.RouteRule;
 
 /**
  * The route callback to notify the status of routing event.
@@ -16,8 +16,8 @@ public interface RouteCallback {
 
     /**
      * There are two types of not found exception:<br>
-     *     <li><b>{@link NotFoundType#SCHEME}: </b>This uri can't match the corresponding routing</li><br>
-     *     <li><b>{@link NotFoundType#CLZ}: </b>The special routing event that matched with uri does not exist.</li>
+     *     <i><b>{@link NotFoundType#SCHEME}: </b>This uri can't match the corresponding routing</i><br>
+     *     <i><b>{@link NotFoundType#CLZ}: </b>The special routing event that matched with uri does not exist.</i>
      * @param uri uri the uri to open
      * @param e {@link NotFoundException}
      */
