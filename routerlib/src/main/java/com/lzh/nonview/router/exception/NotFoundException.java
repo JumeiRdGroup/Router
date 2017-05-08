@@ -36,7 +36,7 @@ public class NotFoundException extends RuntimeException {
 
     /**
      * @param detailMessage detail error message
-     * @param type one of {@link NotFoundException#TYPE_SCHEMA} and {@link NotFoundException#TYPE_SCHEMA}
+     * @param type one of {@link NotFoundException#TYPE_SCHEMA} and {@link NotFoundException#TYPE_CLZ}
      * @param notFoundName The routing target name matched with uri.
      * @see NotFoundException#TYPE_SCHEMA
      * @see NotFoundException#TYPE_CLZ

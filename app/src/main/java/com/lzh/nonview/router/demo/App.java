@@ -59,7 +59,7 @@ public class App extends Application {
             @Override
             public void onOpenSuccess(Uri uri, RouteRule rule) {
                 // 可在此进行route追踪
-                Toast.makeText(App.this, String.format("Launch routing task %s success", rule.getClzName()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.this, String.format("Launch routing task %s success", rule.getRuleClz()), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,7 +87,7 @@ public class App extends Application {
         @Override
         public Map<String, ActionRouteRule> createActionRouteRules() {
             Map<String, ActionRouteRule> routes = new HashMap<>();
-            routes.put("haoge://action/support", new ActionRouteRule(new SayHelloAction()));
+            routes.put("haoge://action/support", new ActionRouteRule(SayHelloAction.class));
             return routes;
         }
     }

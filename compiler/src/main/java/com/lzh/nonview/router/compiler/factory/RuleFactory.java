@@ -83,13 +83,8 @@ public class RuleFactory {
         String target = parser.getType().getQualifiedName().toString();
         TypeElement actType = UtilMgr.getMgr().getElementUtils().getTypeElement(target);
         CodeBlock.Builder codeBuilder;
-        if (Constants.CLASSNAME_ACTION_ROUTE_MAP.equals(className)) {
-            codeBuilder = CodeBlock.builder().add("routes.put($S,new $T(new $T())",
-                    schema, ClassName.bestGuess(className), actType);
-        } else {
-            codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
-                    schema, ClassName.bestGuess(className), actType);
-        }
+        codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
+                schema, ClassName.bestGuess(className), actType);
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.RouteManager;
-import com.lzh.nonview.router.Utils;
-import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
@@ -21,7 +19,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     @Override
     public Intent createIntent(Context context) {
         Intent intent = new Intent();
-        intent.setClassName(context, routeRule.getClzName());
+        intent.setClass(context, routeRule.getRuleClz());
         intent.putExtras(bundle);
         intent.putExtras(extras.getExtras());
         if (extras instanceof ActivityRouteBundleExtras) {
@@ -61,10 +59,6 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
 
     @Override
     protected void realOpen(Context context) throws Throwable {
-        String clzName = routeRule.getClzName();
-        if (!Utils.isClassSupport(clzName)) {
-            throw new NotFoundException(String.format("target activity is not found : %s",clzName), NotFoundException.TYPE_CLZ,clzName);
-        }
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
             ((Activity) context).startActivityForResult(intent,extras.getRequestCode());

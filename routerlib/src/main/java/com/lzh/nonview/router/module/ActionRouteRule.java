@@ -4,14 +4,7 @@ import com.lzh.nonview.router.route.ActionSupport;
 
 public class ActionRouteRule extends RouteRule<ActionRouteRule> {
 
-    private final ActionSupport target;
-
-    public ActionRouteRule(ActionSupport target) {
-        super(target.getClass().getCanonicalName());
-        this.target = target;
-    }
-
-    public ActionSupport getTarget() {
-        return target;
+    public <T extends ActionSupport> ActionRouteRule(Class<T> clz) {
+        super(clz);
     }
 }

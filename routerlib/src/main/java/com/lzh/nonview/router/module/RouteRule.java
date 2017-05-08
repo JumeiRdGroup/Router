@@ -4,8 +4,6 @@ import android.app.Activity;
 
 import com.lzh.nonview.router.route.ActionSupport;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,17 +39,17 @@ public class RouteRule<R> {
 
 
     /**
-     * @param clzName clzName must be a {@link Activity} or {@link ActionSupport} total name
+     * @param clz clzName must be a {@link Activity} or {@link ActionSupport} total name
      */
-    public RouteRule(String clzName) {
-        this.clzName = clzName;
+    public RouteRule(Class clz) {
+        this.clz = clz;
     }
 
-    private String clzName;
+    private Class clz;
     private Map<String,Integer> params = new HashMap<>();
 
-    public String getClzName() {
-        return clzName;
+    public Class getRuleClz() {
+        return clz;
     }
 
     public Map<String,Integer> getParams() {
