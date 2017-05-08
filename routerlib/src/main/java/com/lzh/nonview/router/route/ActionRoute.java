@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.lzh.compiler.parceler.Parceler;
 import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
@@ -27,6 +29,9 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
         Bundle data = new Bundle();
         data.putAll(bundle);
         data.putAll(extras.getExtras());
+        if (Utils.PARCELER_SUPPORT) {
+            Parceler.toEntity(support, data);// inject data
+        }
         support.onRouteTrigger(context, data);
     }
 

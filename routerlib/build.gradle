@@ -36,6 +36,8 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile project(':annotation')
+
+    provided 'org.lzh.compiler.parceler:parceler-api:0.9'
 }
 
 publish {

@@ -21,6 +21,8 @@ import java.util.Set;
 
 public class Utils {
 
+    public static final boolean PARCELER_SUPPORT;
+
     /**
      * Adjust if the scheme is http or https
      * @param scheme scheme for uri
@@ -28,20 +30,6 @@ public class Utils {
      */
     public static boolean isHttp (String scheme) {
         return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
-    }
-
-    /**
-     * Check if the class is available with clzName
-     * @param clzName class name
-     * @return return true if the clz name is supported
-     */
-    public static boolean isClassSupport (String clzName) {
-        try {
-            Class.forName(clzName);
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 
     public static String wrapScheme (String scheme) {
@@ -127,6 +115,19 @@ public class Utils {
                 return new ListBundle(type);
             default:
                 return new SimpleBundle(RouteRule.STRING);
+        }
+    }
+
+    static {
+        boolean isSupport = true;
+        try {
+            Class parceler = Class.forName("com.lzh.compiler.parceler.Parceler");
+            parceler.getMethod("toEntity", Object.class, Bundle.class);
+            isSupport = true;
+        } catch (Throwable e) {
+            isSupport = false;
+        } finally {
+            PARCELER_SUPPORT = isSupport;
         }
     }
 }
