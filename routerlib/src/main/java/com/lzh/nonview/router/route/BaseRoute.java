@@ -17,7 +17,7 @@ import com.lzh.nonview.router.parser.URIParser;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRoute<T, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
+public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
     URIParser parser;
     Bundle bundle;
     E extras;

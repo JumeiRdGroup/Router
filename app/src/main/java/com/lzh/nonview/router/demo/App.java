@@ -29,6 +29,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         // 添加route规则创建器
+
         Router.addRouteCreator(new RouteInit());
         Router.addRouteCreator(new RouterRuleCreator());
         Router.setGlobalRouteInterceptor(new RouteInterceptor() {

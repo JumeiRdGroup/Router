@@ -15,7 +15,7 @@ import java.util.List;
  *     {@link IActionRoute} and {@link IActivityRoute}
  * @param <T> The real type
  */
-public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
+public interface IBaseRoute<T extends IBaseRoute> extends IRoute, RouteInterceptorAction<T>{
     /**
      * add extra bundle data to {@link RouteBundleExtras}
      * @param extras bundle data
@@ -24,6 +24,32 @@ public interface IBaseRoute<T> extends IRoute, RouteInterceptorAction<T>{
      * @see IActivityRoute
      */
     T addExtras(Bundle extras);
+
+    /**
+     * Add a interceptor to container
+     * @param interceptor interceptor instance
+     * @return The real type
+     */
+    T addInterceptor (RouteInterceptor interceptor);
+
+    /**
+     * Remove a interceptor from container
+     * @param interceptor interceptor instance
+     * @return The real type
+     */
+    T removeInterceptor (RouteInterceptor interceptor);
+
+    /**
+     * remove all of interceptors you has set before
+     * @return The real type
+     */
+    T removeAllInterceptors ();
+
+    /**
+     * get all interceptors you has set before
+     * @return all of interceptors
+     */
+    List<RouteInterceptor> getInterceptors ();
 
     IBaseRoute EMPTY = new IBaseRoute<IBaseRoute>() {
         @Override
