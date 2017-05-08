@@ -1,19 +1,25 @@
 package com.lzh.nonview.router.compiler.model;
 
 import com.lzh.compiler.parceler.annotation.Arg;
+import com.lzh.nonview.router.anno.RouteExecutor;
 import com.lzh.nonview.router.anno.RouterRule;
+import com.lzh.nonview.router.compiler.Constants;
 import com.lzh.nonview.router.compiler.exception.RouterException;
+import com.lzh.nonview.router.compiler.util.UtilMgr;
 import com.lzh.nonview.router.compiler.util.Utils;
+import com.squareup.javapoet.ClassName;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 
 public class Parser {
@@ -22,12 +28,27 @@ public class Parser {
     private TypeElement type;
     private BasicConfigurations configurations;
     private Map<String,TypeMirror> map = new HashMap<>();
+    private ClassName executorClass;
 
     public static Parser create (TypeElement element,BasicConfigurations configurations) {
         Parser parser = new Parser();
         parser.type = element;
         parser.configurations = configurations;
+        parser.executorClass = parser.obtainExecutor();
         return parser;
+    }
+
+    private ClassName obtainExecutor() {
+        RouteExecutor annotation = type.getAnnotation(RouteExecutor.class);
+        if (annotation == null) {
+            return ClassName.bestGuess(Constants.CLASSNAME_MAINTHREADEXECUTOR);
+        }
+        try {
+            return ClassName.get(annotation.value());
+        } catch (MirroredTypeException mirrored) {
+            TypeMirror typeMirror = mirrored.getTypeMirror();
+            return ClassName.get((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(typeMirror));
+        }
     }
 
     public void parse () {
@@ -40,6 +61,7 @@ public class Parser {
             checkIsDuplicate(route);
         }
     }
+
 
     private String completeRoute(String route, String basicSchema) {
         if (Utils.isEmpty(route)) {
@@ -94,6 +116,10 @@ public class Parser {
 
     public TypeElement getType() {
         return type;
+    }
+
+    public ClassName getExecutorClass() {
+        return executorClass;
     }
 }
 

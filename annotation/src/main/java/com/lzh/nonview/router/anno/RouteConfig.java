@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * This annotation defined some basic configurations
  */
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.CLASS)
 @Target({ElementType.TYPE})
 public @interface RouteConfig {
     /**

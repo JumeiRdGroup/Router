@@ -36,7 +36,6 @@ public class RuleFactory {
 
     public RuleFactory(ClassName name, List<Parser> parserList) {
         this.clzName = name;
-//        this.parserList = parserList;
         for (Parser item :  parserList) {
             if (Utils.isSuperClass(item.getType(), Constants.CLASSNAME_ACTIVITY)) {
                 activityParser.add(item);
@@ -89,6 +88,11 @@ public class RuleFactory {
         for (String key : keySet) {
             codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));
         }
+
+        if (Constants.CLASSNAME_ACTION_ROUTE_MAP.equals(className)) {
+            codeBuilder.add(".setExecutorClass($T.class)", parser.getExecutorClass());
+        }
+
         codeBuilder.addStatement(")");
         methodCreator.addCode(codeBuilder.build());
     }
