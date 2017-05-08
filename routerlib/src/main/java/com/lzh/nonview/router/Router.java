@@ -52,6 +52,7 @@ public final class Router{
 
     private Uri uri;
     private RouteCallback callback;
+    private boolean isCallNotFound = false;
 
     private Router(Uri uri) {
         this.uri = Utils.completeUri(uri);
@@ -160,8 +161,9 @@ public final class Router{
      * @return returns an {@link IActivityRoute} finds by uri or {@link IActivityRoute#EMPTY} for not found.
      */
     public IActivityRoute getActivityRoute() {
-        if (ActivityRoute.canOpenRouter(uri)) {
-            return (IActivityRoute) new ActivityRoute().create(uri, getCallback());
+        IRoute route = getRoute();
+        if (route instanceof IActivityRoute) {
+            return (IActivityRoute) route;
         }
 
         // return an empty route to avoid NullPointException
@@ -174,9 +176,11 @@ public final class Router{
      * @return returns an {@link IActionRoute} finds by uri or {@link IActionRoute#EMPTY} for not found.
      */
     public IActionRoute getActionRoute() {
-        if (ActionRoute.canOpenRouter(uri)) {
-            return (ActionRoute) new ActionRoute().create(uri, getCallback());
+        IRoute route = getRoute();
+        if (route instanceof IActivityRoute) {
+            return (IActionRoute) route;
         }
+
         notifyNotFound(String.format("find Action Route by %s failed:",uri));
         // return a empty route to avoid NullPointException
         return IActionRoute.EMPTY;
@@ -203,8 +207,10 @@ public final class Router{
     }
 
     private void notifyNotFound(String msg) {
-        getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
-        // reset callback to null to avoid call notFound some times
-        this.callback = null;
+        if (!isCallNotFound) {
+            getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+        }
+        // ensure the method notFound called once.
+        isCallNotFound = true;
     }
 }
