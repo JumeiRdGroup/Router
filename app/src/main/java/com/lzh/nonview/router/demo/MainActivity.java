@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.to_parceler_router})
+    @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.action_say_hello, R.id.action_subthread})
     void onSimpleClick (TextView tv) {
         // 直接使用open进行跳转
         Router.create(tv.getText().toString()).open(this);

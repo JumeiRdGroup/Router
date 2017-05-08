@@ -12,6 +12,7 @@
             android:id="@+id/to_webview"
             android:text="www.baidu.com"
             android:textAllCaps="false"
+            android:onClick="onSimpleClick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -19,13 +20,23 @@
             android:id="@+id/use_simple_router"
             android:text="jumei://main?username=Haoge&amp;password=&amp;books=Android从入门到放弃&amp;books=颈椎病康复指南&amp;prices=9"
             android:textAllCaps="false"
+            android:onClick="onSimpleClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/to_parceler_router"
+            android:id="@+id/action_say_hello"
             android:text="haoge://action/support?username=haoge&amp;address=China&amp;strList=hello&amp;strList=world"
             android:textAllCaps="false"
+            android:onClick="onSimpleClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/action_subthread"
+            android:text="haoge://test/sub/thread/"
+            android:textAllCaps="false"
+            android:onClick="onSimpleClick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
