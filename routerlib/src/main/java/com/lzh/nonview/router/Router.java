@@ -133,8 +133,7 @@ public final class Router{
         } else if (BrowserRoute.canOpenRouter(uri)) {
             return BrowserRoute.getInstance().setUri(uri);
         } else {
-            getCallback().notFound(uri,new NotFoundException(String.format("find Route by %s failed:",uri),
-                    NotFoundException.TYPE_SCHEMA,uri.toString()));
+            notifyNotFound(String.format("find Route by %s failed:",uri));
             return IRoute.EMPTY;
         }
     }
@@ -151,8 +150,8 @@ public final class Router{
         if (route instanceof IBaseRoute) {
             return (IBaseRoute) route;
         }
-        getCallback().notFound(uri, new NotFoundException(String.format("find BaseRoute by %s failed:",uri),
-                NotFoundException.TYPE_SCHEMA, uri.toString()));
+
+        notifyNotFound(String.format("find BaseRoute by %s failed:",uri));
         return IBaseRoute.EMPTY;
     }
 
@@ -166,9 +165,7 @@ public final class Router{
         }
 
         // return an empty route to avoid NullPointException
-        getCallback().notFound(uri,
-                new NotFoundException(String.format("find Activity Route by %s failed:",uri),
-                        NotFoundException.TYPE_SCHEMA,uri.toString()));
+        notifyNotFound(String.format("find Activity Route by %s failed:",uri));
         return IActivityRoute.EMPTY;
     }
 
@@ -180,11 +177,8 @@ public final class Router{
         if (ActionRoute.canOpenRouter(uri)) {
             return (ActionRoute) new ActionRoute().create(uri, getCallback());
         }
-
+        notifyNotFound(String.format("find Action Route by %s failed:",uri));
         // return a empty route to avoid NullPointException
-        getCallback().notFound(uri,
-                new NotFoundException(String.format("find Action Route by %s failed:",uri),
-                        NotFoundException.TYPE_SCHEMA,uri.toString()));
         return IActionRoute.EMPTY;
     }
 
@@ -208,5 +202,9 @@ public final class Router{
         RouteManager.get().addCreator(creator);
     }
 
-
+    private void notifyNotFound(String msg) {
+        getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+        // reset callback to null to avoid call notFound some times
+        this.callback = null;
+    }
 }
