@@ -88,7 +88,7 @@ public final class RouteManager {
      * obtain a callback put to use. will not be null.
      * @return if you had not set yet, it will returns {@link RouteCallback#EMPTY}
      */
-    RouteCallback getCallback() {
+    public RouteCallback getCallback() {
         return globalCallback == null ? EmptyCallback : globalCallback;
     }
 

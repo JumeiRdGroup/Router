@@ -21,16 +21,17 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     URIParser parser;
     Bundle bundle;
     E extras;
-    RouteCallback callback = RouteCallback.EMPTY;
+    private RouteCallback.InternalCallback callback;
     Uri uri;
     RouteRule routeRule = null;
 
-    public final IRoute create(Uri uri, RouteCallback callback) {
+    public final IRoute create(Uri uri, RouteCallback.InternalCallback callback) {
         try {
             this.uri = uri;
             this.callback = callback;
-            this.parser = new URIParser(uri);
             this.extras = createExtras();
+            this.extras.setCallback(callback.getCallback());
+            this.parser = new URIParser(uri);
             this.routeRule = obtainRouteMap();
             this.bundle = Utils.parseRouteMapToBundle(parser, routeRule);
             this.bundle.putParcelable(Router.RAW_URI, uri);
@@ -111,6 +112,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     public void replaceExtras(E extras) {
         if (extras != null) {
             this.extras = extras;
+            this.callback.setCallback(extras.getCallback());
         }
     }
 

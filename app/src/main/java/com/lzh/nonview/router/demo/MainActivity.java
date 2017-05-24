@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
+import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.route.RouteCallback;
 
 import java.io.Serializable;
 
@@ -44,7 +47,9 @@ public class MainActivity extends BaseActivity {
         extras.putString("username","haoge");
         extras.putString("password","lzh");
         extras.putString("usertype","VIP");
-        Router.create("jumei://main").getActivityRoute()
+        Router.create("jumei://main")
+                .setCallback(new SerializableCallback())
+                .getActivityRoute()
 //                .addInterceptor(new SerialInterceptor())
 //                .addInterceptor(new ParcelableInterceptor())
                 .addExtras(extras)// 添加额外参数
@@ -99,6 +104,27 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
             Log.e("MainActivity","被Parcelable的拦截器拦截");
+        }
+    }
+
+    private static class SerializableCallback implements RouteCallback, Serializable {
+
+        @Override
+        public void notFound(Uri uri, NotFoundException e) {
+            System.out.println("SerializableCallback.notFound");
+            System.out.println("uri = [" + uri + "], e = [" + e + "]");
+        }
+
+        @Override
+        public void onOpenSuccess(Uri uri, RouteRule rule) {
+            System.out.println("SerializableCallback.onOpenSuccess");
+            System.out.println("uri = [" + uri + "], rule = [" + rule + "]");
+        }
+
+        @Override
+        public void onOpenFailed(Uri uri, Throwable e) {
+            System.out.println("SerializableCallback.onOpenFailed");
+            System.out.println("uri = [" + uri + "], e = [" + e + "]");
         }
     }
 

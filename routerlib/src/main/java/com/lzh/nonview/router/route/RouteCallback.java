@@ -2,6 +2,7 @@ package com.lzh.nonview.router.route;
 
 import android.net.Uri;
 
+import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
@@ -49,4 +50,58 @@ public interface RouteCallback {
         @Override
         public void onOpenFailed(Uri uri, Throwable e) {}
     };
+
+    // ===========internal apis================
+    final class InternalCallback implements RouteCallback {
+
+        boolean hasCalled = false;
+        RouteCallback callback;
+
+        public void setCallback(RouteCallback callback) {
+            this.callback = callback;
+        }
+
+        public RouteCallback getCallback() {
+            return callback;
+        }
+
+        @Override
+        public void notFound(Uri uri, NotFoundException e) {
+            if (hasCalled) {
+                return;
+            }
+            RouteCallback global = RouteManager.get().getCallback();
+            global.notFound(uri, e);
+            if (callback != null && callback != global) {
+                callback.notFound(uri, e);
+            }
+            callback = null;
+        }
+
+        @Override
+        public void onOpenSuccess(Uri uri, RouteRule rule) {
+            if (hasCalled) {
+                return;
+            }
+            RouteCallback global = RouteManager.get().getCallback();
+            global.onOpenSuccess(uri, rule);
+            if (callback != null && callback != global) {
+                callback.onOpenSuccess(uri, rule);
+            }
+            callback = null;
+        }
+
+        @Override
+        public void onOpenFailed(Uri uri, Throwable e) {
+            if (hasCalled) {
+                return;
+            }
+            RouteCallback global = RouteManager.get().getCallback();
+            global.onOpenFailed(uri, e);
+            if (callback != null && callback != global) {
+                callback.onOpenFailed(uri, e);
+            }
+            callback = null;
+        }
+    }
 }

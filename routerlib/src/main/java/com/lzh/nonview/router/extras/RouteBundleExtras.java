@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import com.lzh.nonview.router.route.IBaseRoute;
+import com.lzh.nonview.router.route.RouteCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
     private Bundle extras = new Bundle();
     private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
+    private RouteCallback callback;
     protected RouteBundleExtras() {}
 
     protected RouteBundleExtras(Parcel in) {
@@ -40,6 +42,15 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
                 interceptor = (RouteInterceptor) in.readSerializable();
             }
             addInterceptor(interceptor);
+        }
+        int type = in.readInt();
+        switch (type) {
+            case 0:
+                callback = in.readParcelable(getClass().getClassLoader());
+                break;
+            case 1:
+                callback = (RouteCallback) in.readSerializable();
+                break;
         }
     }
 
@@ -83,6 +94,16 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
                 dest.writeSerializable(serializable);
             }
         }
+
+        if (callback != null && callback instanceof Parcelable) {
+            dest.writeInt(0);
+            dest.writeParcelable((Parcelable) callback, flags);
+        } else if (callback != null && callback instanceof Serializable){
+            dest.writeInt(1);
+            dest.writeSerializable((Serializable) callback);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     public Bundle getExtras() {
@@ -121,5 +142,13 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
     @Override
     public List<RouteInterceptor> getInterceptors() {
         return interceptors;
+    }
+
+    public void setCallback(RouteCallback callback) {
+        this.callback = callback;
+    }
+
+    public RouteCallback getCallback() {
+        return callback;
     }
 }

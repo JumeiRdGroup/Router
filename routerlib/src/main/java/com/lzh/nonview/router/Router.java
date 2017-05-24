@@ -52,7 +52,7 @@ public final class Router{
 
     private Uri uri;
     private RouteCallback callback;
-    private boolean isCallNotFound = false;
+    private RouteCallback.InternalCallback internalCallback;
 
     private Router(Uri uri) {
         this.uri = Utils.completeUri(uri);
@@ -92,8 +92,12 @@ public final class Router{
      * Obtain a callback put to use. will not be null.
      * @return if you had not set yet, it will returns a global callback obtain from {@link RouteManager#getCallback()}
      */
-    private RouteCallback getCallback () {
-        return callback == null ? RouteManager.get().getCallback() : callback;
+    private RouteCallback.InternalCallback getCallback () {
+        if (internalCallback == null) {
+            internalCallback = new RouteCallback.InternalCallback();
+            internalCallback.setCallback(callback);
+        }
+        return internalCallback;
     }
 
     /**
@@ -177,7 +181,7 @@ public final class Router{
      */
     public IActionRoute getActionRoute() {
         IRoute route = getRoute();
-        if (route instanceof IActivityRoute) {
+        if (route instanceof IActionRoute) {
             return (IActionRoute) route;
         }
 
@@ -207,10 +211,6 @@ public final class Router{
     }
 
     private void notifyNotFound(String msg) {
-        if (!isCallNotFound) {
-            getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
-        }
-        // ensure the method notFound called once.
-        isCallNotFound = true;
+        getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
     }
 }
