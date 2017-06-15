@@ -17,6 +17,7 @@ import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.parser.URIParser;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.io.Serializable;
@@ -32,9 +33,10 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
     }
 
-    @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.action_say_hello, R.id.action_subthread})
+    @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.encode_query, R.id.action_say_hello, R.id.action_subthread})
     void onSimpleClick (TextView tv) {
         // 直接使用open进行跳转
         Router.create(tv.getText().toString()).open(this);

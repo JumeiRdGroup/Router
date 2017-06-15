@@ -25,6 +25,13 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/encode_query"
+            android:text="haoge://haoge.cn/parceler?url=haoge%3A%2F%2Faction%2Fsupport%3Fusername%3Dhaoge"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/action_say_hello"
             android:text="haoge://action/support?username=haoge&amp;address=China&amp;strList=hello&amp;strList=world"
             android:textAllCaps="false"
