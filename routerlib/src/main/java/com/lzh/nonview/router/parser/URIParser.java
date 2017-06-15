@@ -30,9 +30,9 @@ public class URIParser {
         if (host.endsWith("/")) {
             host = host.substring(0,host.lastIndexOf("/"));
         }
-        String query = uri.getQuery();
+        String query = uri.getEncodedQuery();
         if (!TextUtils.isEmpty(query)) {
-            params = parseParams(uri.getQuery());
+            params = parseParams(query);
         } else {
             params = new HashMap<>();
         }
