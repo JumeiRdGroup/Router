@@ -70,6 +70,7 @@ public interface RouteCallback {
             if (hasCalled) {
                 return;
             }
+            hasCalled = true;
             RouteCallback global = RouteManager.get().getCallback();
             global.notFound(uri, e);
             if (callback != null && callback != global) {
@@ -83,6 +84,7 @@ public interface RouteCallback {
             if (hasCalled) {
                 return;
             }
+            hasCalled = true;
             RouteCallback global = RouteManager.get().getCallback();
             global.onOpenSuccess(uri, rule);
             if (callback != null && callback != global) {
@@ -96,6 +98,7 @@ public interface RouteCallback {
             if (hasCalled) {
                 return;
             }
+            hasCalled = true;
             RouteCallback global = RouteManager.get().getCallback();
             global.onOpenFailed(uri, e);
             if (callback != null && callback != global) {
