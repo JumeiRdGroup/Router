@@ -46,7 +46,7 @@ apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ![route](./pics/route.gif)
 ### Usage
 
-[Router wiki](https://github.com/yjfnypeu/Router/wiki)
+[参考Router wiki](https://github.com/yjfnypeu/Router/wiki)
 
 ### ChangeLog
 
