@@ -35,9 +35,16 @@ import java.util.concurrent.Executor;
  * @author haoge
  */
 public final class RouteManager {
-    private final static RouteManager manager = new RouteManager();
+    private static RouteManager manager;
     private RouteManager() {}
     public static RouteManager get() {
+        if (manager == null) {
+            synchronized (RouteManager.class) {
+                if (manager == null) {
+                    manager = new RouteManager();
+                }
+            }
+        }
         return manager;
     }
 
