@@ -1,12 +1,10 @@
 package com.lzh.nonview.router.demo;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Size;
 import android.widget.TextView;
 
 import com.lzh.compiler.parceler.annotation.Arg;
-import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 

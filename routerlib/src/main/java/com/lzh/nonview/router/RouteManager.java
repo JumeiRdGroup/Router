@@ -15,19 +15,20 @@
  */
 package com.lzh.nonview.router;
 
+import com.lzh.nonview.router.executors.MainThreadExecutor;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
-import com.lzh.nonview.router.route.ActionSupport;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 /**
  * A single data manager to manage some route configurations.
@@ -62,7 +63,8 @@ public final class RouteManager {
     private Map<String,ActionRouteRule> actionRouteMap = new HashMap<>();
     public static final int TYPE_ACTIVITY_ROUTE = 0;
     public static final int TYPE_ACTION_ROUTE = 1;
-    private Map<String, ActionSupport> supportMap = new HashMap<>();
+
+    private final static Map<Class<? extends Executor>, Executor> container = new HashMap<>();
 
     /**
      * Set a global route callback to notify users the status of routing event.
@@ -154,6 +156,35 @@ public final class RouteManager {
         if (target != null && src != null) {
             src.putAll(target);
         }
+    }
+
+    public static Executor findOrCreateExecutor(Class<? extends Executor> key) {
+        try {
+            Executor executor = container.get(key);
+            if (executor == null) {
+                executor = key.newInstance();
+                registerExecutors(key, executor);
+            }
+            return executor;
+        } catch (Throwable t) {
+            // provided MainThreadExecutor if occurs an error.
+            return new MainThreadExecutor();
+        }
+    }
+
+    /**
+     * To register an Executor to be used.
+     * @param key The class of Executor
+     * @param value The Executor instance associate with the key.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static void registerExecutors(Class<? extends Executor> key, Executor value) {
+        if (key == null || value == null) {
+            return;
+        }
+
+        container.remove(key);
+        container.put(key, value);
     }
 
 }

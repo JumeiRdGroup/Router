@@ -13,6 +13,7 @@ import com.lzh.nonview.router.demo.action.SayHelloAction;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
+import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
@@ -70,7 +71,7 @@ public class App extends Application {
         });
     }
 
-    class RouteInit implements RouteCreator {
+    private class RouteInit implements RouteCreator {
 
         @Override
         public Map<String, ActivityRouteRule> createActivityRouteRules() {
@@ -81,6 +82,7 @@ public class App extends Application {
                             .addParam("bookName", RouteRule.STRING)
                             .addParam("books", RouteRule.STRING_LIST)
                             .addParam("prices", RouteRule.INT_LIST)
+                            .setLauncher(DefaultActivityLauncher.class)
             );
             return routes;
         }

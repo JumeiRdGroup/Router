@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.demo.base.BaseActivity;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 
 import butterknife.OnClick;

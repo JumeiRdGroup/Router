@@ -26,19 +26,22 @@ import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
+import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
-    URIParser parser;
-    Bundle bundle;
-    E extras;
+    protected URIParser parser;
+    protected Bundle bundle;
+    protected E extras;
     private RouteCallback.InternalCallback callback;
-    Uri uri;
-    RouteRule routeRule = null;
+    protected Uri uri;
+    protected RouteRule routeRule = null;
+    protected Launcher launcher;
 
     public final IRoute create(Uri uri, RouteCallback.InternalCallback callback) {
         try {
@@ -50,6 +53,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
             this.routeRule = obtainRouteMap();
             this.bundle = Utils.parseRouteMapToBundle(parser, routeRule);
             this.bundle.putParcelable(Router.RAW_URI, uri);
+            this.launcher = obtainLauncher();
             return this;
         } catch (Throwable e) {
             callback.onOpenFailed(uri,e);
@@ -62,7 +66,9 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     public final void open(Context context) {
         try {
             Utils.checkInterceptor(uri, extras,context,getInterceptors());
-            realOpen(context);
+            launcher.set(uri, bundle, extras, routeRule);
+            launcher.open(context);
+//            realOpen(context);
             callback.onOpenSuccess(uri, routeRule);
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
@@ -76,7 +82,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     @Override
     public T addExtras(Bundle extras) {
         this.extras.addExtras(extras);
-        //noinspection unchecked
         return (T) this;
     }
 
@@ -85,7 +90,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
         if (extras != null) {
             extras.addInterceptor(interceptor);
         }
-        //noinspection unchecked
         return (T) this;
     }
 
@@ -94,7 +98,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
         if (extras != null) {
             extras.removeInterceptor(interceptor);
         }
-        //noinspection unchecked
         return (T) this;
     }
 
@@ -103,7 +106,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
         if (extras != null) {
             extras.removeAllInterceptors();
         }
-        //noinspection unchecked
         return (T) this;
     }
 
@@ -136,6 +138,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
 
     protected abstract RouteRule obtainRouteMap();
 
-    protected abstract void realOpen(Context context) throws Throwable;
+    protected abstract Launcher obtainLauncher() throws Exception;
 
 }

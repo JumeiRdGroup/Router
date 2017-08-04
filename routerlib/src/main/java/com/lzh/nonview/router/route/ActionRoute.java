@@ -15,15 +15,14 @@
  */
 package com.lzh.nonview.router.route;
 
-import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
 
-import com.lzh.compiler.parceler.Parceler;
 import com.lzh.nonview.router.RouteManager;
-import com.lzh.nonview.router.Utils;
 import com.lzh.nonview.router.executors.MainThreadExecutor;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
+import com.lzh.nonview.router.launcher.ActionLauncher;
+import com.lzh.nonview.router.launcher.DefaultActionLauncher;
+import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
@@ -47,16 +46,13 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
     }
 
     @Override
-    protected void realOpen(final Context context) throws Throwable {
+    protected Launcher obtainLauncher() throws Exception{
         ActionRouteRule rule = (ActionRouteRule) routeRule;
-        final ActionSupport support = (ActionSupport) rule.getRuleClz().newInstance();
-        final Bundle data = new Bundle();
-        data.putAll(bundle);
-        data.putAll(extras.getExtras());
-        if (Utils.PARCELER_SUPPORT) {
-            Parceler.toEntity(support, data);// inject data
+        Class<? extends ActionLauncher> launcher = rule.getLauncher();
+        if (launcher == null) {
+            launcher = DefaultActionLauncher.class;
         }
-        findOrCreateByClass(rule.getExecutorClz()).execute(new ActionRunnable(support, context, data));
+        return launcher.newInstance();
     }
 
     public static boolean canOpenRouter(Uri uri) {
@@ -82,35 +78,10 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
     }
 
     /**
-     * To register an Executor to be used.
-     * @param key The class of Executor
-     * @param value The Executor instance associate with the key.
+     * @see RouteManager#registerExecutors(Class, Executor)
      */
-    @SuppressWarnings("WeakerAccess")
+    @Deprecated
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {
-        if (key == null || value == null) {
-            return;
-        }
-
-        container.remove(key);
-        container.put(key, value);
-    }
-
-    private static class ActionRunnable implements Runnable {
-
-        ActionSupport support;
-        Context context;
-        Bundle data;
-
-        ActionRunnable(ActionSupport support, Context context, Bundle data) {
-            this.support = support;
-            this.context = context;
-            this.data = data;
-        }
-
-        @Override
-        public void run() {
-            support.onRouteTrigger(context, data);
-        }
+        RouteManager.registerExecutors(key, value);
     }
 }

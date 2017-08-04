@@ -15,13 +15,16 @@
  */
 package com.lzh.nonview.router.route;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.RouteManager;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.launcher.ActivityLauncher;
+import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
+import com.lzh.nonview.router.launcher.Launcher;
+import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
@@ -33,12 +36,9 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
 
     @Override
     public Intent createIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, routeRule.getRuleClz());
-        intent.putExtras(bundle);
-        intent.putExtras(extras.getExtras());
-        intent.addFlags(extras.getFlags());
-        return intent;
+        ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
+        activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule);
+        return activityLauncher.createIntent(context);
     }
 
     @Override
@@ -71,19 +71,13 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     }
 
     @Override
-    protected void realOpen(Context context) throws Throwable {
-        Intent intent = createIntent(context);
-        if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
-            int inAnimation = extras.getInAnimation();
-            int outAnimation = extras.getOutAnimation();
-            if (inAnimation >= 0 && outAnimation >= 0) {
-                ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
-            }
-        } else {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+    protected Launcher obtainLauncher() throws Exception{
+        ActivityRouteRule rule = (ActivityRouteRule) routeRule;
+        Class<? extends ActivityLauncher> launcher = rule.getLauncher();
+        if (launcher == null) {
+            launcher = DefaultActivityLauncher.class;
         }
+        return launcher.newInstance();
     }
 
     public static boolean canOpenRouter(Uri uri) {

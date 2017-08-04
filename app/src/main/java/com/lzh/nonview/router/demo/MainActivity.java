@@ -17,7 +17,6 @@ import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteRule;
-import com.lzh.nonview.router.parser.URIParser;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.io.Serializable;

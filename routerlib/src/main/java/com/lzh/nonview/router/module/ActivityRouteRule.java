@@ -18,11 +18,11 @@ package com.lzh.nonview.router.module;
 
 import android.app.Activity;
 
-public class ActivityRouteRule extends RouteRule<ActivityRouteRule> {
+import com.lzh.nonview.router.launcher.ActivityLauncher;
+
+public class ActivityRouteRule extends RouteRule<ActivityRouteRule, ActivityLauncher> {
 
     public <T extends Activity> ActivityRouteRule(Class<T> clz) {
         super(clz);
     }
-
-
 }

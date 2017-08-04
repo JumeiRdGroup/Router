@@ -17,6 +17,7 @@ package com.lzh.nonview.router.module;
 
 import android.app.Activity;
 
+import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.route.ActionSupport;
 
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ import java.util.Map;
 
 /**
  * An entity to contains some data for route
+ *
  * @author haoge
  */
-public class RouteRule<R> {
+@SuppressWarnings("unchecked")
+public class RouteRule<R extends RouteRule, L extends Launcher> {
     /** Associate with {@link android.os.Bundle#putString(String, String)}*/
     public static final int STRING = -1;
     /** Associate with {@link android.os.Bundle#putByte(String, byte)} */
@@ -62,6 +65,7 @@ public class RouteRule<R> {
 
     private Class clz;
     private Map<String,Integer> params = new HashMap<>();
+    private Class<? extends L> launcher;
 
     public Class getRuleClz() {
         return clz;
@@ -79,9 +83,15 @@ public class RouteRule<R> {
      */
     public R addParam (String key, int type) {
         params.put(key,type);
-        //noinspection unchecked
         return (R) this;
     }
 
+    public R setLauncher(Class<? extends L> launcher) {
+        this.launcher = launcher;
+        return (R) this;
+    }
 
+    public Class<? extends L> getLauncher() {
+        return launcher;
+    }
 }
