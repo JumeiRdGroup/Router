@@ -18,7 +18,6 @@ import javax.lang.model.type.TypeMirror;
 /**
  * Created by admin on 16/10/20.
  */
-
 public class Utils {
 
     /**
@@ -65,11 +64,6 @@ public class Utils {
                 return false;
             }
         } while (true);
-//        while (ClassName.get(superclass))
-
-//        return !(type == null || "java.lang.Object".equals(type.getQualifiedName().toString()))
-//                && (type.getQualifiedName().toString().equals(superClassName)
-//                        || isSuperClass((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass()), superClassName));
     }
 
     public static String getKeyFromArg(Arg arg, String def) {
