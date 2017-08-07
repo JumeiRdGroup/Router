@@ -25,11 +25,11 @@ public class Parser {
     private static Map<String,TypeElement> parsed = new HashMap<>();
     private String[] routers;
     private TypeElement type;
-    private BasicConfigurations configurations;
+    private RouteRuleConfig configurations;
     private Map<String,TypeMirror> map = new HashMap<>();
     private ClassName executorClass;
 
-    public static Parser create (TypeElement element,BasicConfigurations configurations) {
+    public static Parser create (TypeElement element, RouteRuleConfig configurations) {
         Parser parser = new Parser();
         parser.type = element;
         parser.configurations = configurations;
@@ -52,34 +52,14 @@ public class Parser {
 
     public void parse () {
         parseEffectField (type);
-        routers = type.getAnnotation(RouterRule.class).value();
+        routers = configurations.getRoute();
         for (int i = 0; i < routers.length; i++) {
             String route = routers[i];
-            route = completeRoute(route,configurations.getSchema());
-            routers[i] = route;
             checkIsDuplicate(route);
         }
     }
 
-
-    private String completeRoute(String route, String basicSchema) {
-        if (Utils.isEmpty(route)) {
-            throw new RouterException("value of annotation RouteRule can not be null!",type);
-        }
-        URI uri = URI.create(route);
-        String scheme = uri.getScheme();
-        if (Utils.isEmpty(scheme)) {
-            if (Utils.isEmpty(basicSchema)) {
-                throw new RouterException("Could not find a basic schema set by RouteConfig to join with the route:" + route,type);
-            }
-            route = basicSchema + "://" + route;
-        }
-        return route;
-    }
-
     private void checkIsDuplicate(String route) {
-
-
         if (route.endsWith("/")) {
             route = route.substring(0,route.lastIndexOf("/"));
         }
@@ -119,6 +99,10 @@ public class Parser {
 
     public ClassName getExecutorClass() {
         return executorClass;
+    }
+
+    public RouteRuleConfig getConfigurations() {
+        return configurations;
     }
 }
 

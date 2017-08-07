@@ -3,9 +3,6 @@ apply plugin: 'com.novoda.bintray-release'//添加
 dependencies {
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 publish {
     artifactId = 'router-anno'
     userOrg = rootProject.userOrg

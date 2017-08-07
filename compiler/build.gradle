@@ -7,9 +7,6 @@ dependencies {
     compile 'org.lzh.compiler.parceler:parceler-anno:0.6'
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 publish {
     artifactId = 'router-compiler'
     userOrg = rootProject.userOrg

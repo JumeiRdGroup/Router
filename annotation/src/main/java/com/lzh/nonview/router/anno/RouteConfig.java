@@ -12,14 +12,23 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 public @interface RouteConfig {
     /**
-     * Define a basic schema value.when you set route rules in {@link RouterRule} without a special schema.this should be used instead
-     * @return a basic schema value
+     * @deprecated The methods will be removing in the future. consider to use baseUrl() instead.
      */
+    @Deprecated
     String schema() default "";
+
+    /**
+     * @return a base url to combine with the route you set via {@link RouterRule}.
+     */
+    String baseUrl() default "";
 
     /**
      * Defined a basic package value.when you haven't set a package value in {@link RouterRule},this word should be used instead
      * @return a basic package value.
      */
     String pack() default "";
+
+    Class activityLauncher() default Void.class;
+
+    Class actionLauncher() default Void.class;
 }

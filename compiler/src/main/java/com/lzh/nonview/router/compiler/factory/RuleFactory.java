@@ -93,6 +93,10 @@ public class RuleFactory {
             codeBuilder.add(".setExecutorClass($T.class)", parser.getExecutorClass());
         }
 
+        if (parser.getConfigurations().getLauncher() != null) {
+            codeBuilder.add(".setLauncher($T.class)", parser.getConfigurations().getLauncher());
+        }
+
         codeBuilder.addStatement(")");
         methodCreator.addCode(codeBuilder.build());
     }

@@ -8,8 +8,11 @@ import android.widget.Toast;
 
 import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.anno.ActivityLauncher;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
+import com.lzh.nonview.router.demo.launcher.CustomActionLauncher;
+import com.lzh.nonview.router.demo.launcher.CustomActivityLauncher;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -23,7 +26,13 @@ import com.lzh.nonview.router.route.RouteCallback;
 import java.util.HashMap;
 import java.util.Map;
 
-@RouteConfig(schema = "haoge",pack = "com.haoge.studio")
+@ActivityLauncher(DefaultActivityLauncher.class)
+@RouteConfig(
+        baseUrl = "haoge://page/",
+        pack = "com.haoge.studio",
+        activityLauncher = CustomActivityLauncher.class,
+        actionLauncher = CustomActionLauncher.class
+        )
 public class App extends Application {
 
     @Override

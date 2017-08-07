@@ -3,12 +3,17 @@ package com.lzh.nonview.router.compiler.util;
 import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.compiler.Constants;
 import com.lzh.nonview.router.compiler.exception.RouterException;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 
+import java.lang.annotation.Annotation;
 import java.util.Set;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.MirroredTypeException;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * Created by admin on 16/10/20.
@@ -43,14 +48,28 @@ public class Utils {
     /**
      * Check out if the class {@code type} is a subclass of {@code superClass}
      * @param type the class to check
-     * @param superClass the super class name
+     * @param superClassName the super class name
      * @return true if is subclass
      */
-    public static boolean isSuperClass (TypeElement type,String superClass) {
-        return !(type == null || "java.lang.Object".equals(type.getQualifiedName().toString()))
-                && (type.getQualifiedName().toString().equals(superClass)
-                        || isSuperClass((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass()), superClass));
+    public static boolean isSuperClass (TypeElement type,String superClassName) {
+        if (type == null) {
+            return false;
+        }
 
+        do {
+            type = (TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass());
+            if (type.getQualifiedName().toString().equals(superClassName)) {
+                return true;
+            }
+            if ("java.lang.Object".equals(type.getQualifiedName().toString())) {
+                return false;
+            }
+        } while (true);
+//        while (ClassName.get(superclass))
+
+//        return !(type == null || "java.lang.Object".equals(type.getQualifiedName().toString()))
+//                && (type.getQualifiedName().toString().equals(superClassName)
+//                        || isSuperClass((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(type.getSuperclass()), superClassName));
     }
 
     public static String getKeyFromArg(Arg arg, String def) {
@@ -87,5 +106,4 @@ public class Utils {
         }
         return false;
     }
-
 }

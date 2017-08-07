@@ -5,12 +5,15 @@ import android.util.Size;
 import android.widget.TextView;
 
 import com.lzh.compiler.parceler.annotation.Arg;
+import com.lzh.nonview.router.anno.ActivityLauncher;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
+import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 
 import java.util.ArrayList;
 
-@RouterRule({"haoge://haoge.cn/parceler","http://haoge.cn/parceler"})
+@ActivityLauncher(DefaultActivityLauncher.class)
+@RouterRule({"haoge.cn/parceler","http://haoge.cn/parceler"})
 public class ParcelerActivity extends BaseActivity {
 
     @Arg

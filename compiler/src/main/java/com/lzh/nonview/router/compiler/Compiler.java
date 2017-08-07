@@ -6,7 +6,7 @@ import com.lzh.nonview.router.compiler.exception.RouterException;
 import com.lzh.nonview.router.compiler.factory.RuleFactory;
 import com.lzh.nonview.router.compiler.model.BasicConfigurations;
 import com.lzh.nonview.router.compiler.model.Parser;
-import com.lzh.nonview.router.compiler.util.LogUtil;
+import com.lzh.nonview.router.compiler.model.RouteRuleConfig;
 import com.lzh.nonview.router.compiler.util.UtilMgr;
 import com.lzh.nonview.router.compiler.util.Utils;
 import com.squareup.javapoet.ClassName;
@@ -30,11 +30,9 @@ import javax.tools.Diagnostic;
 public class Compiler extends AbstractProcessor{
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        LogUtil.debug = true;
-
         try {
             BasicConfigurations config = processRouteConfig(roundEnv);
-            processRouteRules(roundEnv, new HashMap<String,List<Parser>>(),config);
+            processRouteRules(roundEnv, new HashMap<>(), config);
             return false;
         } catch (RouterException e) {
             e.printStackTrace();
@@ -55,17 +53,15 @@ public class Compiler extends AbstractProcessor{
                     throw new RouterException("The RouteConfig in this module was defined duplicated!",type);
                 }
                 if (!Utils.isSuperClass(type,Constants.CLASSNAME_APPLICATION)) {
-                    throw new RouterException("The class you had annotated by RouteConfig must be a Application",type);
+                    throw new RouterException("The class you are annotated by RouteConfig must be a Application",type);
                 }
                 RouteConfig config = type.getAnnotation(RouteConfig.class);
-                configurations = new BasicConfigurations(config.schema(),config.pack());
+                configurations = new BasicConfigurations(config);
             }
-            return configurations == null ? new BasicConfigurations("","") : configurations;
+            return configurations == null ? new BasicConfigurations(null) : configurations;
         } catch (RouterException e) {
-            e.printStackTrace();
             throw e;
         } catch (Throwable e) {
-            e.printStackTrace();
             throw new RouterException(e.getMessage(),e,type);
         }
     }
@@ -78,16 +74,16 @@ public class Compiler extends AbstractProcessor{
                 type = (TypeElement) ele;
                 if (!Utils.checkTypeValid(type)) continue;
 
-                Parser parser = Parser.create(type,config);
+                RouterRule rule = type.getAnnotation(RouterRule.class);
+                RouteRuleConfig ruleConfig = RouteRuleConfig.create(rule, config, type);
+
+                Parser parser = Parser.create(type, ruleConfig);
                 parser.parse();
 
-                RouterRule rule = type.getAnnotation(RouterRule.class);
-                String packName = Utils.isEmpty(rule.pack())
-                        ? Utils.isEmpty(config.getPack())
-                        ? "com.lzh.router" : config.getPack() : rule.pack();
+                String packName = ruleConfig.getPack();
 
                 if (!map.containsKey(packName)) {
-                    map.put(packName,new ArrayList<Parser>());
+                    map.put(packName,new ArrayList<>());
                 }
                 map.get(packName).add(parser);
             }
@@ -97,10 +93,8 @@ public class Compiler extends AbstractProcessor{
                 new RuleFactory(ClassName.get(key,"RouterRuleCreator"),map.get(key)).generateCode();
             }
         } catch (RouterException e) {
-            e.printStackTrace();
             throw e;
         } catch (Throwable e) {
-            e.printStackTrace();
             throw new RouterException(e.getMessage(),e,type);
         }
     }
