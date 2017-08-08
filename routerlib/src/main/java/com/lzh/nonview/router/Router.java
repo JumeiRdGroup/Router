@@ -33,6 +33,8 @@ import com.lzh.nonview.router.route.IBaseRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
 
+import java.util.concurrent.Executor;
+
 
 /**
  * Entry of Router。
@@ -189,6 +191,10 @@ public final class Router{
         return IActionRoute.EMPTY;
     }
 
+    private void notifyNotFound(String msg) {
+        getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+    }
+
     /**
      * Set a global route callback to invoked when open a uri
      * @param callback can't be null
@@ -209,7 +215,13 @@ public final class Router{
         RouteManager.get().addCreator(creator);
     }
 
-    private void notifyNotFound(String msg) {
-        getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+    /**
+     * To register an Executor to be used.
+     * @param key The class of Executor
+     * @param value The Executor instance associate with the key.
+     * @see RouteManager#registerExecutors(Class, Executor)
+     */
+    public static void registerExecutors(Class<? extends Executor> key, Executor value) {
+        RouteManager.registerExecutors(key, value);
     }
 }

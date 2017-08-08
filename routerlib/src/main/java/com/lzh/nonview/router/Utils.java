@@ -34,8 +34,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("unchecked")
 public class Utils {
 
+    /** Flag: indicate that <i><b><a href="https://github.com/yjfnypeu/Parceler">Parceler</a></b></i> is supported.*/
     public static final boolean PARCELER_SUPPORT;
 
     /**
@@ -47,25 +49,27 @@ public class Utils {
         return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
     }
 
-    public static String wrapScheme (String scheme) {
+    static String wrapScheme (String scheme) {
         if (TextUtils.isEmpty(scheme) || !scheme.endsWith("/")) return scheme;
 
         return scheme.substring(0,scheme.lastIndexOf("/"));
     }
 
-    public static String unwrapScheme (String scheme) {
+    static String unwrapScheme (String scheme) {
         return scheme + "/";
     }
 
     /**
-     * To check and complete a uri.check if is not set scheme.a default scheme: <b><i>http</i></b> will be used
+     * <p>
+     * Check and completed the uri when it was build without a 'scheme'.
+     * in this case. the default scheme '<b>http</b>' will be added.
+     * </p>
      * @param uri source uri
      * @return complete uri
      */
     static Uri completeUri(Uri uri) {
-        String url = uri.toString();
-        if (!url.contains("://")) {
-            return Uri.parse("http://" + url);
+        if (TextUtils.isEmpty(uri.getScheme())) {
+            return uri.buildUpon().scheme("http").build();
         }
         return uri;
     }

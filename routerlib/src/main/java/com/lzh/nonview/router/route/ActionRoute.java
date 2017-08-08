@@ -18,7 +18,7 @@ package com.lzh.nonview.router.route;
 import android.net.Uri;
 
 import com.lzh.nonview.router.RouteManager;
-import com.lzh.nonview.router.executors.MainThreadExecutor;
+import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
@@ -27,13 +27,9 @@ import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executor;
 
 public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras> implements IActionRoute {
-
-    private final static Map<Class<? extends Executor>, Executor> container = new HashMap<>();
 
     @Override
     protected ActionRouteBundleExtras createExtras() {
@@ -63,23 +59,11 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
         }
     }
 
-    private static Executor findOrCreateByClass(Class<? extends Executor> key) {
-        try {
-            Executor executor = container.get(key);
-            if (executor == null) {
-                executor = key.newInstance();
-                registerExecutors(key, executor);
-            }
-            return executor;
-        } catch (Throwable t) {
-            // provided MainThreadExecutor if occurs an error.
-            return new MainThreadExecutor();
-        }
-    }
-
     /**
-     * @see RouteManager#registerExecutors(Class, Executor)
+     * @deprecated This method will be delete in the future. consider to use {@link Router#registerExecutors(Class, Executor)} instead
+     * @see Router#registerExecutors(Class, Executor)
      */
+    @SuppressWarnings("unused")
     @Deprecated
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {
         RouteManager.registerExecutors(key, value);
