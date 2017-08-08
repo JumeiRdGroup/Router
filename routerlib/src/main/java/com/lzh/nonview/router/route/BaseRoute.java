@@ -38,7 +38,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     protected URIParser parser;
     protected Bundle bundle;
     protected E extras;
-    private RouteCallback.InternalCallback callback;
+    RouteCallback.InternalCallback callback;
     protected Uri uri;
     protected RouteRule routeRule = null;
     protected Launcher launcher;
