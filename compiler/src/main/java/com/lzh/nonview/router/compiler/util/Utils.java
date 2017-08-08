@@ -15,13 +15,10 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 
-/**
- * Created by admin on 16/10/20.
- */
 public class Utils {
 
     /**
-     * check out if the class are an effective class;
+     * Check out if the class are an effective class;
      * <p>
      *     <i>should not be modified by abstract,if set,should be skip</i><br>
      *     <i>should not be modified by private,if set,should lead to crash</i><br>

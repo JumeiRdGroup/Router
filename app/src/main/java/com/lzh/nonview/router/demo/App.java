@@ -26,7 +26,6 @@ import com.lzh.nonview.router.route.RouteCallback;
 import java.util.HashMap;
 import java.util.Map;
 
-@ActivityLauncher(DefaultActivityLauncher.class)
 @RouteConfig(
         baseUrl = "haoge://page/",
         pack = "com.haoge.studio",

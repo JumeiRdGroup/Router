@@ -35,7 +35,7 @@ public class Compiler extends AbstractProcessor{
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
             BasicConfigurations config = processRouteConfig(roundEnv);
-            processRouteRules(roundEnv, new HashMap<>(), config);
+            processRouteRules(roundEnv, config);
             return false;
         } catch (RouterException e) {
             e.printStackTrace();
@@ -44,6 +44,12 @@ public class Compiler extends AbstractProcessor{
         }
     }
 
+    /**
+     * Parse the {@link RouteConfig} and create a {@link BasicConfigurations} to be used.
+     * @param roundEnv data sources
+     * @return The instance of {@link BasicConfigurations}
+     * @throws RouterException pack all of the exception when a error occurs.
+     */
     private BasicConfigurations processRouteConfig(RoundEnvironment roundEnv) throws RouterException{
         TypeElement type = null;
         try {
@@ -69,7 +75,14 @@ public class Compiler extends AbstractProcessor{
         }
     }
 
-    private void processRouteRules(RoundEnvironment roundEnv, Map<String, List<Parser>> map,BasicConfigurations config) throws RouterException{
+    /**
+     * Parse all of the elements that annotated by {@link RouterRule}. and combines the {@link BasicConfigurations} to create new java file.
+     * @param roundEnv The data sources
+     * @param config The instance of {@link BasicConfigurations} that be parsed by {@link Compiler#processRouteConfig(RoundEnvironment)}
+     * @throws RouterException pack all of the exception when a error occurs.
+     */
+    private void processRouteRules(RoundEnvironment roundEnv, BasicConfigurations config) throws RouterException{
+        Map<String, List<Parser>> map = new HashMap<>();
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(RouterRule.class);
         TypeElement type = null;
         try {
@@ -103,7 +116,7 @@ public class Compiler extends AbstractProcessor{
     }
 
     /**
-     * compiler output method,when compiler occurs exception.should be notice here.
+     * compiler output method, when a error occurs. should be notice here.
      *
      * @param element Element of class who has a exception when compiled
      * @param message The message should be noticed to user

@@ -29,10 +29,9 @@ public class RuleFactory {
     private ClassName clzName;
     private List<Parser> activityParser = new ArrayList<>();
     private List<Parser> actionParser = new ArrayList<>();
-//    private List<Parser> parserList;
-    ClassName routeMap = ClassName.bestGuess(Constants.CLASSNAME_ROUTE_MAP);
-    ClassName activityRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTIVITY_ROUTE_MAP);
-    ClassName actionRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTION_ROUTE_MAP);
+    private ClassName routeMap = ClassName.bestGuess(Constants.CLASSNAME_ROUTE_MAP);
+    private ClassName activityRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTIVITY_ROUTE_MAP);
+    private ClassName actionRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTION_ROUTE_MAP);
 
     public RuleFactory(ClassName name, List<Parser> parserList) {
         this.clzName = name;

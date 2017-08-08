@@ -4,7 +4,7 @@ import javax.lang.model.element.Element;
 
 public class RouterException extends RuntimeException {
 
-    Element element;
+    private Element element;
 
     public RouterException(String message, Element element) {
         super(message);

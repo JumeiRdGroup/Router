@@ -15,6 +15,13 @@ import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 
+/**
+ * The configuration class links to {@link RouterRule}.
+ *
+ * <p>
+ *     This class are one-to-one correspondence to {@link RouterRule}
+ * </p>
+ */
 public class RouteRuleConfig {
     private String[] routes;
     private String pack;
