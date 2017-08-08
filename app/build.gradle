@@ -26,7 +26,7 @@ android {
 
 def AAVersion = '4.3.0'
 def PARCELER_VERSION="0.9.1"
-def ROUTER_VERSION="8d0d8fb101"
+def ROUTER_VERSION="38e36a2513"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
