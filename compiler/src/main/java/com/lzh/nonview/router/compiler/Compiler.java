@@ -99,7 +99,7 @@ public class Compiler extends AbstractProcessor{
                 String packName = ruleConfig.getPack();
 
                 if (!map.containsKey(packName)) {
-                    map.put(packName,new ArrayList<>());
+                    map.put(packName,new ArrayList<Parser>());
                 }
                 map.get(packName).add(parser);
             }
