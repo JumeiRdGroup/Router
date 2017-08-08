@@ -15,11 +15,14 @@
  */
 package com.lzh.nonview.router.route;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
@@ -58,6 +61,40 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     public IActivityRoute addFlags(int flag) {
         this.extras.addFlags(flag);
         return this;
+    }
+
+    @Override
+    public void open(Fragment fragment) {
+        try {
+            Utils.checkInterceptor(uri, extras, fragment.getActivity(), getInterceptors());
+            ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
+            activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule);
+            activityLauncher.open(fragment);
+            callback.onOpenSuccess(uri, routeRule);
+        } catch (Throwable e) {
+            if (e instanceof NotFoundException) {
+                callback.notFound(uri, (NotFoundException) e);
+            } else {
+                callback.onOpenFailed(this.uri,e);
+            }
+        }
+    }
+
+    @Override
+    public void open(android.support.v4.app.Fragment fragment) {
+        try {
+            Utils.checkInterceptor(uri, extras, fragment.getActivity(), getInterceptors());
+            ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
+            activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule);
+            activityLauncher.open(fragment);
+            callback.onOpenSuccess(uri, routeRule);
+        } catch (Throwable e) {
+            if (e instanceof NotFoundException) {
+                callback.notFound(uri, (NotFoundException) e);
+            } else {
+                callback.onOpenFailed(this.uri,e);
+            }
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@
  */
 package com.lzh.nonview.router.route;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,6 +63,18 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
      */
     IActivityRoute addFlags(int flag);
 
+    /**
+     * Launch routing by {@link Fragment}
+     * @param fragment the fragment to startActivity
+     */
+    void open(Fragment fragment);
+
+    /**
+     * Launch ronting by {@link android.support.v4.app.Fragment}
+     * @param fragment the fragment to startActivity
+     */
+    void open(android.support.v4.app.Fragment fragment);
+
     IActivityRoute EMPTY = new IActivityRoute() {
         @Override
         public Intent createIntent(Context context) {
@@ -84,6 +97,12 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
         }
 
         @Override
+        public void open(Fragment fragment) {}
+
+        @Override
+        public void open(android.support.v4.app.Fragment fragment) {}
+
+        @Override
         public IActivityRoute addInterceptor(RouteInterceptor interceptor) {
             return this;
         }
@@ -104,9 +123,7 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
         }
 
         @Override
-        public void open(Context context) {
-
-        }
+        public void open(Context context) {}
 
         @Override
         public IActivityRoute addExtras(Bundle extras) {

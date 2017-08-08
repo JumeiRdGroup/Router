@@ -16,6 +16,7 @@
 package com.lzh.nonview.router.launcher;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
@@ -32,6 +33,18 @@ public class DefaultActivityLauncher extends ActivityLauncher{
         intent.putExtras(extras.getExtras());
         intent.addFlags(extras.getFlags());
         return intent;
+    }
+
+    @Override
+    public void open(Fragment fragment) throws Exception {
+        Intent intent = createIntent(fragment.getActivity());
+        fragment.startActivityForResult(intent, extras.getRequestCode());
+    }
+
+    @Override
+    public void open(android.support.v4.app.Fragment fragment) throws Exception {
+        Intent intent = createIntent(fragment.getContext());
+        fragment.startActivityForResult(intent, extras.getRequestCode());
     }
 
     @Override
