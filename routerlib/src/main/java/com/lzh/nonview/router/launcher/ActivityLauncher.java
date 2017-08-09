@@ -51,5 +51,5 @@ public abstract class ActivityLauncher extends Launcher<ActivityRouteRule, Activ
      * @param fragment The fragment instance
      * @throws Exception a error occurs
      */
-    public abstract void open(android.support.v4.app.Fragment fragment) throws Exception;
+    public void open(android.support.v4.app.Fragment fragment) throws Exception {}
 }

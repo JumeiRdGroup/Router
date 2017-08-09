@@ -1,6 +1,7 @@
 package com.lzh.nonview.router.demo.launcher;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
@@ -17,6 +18,11 @@ public class CustomActivityLauncher extends ActivityLauncher{
         intent.putExtras(extras.getExtras());
         intent.addFlags(extras.getFlags());
         return intent;
+    }
+
+    @Override
+    public void open(Fragment fragment) throws Exception {
+
     }
 
     @Override

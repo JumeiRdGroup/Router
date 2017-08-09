@@ -32,6 +32,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:support-annotations:26.0.0-alpha1'
     compile 'com.jakewharton:butterknife:7.0.0'
+    compile 'com.android.support:support-v4:23.0.1'
 
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
@@ -39,9 +40,10 @@ dependencies {
     annotationProcessor "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
     compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
 
-    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
-    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
+//    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
+//    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
-//    compile project(':routerlib')
-//    annotationProcessor project(':compiler')
+    compile project(':routerlib')
+    annotationProcessor project(':compiler')
+    compile project(':host')
 }

@@ -24,6 +24,7 @@ import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
+import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.route.ActionRoute;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
@@ -50,6 +51,11 @@ public final class Router{
      * </pre>
      */
     public static final String RAW_URI = "_ROUTER_RAW_URI_KEY_";
+
+    /**
+     * host package name.
+     */
+    private static String hostPackage;
 
     private Uri uri;
     private RouteCallback callback;
@@ -138,6 +144,9 @@ public final class Router{
             return new ActivityRoute().create(uri, getCallback());
         } else if (BrowserRoute.canOpenRouter(uri)) {
             return BrowserRoute.getInstance().setUri(uri);
+        } else if (HostServiceWrapper.canOpenRouter(uri)) {
+            // TODO: 2017/8/9
+            return null;
         } else {
             notifyNotFound(String.format("find Route by %s failed:",uri));
             return IRoute.EMPTY;
@@ -223,5 +232,16 @@ public final class Router{
      */
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {
         RouteManager.registerExecutors(key, value);
+    }
+
+    /**
+     * Set a host package name. it will be used to bind a remote service in host app.
+     *
+     * @param hostPackage the package name of host.
+     * @param context the context to start remote host service.
+     * @see HostServiceWrapper#startHostService(String, Context)
+     */
+    public static void startHostService(String hostPackage, Context context) {
+        HostServiceWrapper.startHostService(hostPackage, context);
     }
 }
