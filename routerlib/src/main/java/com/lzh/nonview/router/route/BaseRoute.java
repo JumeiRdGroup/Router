@@ -67,7 +67,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     public final void open(Context context) {
         try {
             Utils.checkInterceptor(uri, extras,context,getInterceptors());
-            launcher.set(uri, bundle, extras, routeRule);
+            launcher.set(uri, bundle, extras, routeRule, remote);
             launcher.open(context);
 //            realOpen(context);
             callback.onOpenSuccess(uri, routeRule);

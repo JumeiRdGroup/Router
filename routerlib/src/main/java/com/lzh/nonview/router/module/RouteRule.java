@@ -17,8 +17,6 @@ package com.lzh.nonview.router.module;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.protocol.IRemoteFactory;
@@ -34,7 +32,7 @@ import java.util.Map;
  * @author haoge
  */
 @SuppressWarnings("unchecked")
-public class RouteRule<R extends RouteRule, L extends Launcher> implements Parcelable{
+public class RouteRule<R extends RouteRule, L extends Launcher>{
     /** Associate with {@link Bundle#putString(String, String)}*/
     public static final int STRING = -1;
     /** Associate with {@link Bundle#putByte(String, byte)} */
@@ -77,6 +75,13 @@ public class RouteRule<R extends RouteRule, L extends Launcher> implements Parce
         return params;
     }
 
+    R setParams(Map<String,Integer> params) {
+        if (params != null) {
+            this.params = params;
+        }
+        return (R) this;
+    }
+
     /**
      * Specify required type when parsing the Url parameters
      * @param key the key in Url params.
@@ -104,32 +109,4 @@ public class RouteRule<R extends RouteRule, L extends Launcher> implements Parce
     public Class<? extends L> getLauncher() {
         return launcher;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(clzName);
-        dest.writeMap(params);
-    }
-
-    protected RouteRule(Parcel in) {
-        clzName = in.readString();
-        params = in.readHashMap(getClass().getClassLoader());
-    }
-
-    public static final Creator<RouteRule> CREATOR = new Creator<RouteRule>() {
-        @Override
-        public RouteRule createFromParcel(Parcel in) {
-            return new RouteRule(in);
-        }
-
-        @Override
-        public RouteRule[] newArray(int size) {
-            return new RouteRule[size];
-        }
-    };
 }

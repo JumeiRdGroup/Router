@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.lzh.nonview.router.protocol.IService;
-import com.lzh.nonview.router.protocol.RemoteRule;
+import com.lzh.nonview.router.module.RemoteRule;
 
 import java.util.HashMap;
 import java.util.Map;

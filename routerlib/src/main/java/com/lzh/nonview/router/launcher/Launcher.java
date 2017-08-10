@@ -33,6 +33,7 @@ public abstract class Launcher<T extends RouteRule, E extends RouteBundleExtras>
     protected Bundle bundle;
     protected E extras;
     protected T rule;
+    protected Bundle remote;
 
     /**
      * Requires to open with this launcher.
@@ -48,10 +49,11 @@ public abstract class Launcher<T extends RouteRule, E extends RouteBundleExtras>
      * @param extras The extras data you set via {@link Router#getRoute()}
      * @param rule The rule that associate with the uri.
      */
-    public final void set(Uri uri, Bundle bundle, E extras, T rule) {
+    public final void set(Uri uri, Bundle bundle, E extras, T rule, Bundle remote) {
         this.uri = uri;
         this.bundle = bundle;
         this.extras = extras;
         this.rule = rule;
+        this.remote = remote;
     }
 }

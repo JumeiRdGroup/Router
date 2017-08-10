@@ -25,4 +25,8 @@ public class ActivityRouteRule extends RouteRule<ActivityRouteRule, ActivityLaun
     public <T extends Activity> ActivityRouteRule(Class<T> clz) {
         super(clz.getCanonicalName());
     }
+
+    public ActivityRouteRule(String clzName) {
+        super(clzName);
+    }
 }

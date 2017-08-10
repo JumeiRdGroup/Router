@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 
+import com.lzh.nonview.router.module.RemoteRule;
 import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.route.ActionRoute;
@@ -72,9 +73,9 @@ public class HostServiceWrapper {
     private static IRoute createWithThrow(Uri uri, RouteCallback.InternalCallback callback) throws Exception{
         RemoteRule rule;
         if ((rule = service.getActivityRule(uri)) != null) {
-            return new ActivityRoute().create(uri, rule.rule, rule.extra, callback);
+            return new ActivityRoute().create(uri, rule.getRule(), rule.getExtra(), callback);
         } else if ((rule = service.getActionRule(uri)) != null) {
-            return new ActionRoute().create(uri, rule.rule, rule.extra, callback);
+            return new ActionRoute().create(uri, rule.getRule(), rule.getExtra(), callback);
         } else {
             return IRoute.EMPTY;
         }

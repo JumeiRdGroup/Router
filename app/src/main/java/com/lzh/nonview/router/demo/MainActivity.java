@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.addExtras)
     void onAddExtrasClick (View v) {
-        HostServiceWrapper.registerRulesToHostService();
         // 获取Route对象.并添加额外数据
         Bundle extras = new Bundle();
         extras.putString("username","haoge");

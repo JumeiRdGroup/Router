@@ -3,7 +3,7 @@ package com.lzh.nonview.router.protocol;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.lzh.nonview.router.protocol.RemoteRule;
+import com.lzh.nonview.router.module.RemoteRule;
 
 /**
  * Remote Service for Host app. it provided a bridge to do multi-module supported.

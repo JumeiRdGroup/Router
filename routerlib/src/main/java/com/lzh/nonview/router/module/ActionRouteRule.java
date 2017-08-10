@@ -29,6 +29,10 @@ public class ActionRouteRule extends RouteRule<ActionRouteRule, ActionLauncher> 
         super(clz.getCanonicalName());
     }
 
+    public ActionRouteRule(String clzName) {
+        super(clzName);
+    }
+
     public ActionRouteRule setExecutorClass(Class<? extends Executor> executor) {
         if (executor != null) {
             this.executor = executor;
