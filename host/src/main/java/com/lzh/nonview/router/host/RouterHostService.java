@@ -6,49 +6,59 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.lzh.nonview.router.protocol.IClient;
 import com.lzh.nonview.router.protocol.IService;
+import com.lzh.nonview.router.protocol.RemoteRule;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class RouterHostService extends Service{
 
     IService.Stub stub = new IService.Stub() {
-        private List<IClient> clients = new ArrayList<>();
+        Map<String, RemoteRule> activities = new HashMap<>();
+        Map<String, RemoteRule> actions = new HashMap<>();
 
         @Override
-        public void add(IClient client) throws RemoteException {
-            if (!clients.contains(client)) {
-                clients.add(client);
-            }
+        public void addActivityRules(Map rules) throws RemoteException {
+            activities.putAll(rules);
         }
 
         @Override
-        public void remove(IClient client) throws RemoteException {
-            if (clients.contains(client)) {
-                clients.remove(client);
-            }
+        public void addActionRules(Map rules) throws RemoteException {
+            actions.putAll(rules);
         }
 
         @Override
-        public boolean canOpen(Uri uri) throws RemoteException {
-            for (IClient client : clients) {
-                try {
-                    if (client.canOpen(uri)) {
-                        return true;
-                    }
-                } catch (RemoteException remote) {
-                    // ignore
-                }
-            }
-            return false;
+        public RemoteRule getActionRule(Uri uri) throws RemoteException {
+            return findRule(uri, actions);
+        }
+
+        @Override
+        public RemoteRule getActivityRule(Uri uri) throws RemoteException {
+            return findRule(uri, activities);
         }
     };
+
+    private RemoteRule findRule(Uri uri, Map<String, RemoteRule> rules) {
+        String route = uri.getScheme() + "://" + uri.getHost() + uri.getPath();
+        for (String key:rules.keySet()) {
+            if (format(key).equals(format(route))) {
+                return rules.get(key);
+            }
+        }
+        return null;
+    }
+
+    private String format(String url) {
+        if (url.endsWith("/")){
+            return url.substring(0, url.length() - 1);
+        }
+        return url;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return stub;
+//        return null;
     }
 }

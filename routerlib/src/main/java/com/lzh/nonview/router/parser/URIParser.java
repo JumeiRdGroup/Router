@@ -23,15 +23,13 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 /**
- *
  * A parser to parse uri to scheme/host/params .etc
  * Created by lzh on 16/9/5.
  */
 public class URIParser {
 
     private Uri uri;
-    private String scheme;
-    private String host;
+    private String route;
     private Map<String,String> params;
 
     public URIParser(Uri uri) {
@@ -40,11 +38,7 @@ public class URIParser {
     }
 
     private void parse() {
-        scheme = this.uri.getScheme();
-        host = this.uri.getHost() + this.uri.getPath();
-        if (host.endsWith("/")) {
-            host = host.substring(0,host.lastIndexOf("/"));
-        }
+        this.route = uri.getScheme() + "://" + uri.getHost() + uri.getPath();
         String query = uri.getEncodedQuery();
         if (!TextUtils.isEmpty(query)) {
             params = parseParams(query);
@@ -72,15 +66,11 @@ public class URIParser {
         return params;
     }
 
-    public String getScheme() {
-        return scheme;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
     public Map<String, String> getParams() {
         return params;
+    }
+
+    public String getRoute() {
+        return route;
     }
 }

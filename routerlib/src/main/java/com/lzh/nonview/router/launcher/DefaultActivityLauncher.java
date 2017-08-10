@@ -28,7 +28,7 @@ public class DefaultActivityLauncher extends ActivityLauncher{
     @Override
     public Intent createIntent(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context, rule.getRuleClz());
+        intent.setClassName(context, rule.getRuleClz());
         intent.putExtras(bundle);
         intent.putExtras(extras.getExtras());
         intent.addFlags(extras.getFlags());

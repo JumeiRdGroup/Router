@@ -17,6 +17,7 @@ import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.io.Serializable;
@@ -43,12 +44,13 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.addExtras)
     void onAddExtrasClick (View v) {
+        HostServiceWrapper.registerRulesToHostService();
         // 获取Route对象.并添加额外数据
         Bundle extras = new Bundle();
         extras.putString("username","haoge");
         extras.putString("password","lzh");
         extras.putString("usertype","VIP");
-        Router.create("jumei://main")
+        Router.create("jumei://main/host")
                 .setCallback(new SerializableCallback())
                 .getActivityRoute()
 //                .addInterceptor(new SerialInterceptor())

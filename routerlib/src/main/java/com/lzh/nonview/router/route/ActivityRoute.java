@@ -20,15 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.lzh.nonview.router.RouteManager;
-import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActivityRouteRule;
-import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
 
 /**
@@ -103,11 +102,6 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
     }
 
     @Override
-    protected RouteRule obtainRouteMap() {
-        return RouteManager.get().getRouteMapByUri(parser, RouteManager.TYPE_ACTIVITY_ROUTE);
-    }
-
-    @Override
     protected Launcher obtainLauncher() throws Exception{
         ActivityRouteRule rule = (ActivityRouteRule) routeRule;
         Class<? extends ActivityLauncher> launcher = rule.getLauncher();
@@ -119,7 +113,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
 
     public static boolean canOpenRouter(Uri uri) {
         try {
-            return RouteManager.get().getRouteMapByUri(new URIParser(uri), RouteManager.TYPE_ACTIVITY_ROUTE) != null;
+            return Cache.getRouteMapByUri(new URIParser(uri), Cache.TYPE_ACTIVITY_ROUTE) != null;
         } catch (Throwable e) {
             return false;
         }

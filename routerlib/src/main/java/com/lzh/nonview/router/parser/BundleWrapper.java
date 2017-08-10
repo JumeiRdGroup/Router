@@ -25,7 +25,6 @@ import com.lzh.nonview.router.module.RouteRule;
  */
 public abstract class BundleWrapper {
     final int type;
-
     /**
      * Create a wrapper instance form specially type.
      * @param type The type value defined in {@link RouteRule}

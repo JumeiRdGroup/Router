@@ -15,6 +15,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         jcenter()
         maven { url "https://jitpack.io" }
     }
@@ -29,7 +30,7 @@ ext {
     userOrg = 'yjfnypeu'
     groupId = 'org.haoge.router2'//jcenter上的路径
     uploadName = 'Router2'
-    publishVersion = '2.0-beta0'
+    publishVersion = '2.0-beta1'
     desc = 'A simple router lib to android'
     website = 'https://github.com/yjfnypeu/Router'
     licences = ['Apache-2.0']

@@ -19,9 +19,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.RouterConfiguration;
+import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.Router;
-import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.tools.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -35,23 +36,23 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
-    protected URIParser parser;
     protected Bundle bundle;
     protected E extras;
     RouteCallback.InternalCallback callback;
     protected Uri uri;
+    protected Bundle remote;
     protected RouteRule routeRule = null;
     protected Launcher launcher;
 
-    public final IRoute create(Uri uri, RouteCallback.InternalCallback callback) {
+    public final IRoute create(Uri uri, RouteRule rule, Bundle remote, RouteCallback.InternalCallback callback) {
         try {
             this.uri = uri;
+            this.remote = remote;
             this.callback = callback;
             this.extras = createExtras();
             this.extras.setCallback(callback.getCallback());
-            this.parser = new URIParser(uri);
-            this.routeRule = obtainRouteMap();
-            this.bundle = Utils.parseRouteMapToBundle(parser, routeRule);
+            this.routeRule = rule;
+            this.bundle = Utils.parseRouteMapToBundle(new URIParser(uri), routeRule);
             this.bundle.putParcelable(Router.RAW_URI, uri);
             this.launcher = obtainLauncher();
             return this;
@@ -113,8 +114,8 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     public List<RouteInterceptor> getInterceptors() {
         List<RouteInterceptor> interceptors = new ArrayList<>();
         // add global interceptor
-        if (RouteManager.get().getGlobalInterceptor() != null) {
-            interceptors.add(RouteManager.get().getGlobalInterceptor());
+        if (RouterConfiguration.get().getInterceptor() != null) {
+            interceptors.add(RouterConfiguration.get().getInterceptor());
         }
 
         // add extra interceptors
@@ -133,10 +134,12 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
         }
     }
 
+    public static RouteRule findRule(Uri uri, int type) {
+        return Cache.getRouteMapByUri(new URIParser(uri), type);
+    }
+
     // ============abstract methods============
     protected abstract E createExtras();
-
-    protected abstract RouteRule obtainRouteMap();
 
     protected abstract Launcher obtainLauncher() throws Exception;
 

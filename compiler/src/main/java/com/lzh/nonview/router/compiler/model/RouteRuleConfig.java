@@ -32,9 +32,9 @@ public class RouteRuleConfig {
         config.routes = config.combineRoute(rule, basicConfigurations);
         config.pack = config.combinePack(rule, basicConfigurations);
         if (Utils.isSuperClass(type, Constants.CLASSNAME_ACTIVITY)) {
-            config.launcher = config.combineActivityLauncher(type.getAnnotation(ActivityLauncher.class), basicConfigurations);
+            config.launcher = config.combineActivityLauncher(type.getAnnotation(ActivityLauncher.class));
         } else if (Utils.isSuperClass(type, Constants.CLASSNAME_ACTION_SUPPORT)) {
-            config.launcher = config.combineActionLauncher(type.getAnnotation(ActionLauncher.class), basicConfigurations);
+            config.launcher = config.combineActionLauncher(type.getAnnotation(ActionLauncher.class));
         }
         return config;
     }
@@ -66,8 +66,7 @@ public class RouteRuleConfig {
                 ? "com.lzh.router" : configurations.pack : rule.pack();
     }
 
-    private ClassName combineActivityLauncher(ActivityLauncher rule, BasicConfigurations configurations) {
-        ClassName defLauncher = configurations.activityLauncher;
+    private ClassName combineActivityLauncher(ActivityLauncher rule) {
         ClassName launcher = null;
         try {
             if (rule != null) {
@@ -76,10 +75,6 @@ public class RouteRuleConfig {
         } catch (MirroredTypeException mirrored) {
             TypeMirror typeMirror = mirrored.getTypeMirror();
             launcher = ClassName.get((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(typeMirror));
-        }
-
-        if (launcher == null) {
-            launcher = defLauncher;
         }
 
         Elements utils = UtilMgr.getMgr().getElementUtils();
@@ -92,8 +87,7 @@ public class RouteRuleConfig {
         return launcher;
     }
 
-    private ClassName combineActionLauncher(ActionLauncher rule, BasicConfigurations configurations) {
-        ClassName defLauncher = configurations.actionLauncher;
+    private ClassName combineActionLauncher(ActionLauncher rule) {
         ClassName launcher = null;
         try {
             if (rule != null) {
@@ -102,10 +96,6 @@ public class RouteRuleConfig {
         } catch (MirroredTypeException mirrored) {
             TypeMirror typeMirror = mirrored.getTypeMirror();
             launcher = ClassName.get((TypeElement) UtilMgr.getMgr().getTypeUtils().asElement(typeMirror));
-        }
-
-        if (launcher == null) {
-            launcher = defLauncher;
         }
 
         Elements utils = UtilMgr.getMgr().getElementUtils();

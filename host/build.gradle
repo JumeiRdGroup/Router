@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'//添加
 
 android {
     compileSdkVersion 25
@@ -25,3 +26,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':routerlib')
 }
+
+publish {
+    artifactId = 'router-host'
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
+    licences = rootProject.licences
+}
+
+
+apply from: '../javadoc.gradle'

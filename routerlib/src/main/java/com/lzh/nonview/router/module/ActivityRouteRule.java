@@ -23,6 +23,6 @@ import com.lzh.nonview.router.launcher.ActivityLauncher;
 public class ActivityRouteRule extends RouteRule<ActivityRouteRule, ActivityLauncher> {
 
     public <T extends Activity> ActivityRouteRule(Class<T> clz) {
-        super(clz);
+        super(clz.getCanonicalName());
     }
 }

@@ -8,11 +8,9 @@ import android.widget.Toast;
 
 import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.Router;
-import com.lzh.nonview.router.anno.ActivityLauncher;
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
-import com.lzh.nonview.router.demo.launcher.CustomActionLauncher;
-import com.lzh.nonview.router.demo.launcher.CustomActivityLauncher;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -28,10 +26,7 @@ import java.util.Map;
 
 @RouteConfig(
         baseUrl = "haoge://page/",
-        pack = "com.haoge.studio",
-        activityLauncher = CustomActivityLauncher.class,
-        actionLauncher = CustomActionLauncher.class
-        )
+        pack = "com.haoge.studio")
 public class App extends Application {
 
     @Override
@@ -39,9 +34,9 @@ public class App extends Application {
         super.onCreate();
         // 添加route规则创建器
         Router.startHostService("com.lzh.nonview.router.demo", this);
-        Router.addRouteCreator(new RouteInit());
-        Router.addRouteCreator(new RouterRuleCreator());
-        Router.setGlobalRouteInterceptor(new RouteInterceptor() {
+        RouterConfiguration.get().addRouteCreator(new RouteInit());
+        RouterConfiguration.get().addRouteCreator(new RouterRuleCreator());
+        RouterConfiguration.get().setInterceptor(new RouteInterceptor() {
 
             @Override
             public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {

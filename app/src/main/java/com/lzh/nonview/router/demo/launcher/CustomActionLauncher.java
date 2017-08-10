@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.lzh.compiler.parceler.Parceler;
-import com.lzh.nonview.router.Utils;
+import com.lzh.nonview.router.tools.Utils;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.route.ActionSupport;
 
@@ -12,7 +12,7 @@ public class CustomActionLauncher extends ActionLauncher{
 
     @Override
     public void open(Context context) throws Exception {
-        final ActionSupport support = (ActionSupport) rule.getRuleClz().newInstance();
+        final ActionSupport support = newInstance(rule.getRuleClz());
         final Bundle data = new Bundle();
         data.putAll(bundle);
         data.putAll(extras.getExtras());
@@ -37,6 +37,14 @@ public class CustomActionLauncher extends ActionLauncher{
         @Override
         public void run() {
             support.onRouteTrigger(context, data);
+        }
+    }
+
+    private ActionSupport newInstance(String name) {
+        try {
+            return (ActionSupport) Class.forName(name).newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(String.format("create instance of %s failed", name), e);
         }
     }
 }

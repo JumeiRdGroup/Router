@@ -15,17 +15,13 @@
  */
 package com.lzh.nonview.router.route;
 
-import android.net.Uri;
-
-import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActionRouteRule;
-import com.lzh.nonview.router.module.RouteRule;
-import com.lzh.nonview.router.parser.URIParser;
 
 import java.util.concurrent.Executor;
 
@@ -34,11 +30,6 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
     @Override
     protected ActionRouteBundleExtras createExtras() {
         return new ActionRouteBundleExtras();
-    }
-
-    @Override
-    protected RouteRule obtainRouteMap() {
-        return RouteManager.get().getRouteMapByUri(parser, RouteManager.TYPE_ACTION_ROUTE);
     }
 
     @Override
@@ -51,14 +42,6 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
         return launcher.newInstance();
     }
 
-    public static boolean canOpenRouter(Uri uri) {
-        try {
-            return RouteManager.get().getRouteMapByUri(new URIParser(uri), RouteManager.TYPE_ACTION_ROUTE) != null;
-        } catch (Throwable e) {
-            return false;
-        }
-    }
-
     /**
      * @deprecated This method will be delete in the future. consider to use {@link Router#registerExecutors(Class, Executor)} instead
      * @see Router#registerExecutors(Class, Executor)
@@ -66,6 +49,6 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
     @SuppressWarnings("unused")
     @Deprecated
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {
-        RouteManager.registerExecutors(key, value);
+        Cache.registerExecutors(key, value);
     }
 }

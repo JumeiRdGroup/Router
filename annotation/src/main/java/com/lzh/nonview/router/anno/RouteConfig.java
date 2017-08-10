@@ -27,8 +27,4 @@ public @interface RouteConfig {
      * @return a basic package value.
      */
     String pack() default "";
-
-    Class activityLauncher() default Void.class;
-
-    Class actionLauncher() default Void.class;
 }

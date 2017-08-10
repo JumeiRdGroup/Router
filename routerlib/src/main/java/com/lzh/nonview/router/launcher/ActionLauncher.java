@@ -15,7 +15,7 @@
  */
 package com.lzh.nonview.router.launcher;
 
-import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.module.ActionRouteRule;
 
@@ -34,6 +34,6 @@ public abstract class ActionLauncher extends Launcher<ActionRouteRule, ActionRou
      * @return returns a executor instance to switching thread.
      */
     protected Executor getExecutor() {
-        return RouteManager.findOrCreateExecutor(rule.getExecutor());
+        return Cache.findOrCreateExecutor(rule.getExecutor());
     }
 }

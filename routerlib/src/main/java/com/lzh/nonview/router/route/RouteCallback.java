@@ -17,7 +17,8 @@ package com.lzh.nonview.router.route;
 
 import android.net.Uri;
 
-import com.lzh.nonview.router.RouteManager;
+import com.lzh.nonview.router.RouterConfiguration;
+import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
@@ -86,7 +87,7 @@ public interface RouteCallback {
                 return;
             }
             hasCalled = true;
-            RouteCallback global = RouteManager.get().getCallback();
+            RouteCallback global = RouterConfiguration.get().getCallback();
             global.notFound(uri, e);
             if (callback != null && callback != global) {
                 callback.notFound(uri, e);
@@ -100,7 +101,7 @@ public interface RouteCallback {
                 return;
             }
             hasCalled = true;
-            RouteCallback global = RouteManager.get().getCallback();
+            RouteCallback global = RouterConfiguration.get().getCallback();
             global.onOpenSuccess(uri, rule);
             if (callback != null && callback != global) {
                 callback.onOpenSuccess(uri, rule);
@@ -114,7 +115,7 @@ public interface RouteCallback {
                 return;
             }
             hasCalled = true;
-            RouteCallback global = RouteManager.get().getCallback();
+            RouteCallback global = RouterConfiguration.get().getCallback();
             global.onOpenFailed(uri, e);
             if (callback != null && callback != global) {
                 callback.onOpenFailed(uri, e);

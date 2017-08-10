@@ -17,6 +17,7 @@ package com.lzh.nonview.router;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
@@ -24,6 +25,7 @@ import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
+import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.route.ActionRoute;
 import com.lzh.nonview.router.route.ActivityRoute;
@@ -33,6 +35,8 @@ import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IBaseRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Utils;
 
 import java.util.concurrent.Executor;
 
@@ -51,11 +55,6 @@ public final class Router{
      * </pre>
      */
     public static final String RAW_URI = "_ROUTER_RAW_URI_KEY_";
-
-    /**
-     * host package name.
-     */
-    private static String hostPackage;
 
     private Uri uri;
     private RouteCallback callback;
@@ -97,7 +96,7 @@ public final class Router{
 
     /**
      * Obtain a callback put to use. will not be null.
-     * @return if you had not set yet, it will returns a global callback obtain from {@link RouteManager#getCallback()}
+     * @return if you had not set yet, it will returns a global callback obtain from {@link Cache#getCallback()}
      */
     private RouteCallback.InternalCallback getCallback () {
         if (internalCallback == null) {
@@ -138,15 +137,21 @@ public final class Router{
      *  and it also will be {@link IRoute#EMPTY} if it not found
      */
     public IRoute getRoute () {
-        if (ActionRoute.canOpenRouter(uri)) {
-            return new ActionRoute().create(uri, getCallback());
-        } else if (ActivityRoute.canOpenRouter(uri)) {
-            return new ActivityRoute().create(uri, getCallback());
+        IRoute route = getLocalRoute();
+        if (route != IRoute.EMPTY) {
+            return route;
+        }
+        return HostServiceWrapper.create(uri, getCallback());
+    }
+
+    private IRoute getLocalRoute() {
+        RouteRule rule;
+        if ((rule = ActionRoute.findRule(uri, Cache.TYPE_ACTION_ROUTE)) != null) {
+            return new ActionRoute().create(uri, rule, new Bundle(), getCallback());
+        } else if ((rule = ActivityRoute.findRule(uri, Cache.TYPE_ACTIVITY_ROUTE)) != null) {
+            return new ActivityRoute().create(uri, rule, new Bundle(), getCallback());
         } else if (BrowserRoute.canOpenRouter(uri)) {
             return BrowserRoute.getInstance().setUri(uri);
-        } else if (HostServiceWrapper.canOpenRouter(uri)) {
-            // TODO: 2017/8/9
-            return null;
         } else {
             notifyNotFound(String.format("find Route by %s failed:",uri));
             return IRoute.EMPTY;
@@ -204,43 +209,26 @@ public final class Router{
         getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
     }
 
-    /**
-     * Set a global route callback to invoked when open a uri
-     * @param callback can't be null
-     */
+    @Deprecated
     public static void setGlobalRouteCallback (RouteCallback callback) {
-        RouteManager.get().setCallback(callback);
+        RouterConfiguration.get().setCallback(callback);
     }
 
+    @Deprecated
     public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {
-        RouteManager.get().setInterceptor(interceptor);
+        RouterConfiguration.get().setInterceptor(interceptor);
     }
 
-    /**
-     * Set to create route rules
-     * @param creator Route rules creator.can't be null
-     */
+    @Deprecated
     public static void addRouteCreator(RouteCreator creator) {
-        RouteManager.get().addCreator(creator);
+        RouterConfiguration.get().addRouteCreator(creator);
     }
 
-    /**
-     * To register an Executor to be used.
-     * @param key The class of Executor
-     * @param value The Executor instance associate with the key.
-     * @see RouteManager#registerExecutors(Class, Executor)
-     */
+    @Deprecated
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {
-        RouteManager.registerExecutors(key, value);
+        RouterConfiguration.get().registerExecutors(key, value);
     }
 
-    /**
-     * Set a host package name. it will be used to bind a remote service in host app.
-     *
-     * @param hostPackage the package name of host.
-     * @param context the context to start remote host service.
-     * @see HostServiceWrapper#startHostService(String, Context)
-     */
     public static void startHostService(String hostPackage, Context context) {
         HostServiceWrapper.startHostService(hostPackage, context);
     }

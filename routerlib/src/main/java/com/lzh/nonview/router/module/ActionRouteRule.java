@@ -26,7 +26,7 @@ public class ActionRouteRule extends RouteRule<ActionRouteRule, ActionLauncher> 
     private Class<? extends Executor> executor = MainThreadExecutor.class;
 
     public <T extends ActionSupport> ActionRouteRule(Class<T> clz) {
-        super(clz);
+        super(clz.getCanonicalName());
     }
 
     public ActionRouteRule setExecutorClass(Class<? extends Executor> executor) {

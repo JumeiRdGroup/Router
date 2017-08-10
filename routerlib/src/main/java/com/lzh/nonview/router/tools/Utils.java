@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lzh.nonview.router;
+package com.lzh.nonview.router.tools;
 
 import android.content.Context;
 import android.net.Uri;
@@ -49,14 +49,11 @@ public class Utils {
         return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
     }
 
-    static String wrapScheme (String scheme) {
-        if (TextUtils.isEmpty(scheme) || !scheme.endsWith("/")) return scheme;
-
-        return scheme.substring(0,scheme.lastIndexOf("/"));
-    }
-
-    static String unwrapScheme (String scheme) {
-        return scheme + "/";
+    static String format(String url) {
+        if (url.endsWith("/")){
+            return url.substring(0, url.length() - 1);
+        }
+        return url;
     }
 
     /**
@@ -67,7 +64,7 @@ public class Utils {
      * @param uri source uri
      * @return complete uri
      */
-    static Uri completeUri(Uri uri) {
+    public static Uri completeUri(Uri uri) {
         if (TextUtils.isEmpty(uri.getScheme())) {
             return uri.buildUpon().scheme("http").build();
         }
