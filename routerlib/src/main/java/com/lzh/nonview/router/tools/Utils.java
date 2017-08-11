@@ -66,7 +66,7 @@ public class Utils {
      */
     public static Uri completeUri(Uri uri) {
         if (TextUtils.isEmpty(uri.getScheme())) {
-            return uri.buildUpon().scheme("http").build();
+            return Uri.parse("http://" + uri.toString());
         }
         return uri;
     }

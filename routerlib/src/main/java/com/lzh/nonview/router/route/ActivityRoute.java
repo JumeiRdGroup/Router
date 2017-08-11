@@ -20,8 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.lzh.nonview.router.tools.Cache;
-import com.lzh.nonview.router.tools.Utils;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
@@ -29,6 +27,8 @@ import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.parser.URIParser;
+import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Utils;
 
 /**
  * A route tool to check route rule by uri and launch activity

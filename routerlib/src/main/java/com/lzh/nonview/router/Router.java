@@ -96,7 +96,7 @@ public final class Router{
 
     /**
      * Obtain a callback put to use. will not be null.
-     * @return if you had not set yet, it will returns a global callback obtain from {@link Cache#getCallback()}
+     * @return if you had not set yet, it will returns a global callback obtain from {@link RouterConfiguration#getCallback()}
      */
     private RouteCallback.InternalCallback getCallback () {
         if (internalCallback == null) {
@@ -130,6 +130,7 @@ public final class Router{
         getRoute().open(context);
     }
 
+
     /**
      * Get route by uri, you should get a route by this way and set some extras data before open
      * @return
@@ -141,7 +142,11 @@ public final class Router{
         if (route != IRoute.EMPTY) {
             return route;
         }
-        return HostServiceWrapper.create(uri, getCallback());
+        route = HostServiceWrapper.create(uri, getCallback());
+        if (route == IRoute.EMPTY) {
+            notifyNotFound(String.format("find Route by %s failed:",uri));
+        }
+        return route;
     }
 
     private IRoute getLocalRoute() {
@@ -153,7 +158,6 @@ public final class Router{
         } else if (BrowserRoute.canOpenRouter(uri)) {
             return BrowserRoute.getInstance().setUri(uri);
         } else {
-            notifyNotFound(String.format("find Route by %s failed:",uri));
             return IRoute.EMPTY;
         }
     }
@@ -171,7 +175,7 @@ public final class Router{
             return (IBaseRoute) route;
         }
 
-        notifyNotFound(String.format("find BaseRoute by %s failed:",uri));
+        notifyNotFound(String.format("find BaseRoute by %s failed, but is %s",uri, route.getClass().getSimpleName()));
         return IBaseRoute.EMPTY;
     }
 
@@ -186,7 +190,7 @@ public final class Router{
         }
 
         // return an empty route to avoid NullPointException
-        notifyNotFound(String.format("find Activity Route by %s failed:",uri));
+        notifyNotFound(String.format("find ActivityRoute by %s failed, but is %s",uri, route.getClass().getSimpleName()));
         return IActivityRoute.EMPTY;
     }
 
@@ -200,7 +204,7 @@ public final class Router{
             return (IActionRoute) route;
         }
 
-        notifyNotFound(String.format("find Action Route by %s failed:",uri));
+        notifyNotFound(String.format("find ActionRoute by %s failed, but is %s",uri, route.getClass().getSimpleName()));
         // return a empty route to avoid NullPointException
         return IActionRoute.EMPTY;
     }
@@ -209,26 +213,31 @@ public final class Router{
         getCallback().notFound(uri, new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
     }
 
+    /** Consider to change entrance to {@link RouterConfiguration#setCallback(RouteCallback)}*/
     @Deprecated
-    public static void setGlobalRouteCallback (RouteCallback callback) {
-        RouterConfiguration.get().setCallback(callback);
-    }
+    public static void setGlobalRouteCallback (RouteCallback callback) {}
 
+    /** Consider to change entrance to {@link RouterConfiguration#setInterceptor(RouteInterceptor)}*/
     @Deprecated
-    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {
-        RouterConfiguration.get().setInterceptor(interceptor);
-    }
+    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {}
 
+    /** Consider to change entrance to {@link RouterConfiguration#addRouteCreator(RouteCreator)}*/
     @Deprecated
-    public static void addRouteCreator(RouteCreator creator) {
-        RouterConfiguration.get().addRouteCreator(creator);
-    }
+    public static void addRouteCreator(RouteCreator creator) {}
 
+    /** Consider to change entrance to {@link RouterConfiguration#registerExecutors(Class, Executor)}*/
     @Deprecated
-    public static void registerExecutors(Class<? extends Executor> key, Executor value) {
-        RouterConfiguration.get().registerExecutors(key, value);
-    }
+    public static void registerExecutors(Class<? extends Executor> key, Executor value) {}
 
+    /**
+     * Request to launch a remote service with the host package name.
+     *
+     * <p>
+     *     The remote service used to store all the routing rules and provided for other process or plugins to matched with uri.
+     * </p>
+     * @param hostPackage host package name.
+     * @param context a valid context.
+     */
     public static void startHostService(String hostPackage, Context context) {
         HostServiceWrapper.startHostService(hostPackage, context);
     }

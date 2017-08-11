@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
         extras.putString("username","haoge");
         extras.putString("password","lzh");
         extras.putString("usertype","VIP");
-        Router.create("jumei://main/host")
+        Router.create("jumei://main")
                 .setCallback(new SerializableCallback())
                 .getActivityRoute()
 //                .addInterceptor(new SerialInterceptor())

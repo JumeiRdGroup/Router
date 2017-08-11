@@ -15,15 +15,11 @@
  */
 package com.lzh.nonview.router.route;
 
-import com.lzh.nonview.router.tools.Cache;
-import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActionRouteRule;
-
-import java.util.concurrent.Executor;
 
 public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras> implements IActionRoute {
 
@@ -40,15 +36,5 @@ public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras
             launcher = DefaultActionLauncher.class;
         }
         return launcher.newInstance();
-    }
-
-    /**
-     * @deprecated This method will be delete in the future. consider to use {@link Router#registerExecutors(Class, Executor)} instead
-     * @see Router#registerExecutors(Class, Executor)
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public static void registerExecutors(Class<? extends Executor> key, Executor value) {
-        Cache.registerExecutors(key, value);
     }
 }

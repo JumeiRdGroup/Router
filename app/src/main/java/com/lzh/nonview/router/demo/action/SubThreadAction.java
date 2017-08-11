@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.lzh.compiler.parceler.annotation.Arg;
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteExecutor;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.executors.SubThreadExecutor;
@@ -23,7 +24,7 @@ public class SubThreadAction extends ActionSupport{
 
     static {
         // 注册此Executor.
-        ActionRoute.registerExecutors(SubThreadExecutor.class, new SubThreadExecutor());
+        RouterConfiguration.get().registerExecutors(SubThreadExecutor.class, new SubThreadExecutor());
     }
 }
 

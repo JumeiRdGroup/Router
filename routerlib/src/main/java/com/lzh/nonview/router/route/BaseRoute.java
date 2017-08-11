@@ -19,10 +19,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.lzh.nonview.router.RouterConfiguration;
-import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.Router;
-import com.lzh.nonview.router.tools.Utils;
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -30,6 +28,8 @@ import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
+import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
