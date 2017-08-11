@@ -22,7 +22,6 @@ import com.lzh.nonview.router.module.ActionRouteRule;
 
 public class ActionRoute extends BaseRoute<IActionRoute> implements IActionRoute {
 
-
     @Override
     protected Launcher obtainLauncher() throws Exception{
         ActionRouteRule rule = (ActionRouteRule) routeRule;

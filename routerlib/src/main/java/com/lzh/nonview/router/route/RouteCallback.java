@@ -17,7 +17,6 @@ package com.lzh.nonview.router.route;
 
 import android.net.Uri;
 
-import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
@@ -44,7 +43,7 @@ public interface RouteCallback {
      * @param uri the uri to open
      * @param rule The uri matching rule, it could be {@link ActionRouteRule} or {@link ActivityRouteRule}
      */
-    void onOpenSuccess(Uri uri,RouteRule rule);
+    void onOpenSuccess(Uri uri, RouteRule rule);
 
     /**
      * A callback method to notice that you occurs some exception.<br>
@@ -52,68 +51,7 @@ public interface RouteCallback {
      * @param uri the uri to open
      * @param e the exception
      */
-    void onOpenFailed(Uri uri,Throwable e);
+    void onOpenFailed(Uri uri, Throwable e);
 
-    // ===========internal apis================
-    final class InternalCallback implements RouteCallback {
 
-        boolean hasCalled = false;
-        RouteCallback callback;
-
-        public void setCallback(RouteCallback callback) {
-            this.callback = callback;
-        }
-
-        public RouteCallback getCallback() {
-            return callback;
-        }
-
-        @Override
-        public void notFound(Uri uri, NotFoundException e) {
-            if (hasCalled) {
-                return;
-            }
-            hasCalled = true;
-            RouteCallback global = RouterConfiguration.get().getCallback();
-            if (global != null) {
-                global.notFound(uri, e);
-            }
-            if (callback != null && callback != global) {
-                callback.notFound(uri, e);
-            }
-            callback = null;
-        }
-
-        @Override
-        public void onOpenSuccess(Uri uri, RouteRule rule) {
-            if (hasCalled) {
-                return;
-            }
-            hasCalled = true;
-            RouteCallback global = RouterConfiguration.get().getCallback();
-            if (global != null) {
-                global.onOpenSuccess(uri, rule);
-            }
-            if (callback != null && callback != global) {
-                callback.onOpenSuccess(uri, rule);
-            }
-            callback = null;
-        }
-
-        @Override
-        public void onOpenFailed(Uri uri, Throwable e) {
-            if (hasCalled) {
-                return;
-            }
-            hasCalled = true;
-            RouteCallback global = RouterConfiguration.get().getCallback();
-            if (global != null) {
-                global.onOpenFailed(uri, e);
-            }
-            if (callback != null && callback != global) {
-                callback.onOpenFailed(uri, e);
-            }
-            callback = null;
-        }
-    }
 }

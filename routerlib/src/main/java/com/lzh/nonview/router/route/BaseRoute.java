@@ -37,28 +37,25 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
     protected Bundle bundle;
-    protected RouteBundleExtras extras;
-    RouteCallback.InternalCallback callback;
+    InternalCallback callback;
     protected Uri uri;
     protected Bundle remote;
     protected RouteRule routeRule = null;
     protected Launcher launcher;
 
-    public final IRoute create(Uri uri, RouteRule rule, Bundle remote, RouteCallback.InternalCallback callback) {
+    public final IRoute create(Uri uri, RouteRule rule, Bundle remote, InternalCallback callback) {
         try {
             this.uri = uri;
             this.remote = remote;
             this.callback = callback;
-            this.extras = new RouteBundleExtras();
-            this.extras.setCallback(callback.getCallback());
             this.routeRule = rule;
             this.bundle = Utils.parseRouteMapToBundle(new URIParser(uri), routeRule);
             this.bundle.putParcelable(Router.RAW_URI, uri);
             this.launcher = obtainLauncher();
             return this;
         } catch (Throwable e) {
-            callback.onOpenFailed(uri,e);
-            return IRoute.EMPTY;
+            callback.onOpenFailed(e);
+            return new EmptyRoute(callback);
         }
     }
 
@@ -66,46 +63,48 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
     @Override
     public final void open(Context context) {
         try {
-            Utils.checkInterceptor(uri, extras,context,getInterceptors());
-            launcher.set(uri, bundle, extras, routeRule, remote);
+            Utils.checkInterceptor(uri, callback.getExtras(), context,getInterceptors());
+            launcher.set(uri, bundle, callback.getExtras(), routeRule, remote);
             launcher.open(context);
 //            realOpen(context);
-            callback.onOpenSuccess(uri, routeRule);
+            callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
+                callback.notFound((NotFoundException) e);
             } else {
-                callback.onOpenFailed(this.uri,e);
+                callback.onOpenFailed(e);
             }
         }
+
+        callback.invoke();
     }
 
     @Override
     public T addExtras(Bundle extras) {
-        this.extras.addExtras(extras);
+        this.callback.extras.addExtras(extras);
         return (T) this;
     }
 
     // =============RouteInterceptor operation===============
     public T addInterceptor(RouteInterceptor interceptor) {
-        if (extras != null) {
-            extras.addInterceptor(interceptor);
+        if (callback.extras != null) {
+            callback.extras.addInterceptor(interceptor);
         }
         return (T) this;
     }
 
     @Override
     public T removeInterceptor(RouteInterceptor interceptor) {
-        if (extras != null) {
-            extras.removeInterceptor(interceptor);
+        if (callback.extras != null) {
+            callback.extras.removeInterceptor(interceptor);
         }
         return (T) this;
     }
 
     @Override
     public T removeAllInterceptors() {
-        if (extras != null) {
-            extras.removeAllInterceptors();
+        if (callback.extras != null) {
+            callback.extras.removeAllInterceptors();
         }
         return (T) this;
     }
@@ -119,8 +118,8 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
         }
 
         // add extra interceptors
-        if (extras != null) {
-            interceptors.addAll(extras.getInterceptors());
+        if (callback.extras != null) {
+            interceptors.addAll(callback.extras.getInterceptors());
         }
 
         return interceptors;
@@ -128,10 +127,7 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
 
     // ========getter/setter============
     public void replaceExtras(RouteBundleExtras extras) {
-        if (extras != null) {
-            this.extras = extras;
-            this.callback.setCallback(extras.getCallback());
-        }
+        this.callback.setExtras(extras);
     }
 
     public static RouteRule findRule(Uri uri, int type) {

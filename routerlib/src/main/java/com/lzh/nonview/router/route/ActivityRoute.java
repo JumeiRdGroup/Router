@@ -18,15 +18,12 @@ package com.lzh.nonview.router.route;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActivityRouteRule;
-import com.lzh.nonview.router.parser.URIParser;
-import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.Utils;
 
 /**
@@ -38,63 +35,65 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     @Override
     public Intent createIntent(Context context) {
         ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-        activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule, remote);
+        activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
         return activityLauncher.createIntent(context);
     }
 
     @Override
     public IActivityRoute requestCode(int requestCode) {
-        this.extras.setRequestCode(requestCode);
+        this.callback.extras.setRequestCode(requestCode);
         return this;
     }
 
     @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.extras.setInAnimation(enterAnim);
-        this.extras.setOutAnimation(exitAnim);
+        this.callback.extras.setInAnimation(enterAnim);
+        this.callback.extras.setOutAnimation(exitAnim);
         return this;
     }
 
     @Override
     public IActivityRoute addFlags(int flag) {
-        this.extras.addFlags(flag);
+        this.callback.extras.addFlags(flag);
         return this;
     }
 
     @Override
     public void open(Fragment fragment) {
         try {
-            Utils.checkInterceptor(uri, extras, fragment.getActivity(), getInterceptors());
+            Utils.checkInterceptor(uri, callback.extras, fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
             activityLauncher.open(fragment);
-            callback.onOpenSuccess(uri, routeRule);
+            callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
+                callback.notFound((NotFoundException) e);
             } else {
-                callback.onOpenFailed(this.uri,e);
+                callback.onOpenFailed(e);
             }
         }
+        callback.invoke();
     }
 
     @Override
     public void open(android.support.v4.app.Fragment fragment) {
         try {
-            Utils.checkInterceptor(uri, extras, fragment.getActivity(), getInterceptors());
+            Utils.checkInterceptor(uri, callback.extras, fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, extras, (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
             activityLauncher.open(fragment);
-            callback.onOpenSuccess(uri, routeRule);
+            callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
             if (e instanceof NotFoundException) {
-                callback.notFound(uri, (NotFoundException) e);
+                callback.notFound((NotFoundException) e);
             } else {
-                callback.onOpenFailed(this.uri,e);
+                callback.onOpenFailed(e);
             }
         }
-    }
 
+        callback.invoke();
+    }
 
     @Override
     protected Launcher obtainLauncher() throws Exception{
@@ -104,13 +103,5 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
             launcher = DefaultActivityLauncher.class;
         }
         return launcher.newInstance();
-    }
-
-    public static boolean canOpenRouter(Uri uri) {
-        try {
-            return Cache.getRouteMapByUri(new URIParser(uri), Cache.TYPE_ACTIVITY_ROUTE) != null;
-        } catch (Throwable e) {
-            return false;
-        }
     }
 }

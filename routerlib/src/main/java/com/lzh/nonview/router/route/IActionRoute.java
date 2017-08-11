@@ -59,4 +59,11 @@ public interface IActionRoute extends IBaseRoute<IActionRoute>{
             return this;
         }
     };
+
+    class EmptyActionRoute extends EmptyBaseRoute<IActionRoute> implements IActionRoute {
+
+        public EmptyActionRoute(InternalCallback internal) {
+            super(internal);
+        }
+    }
 }

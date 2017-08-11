@@ -130,4 +130,46 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
             return this;
         }
     };
+
+    class EmptyActivityRoute extends EmptyBaseRoute<IActivityRoute> implements IActivityRoute {
+
+        public EmptyActivityRoute(InternalCallback internal) {
+            super(internal);
+        }
+
+        @Override
+        public Intent createIntent(Context context) {
+            internal.invoke();
+            return new Intent();
+        }
+
+        @Override
+        public IActivityRoute requestCode(int requestCode) {
+            internal.getExtras().setRequestCode(requestCode);
+            return this;
+        }
+
+        @Override
+        public IActivityRoute setAnim(int enterAnim, int exitAnim) {
+            internal.getExtras().setInAnimation(enterAnim);
+            internal.getExtras().setOutAnimation(exitAnim);
+            return this;
+        }
+
+        @Override
+        public IActivityRoute addFlags(int flag) {
+            internal.getExtras().addFlags(flag);
+            return this;
+        }
+
+        @Override
+        public void open(Fragment fragment) {
+            internal.invoke();
+        }
+
+        @Override
+        public void open(android.support.v4.app.Fragment fragment) {
+            internal.invoke();
+        }
+    }
 }

@@ -29,7 +29,7 @@ import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.route.ActionRoute;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.IRoute;
-import com.lzh.nonview.router.route.RouteCallback;
+import com.lzh.nonview.router.route.InternalCallback;
 import com.lzh.nonview.router.tools.Cache;
 
 import java.util.HashMap;
@@ -38,7 +38,7 @@ import java.util.Map;
 public class HostServiceWrapper {
 
     private static String hostPackage;
-    static Context context;
+    private static Context context;
     private static IService service;
 
     private static ServiceConnection connection = new ServiceConnection() {
@@ -77,22 +77,22 @@ public class HostServiceWrapper {
         context.bindService(intent, connection, Service.BIND_AUTO_CREATE);
     }
 
-    public static IRoute create(Uri uri, RouteCallback.InternalCallback callback) {
+    public static IRoute create(Uri uri, InternalCallback callback) {
         try {
             return createWithThrow(uri, callback);
         } catch (Exception e) {
-            return IRoute.EMPTY;
+            return new IRoute.EmptyRoute(callback);
         }
     }
 
-    private static IRoute createWithThrow(Uri uri, RouteCallback.InternalCallback callback) throws Exception{
+    private static IRoute createWithThrow(Uri uri, InternalCallback callback) throws Exception{
         RemoteRule rule;
         if ((rule = service.getActivityRule(uri)) != null) {
             return new ActivityRoute().create(uri, rule.getRule(), rule.getExtra(), callback);
         } else if ((rule = service.getActionRule(uri)) != null) {
             return new ActionRoute().create(uri, rule.getRule(), rule.getExtra(), callback);
         } else {
-            return IRoute.EMPTY;
+            return new IRoute.EmptyRoute(callback);
         }
     }
 

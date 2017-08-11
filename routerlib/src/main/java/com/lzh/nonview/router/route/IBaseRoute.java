@@ -15,14 +15,12 @@
  */
 package com.lzh.nonview.router.route;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,33 +64,40 @@ public interface IBaseRoute<T extends IBaseRoute> extends IRoute, RouteIntercept
      */
     List<RouteInterceptor> getInterceptors ();
 
-    IBaseRoute EMPTY = new IBaseRoute<IBaseRoute>() {
-        @Override
-        public IBaseRoute addExtras(Bundle extras) {
-            return this;
+    @SuppressWarnings("unchecked")
+    class EmptyBaseRoute<T extends IBaseRoute> extends EmptyRoute implements IBaseRoute<T> {
+
+        public EmptyBaseRoute(InternalCallback internal) {
+            super(internal);
         }
 
         @Override
-        public void open(Context context) {}
-
-        @Override
-        public IBaseRoute addInterceptor(RouteInterceptor interceptor) {
-            return this;
+        public T addExtras(Bundle extras) {
+            internal.getExtras().addExtras(extras);
+            return (T) this;
         }
 
         @Override
-        public IBaseRoute removeInterceptor(RouteInterceptor interceptor) {
-            return this;
+        public T addInterceptor(RouteInterceptor interceptor) {
+            internal.getExtras().addInterceptor(interceptor);
+            return (T) this;
         }
 
         @Override
-        public IBaseRoute removeAllInterceptors() {
-            return this;
+        public T removeInterceptor(RouteInterceptor interceptor) {
+            internal.getExtras().removeInterceptor(interceptor);
+            return (T) this;
+        }
+
+        @Override
+        public T removeAllInterceptors() {
+            internal.getExtras().removeAllInterceptors();
+            return (T) this;
         }
 
         @Override
         public List<RouteInterceptor> getInterceptors() {
-            return new ArrayList<>();
+            return internal.getExtras().getInterceptors();
         }
-    };
+    }
 }

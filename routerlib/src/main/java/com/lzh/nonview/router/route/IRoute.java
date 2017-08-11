@@ -29,8 +29,20 @@ public interface IRoute {
      */
     void open(Context context);
 
-    IRoute EMPTY = new IRoute() {
+    class EmptyRoute implements IRoute{
+        protected InternalCallback internal;
+
+        public EmptyRoute(InternalCallback internal) {
+            this.internal = internal;
+        }
+
+        public InternalCallback getInternal() {
+            return internal;
+        }
+
         @Override
-        public void open(Context context) {}
-    };
+        public void open(Context context) {
+            internal.invoke();
+        }
+    }
 }
