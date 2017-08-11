@@ -69,8 +69,10 @@ public final class InternalCallback {
             callback.notFound(uri, (NotFoundException) error);
         } else if (error != null) {
             callback.onOpenFailed(uri, error);
-        } else {
+        } else if (rule != null) {
             callback.onOpenSuccess(uri, rule);
+        } else {
+            callback.onOpenFailed(uri, new RuntimeException("Unknown error"));
         }
     }
 
