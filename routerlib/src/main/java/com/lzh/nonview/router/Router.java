@@ -61,7 +61,7 @@ public final class Router{
 
     private Router(Uri uri) {
         this.uri = Utils.completeUri(uri);
-        internalCallback = new InternalCallback(uri);
+        internalCallback = new InternalCallback(this.uri);
     }
 
     /**
@@ -127,7 +127,7 @@ public final class Router{
             return route;
         }
         route = HostServiceWrapper.create(uri, internalCallback);
-        if (!(route instanceof IRoute.EmptyRoute)) {
+        if (route instanceof IRoute.EmptyRoute) {
             notifyNotFound(String.format("find Route by %s failed:",uri));
         }
         return route;
@@ -194,7 +194,7 @@ public final class Router{
     }
 
     private void notifyNotFound(String msg) {
-        internalCallback.notFound(new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+        internalCallback.onOpenFailed(new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
     }
 
     /** Consider to change entrance to {@link RouterConfiguration#setCallback(RouteCallback)}*/

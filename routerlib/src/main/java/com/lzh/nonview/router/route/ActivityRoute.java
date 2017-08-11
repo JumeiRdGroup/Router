@@ -19,7 +19,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
-import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
@@ -35,63 +34,55 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     @Override
     public Intent createIntent(Context context) {
         ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-        activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
+        activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
         return activityLauncher.createIntent(context);
     }
 
     @Override
     public IActivityRoute requestCode(int requestCode) {
-        this.callback.extras.setRequestCode(requestCode);
+        this.callback.getExtras().setRequestCode(requestCode);
         return this;
     }
 
     @Override
     public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-        this.callback.extras.setInAnimation(enterAnim);
-        this.callback.extras.setOutAnimation(exitAnim);
+        this.callback.getExtras().setInAnimation(enterAnim);
+        this.callback.getExtras().setOutAnimation(exitAnim);
         return this;
     }
 
     @Override
     public IActivityRoute addFlags(int flag) {
-        this.callback.extras.addFlags(flag);
+        this.callback.getExtras().addFlags(flag);
         return this;
     }
 
     @Override
     public void open(Fragment fragment) {
         try {
-            Utils.checkInterceptor(uri, callback.extras, fragment.getActivity(), getInterceptors());
+            Utils.checkInterceptor(uri, callback.getExtras(), fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
             activityLauncher.open(fragment);
             callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound((NotFoundException) e);
-            } else {
-                callback.onOpenFailed(e);
-            }
+            callback.onOpenFailed(e);
         }
+
         callback.invoke();
     }
 
     @Override
     public void open(android.support.v4.app.Fragment fragment) {
         try {
-            Utils.checkInterceptor(uri, callback.extras, fragment.getActivity(), getInterceptors());
+            Utils.checkInterceptor(uri, callback.getExtras(), fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, callback.extras, (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
             activityLauncher.open(fragment);
             callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound((NotFoundException) e);
-            } else {
-                callback.onOpenFailed(e);
-            }
+            callback.onOpenFailed(e);
         }
-
         callback.invoke();
     }
 

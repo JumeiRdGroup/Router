@@ -20,10 +20,10 @@ public final class InternalCallback {
     // store the map to provided find extras for uri.
     private static Map<Uri, RouteBundleExtras> cache = new HashMap<>();
 
-    Uri uri;
-    RouteBundleExtras extras = new RouteBundleExtras();
-    RouteRule rule;
-    Throwable error;
+    private Uri uri;
+    private RouteBundleExtras extras = new RouteBundleExtras();
+    private RouteRule rule;
+    private Throwable error;
 
     public InternalCallback(Uri uri) {
         this.uri = uri;
@@ -41,10 +41,6 @@ public final class InternalCallback {
         if (extras != null) {
             this.extras = extras;
         }
-    }
-
-    public void notFound(NotFoundException e) {
-        this.error = e;
     }
 
     public void onOpenSuccess(RouteRule rule) {

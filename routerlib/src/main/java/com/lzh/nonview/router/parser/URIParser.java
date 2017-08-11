@@ -18,6 +18,8 @@ package com.lzh.nonview.router.parser;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.lzh.nonview.router.tools.Utils;
+
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class URIParser {
     }
 
     private void parse() {
-        this.route = uri.getScheme() + "://" + uri.getHost() + uri.getPath();
+        this.route = Utils.format(uri.getScheme() + "://" + uri.getHost() + uri.getPath());
         String query = uri.getEncodedQuery();
         if (!TextUtils.isEmpty(query)) {
             params = parseParams(query);

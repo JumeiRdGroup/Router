@@ -49,7 +49,7 @@ public class Utils {
         return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
     }
 
-    static String format(String url) {
+    public static String format(String url) {
         if (url.endsWith("/")){
             return url.substring(0, url.length() - 1);
         }

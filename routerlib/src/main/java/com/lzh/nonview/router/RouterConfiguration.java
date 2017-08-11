@@ -15,6 +15,9 @@
  */
 package com.lzh.nonview.router;
 
+import android.net.Uri;
+
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
@@ -24,6 +27,7 @@ import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.protocol.IRemoteFactory;
 import com.lzh.nonview.router.route.ActionRoute;
 import com.lzh.nonview.router.route.ActivityRoute;
+import com.lzh.nonview.router.route.InternalCallback;
 import com.lzh.nonview.router.route.RouteCallback;
 import com.lzh.nonview.router.tools.Cache;
 
@@ -135,6 +139,16 @@ public final class RouterConfiguration {
      */
     public void registerExecutors(Class<? extends Executor> key, Executor value) {
         Cache.registerExecutors(key, value);
+    }
+
+    /**
+     * Restore a {@link RouteBundleExtras} by uri. this method should only be called in lifecycle of {@link RouteCallback}.
+     * otherwise it will be null cause it is cleaned.
+     * @param uri The uri that you open
+     * @return The {@link RouteBundleExtras} instance that you may set before before you open the routing by uri.
+     */
+    public RouteBundleExtras restoreExtras(Uri uri) {
+        return InternalCallback.findExtrasByUri(uri);
     }
 
     private static RouterConfiguration config = new RouterConfiguration();

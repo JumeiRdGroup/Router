@@ -21,7 +21,6 @@ import android.os.Bundle;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.RouterConfiguration;
-import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
@@ -69,11 +68,7 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
 //            realOpen(context);
             callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
-            if (e instanceof NotFoundException) {
-                callback.notFound((NotFoundException) e);
-            } else {
-                callback.onOpenFailed(e);
-            }
+            callback.onOpenFailed(e);
         }
 
         callback.invoke();
@@ -81,30 +76,30 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
 
     @Override
     public T addExtras(Bundle extras) {
-        this.callback.extras.addExtras(extras);
+        this.callback.getExtras().addExtras(extras);
         return (T) this;
     }
 
     // =============RouteInterceptor operation===============
     public T addInterceptor(RouteInterceptor interceptor) {
-        if (callback.extras != null) {
-            callback.extras.addInterceptor(interceptor);
+        if (callback.getExtras() != null) {
+            callback.getExtras().addInterceptor(interceptor);
         }
         return (T) this;
     }
 
     @Override
     public T removeInterceptor(RouteInterceptor interceptor) {
-        if (callback.extras != null) {
-            callback.extras.removeInterceptor(interceptor);
+        if (callback.getExtras() != null) {
+            callback.getExtras().removeInterceptor(interceptor);
         }
         return (T) this;
     }
 
     @Override
     public T removeAllInterceptors() {
-        if (callback.extras != null) {
-            callback.extras.removeAllInterceptors();
+        if (callback.getExtras() != null) {
+            callback.getExtras().removeAllInterceptors();
         }
         return (T) this;
     }
@@ -118,8 +113,8 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
         }
 
         // add extra interceptors
-        if (callback.extras != null) {
-            interceptors.addAll(callback.extras.getInterceptors());
+        if (callback.getExtras() != null) {
+            interceptors.addAll(callback.getExtras().getInterceptors());
         }
 
         return interceptors;

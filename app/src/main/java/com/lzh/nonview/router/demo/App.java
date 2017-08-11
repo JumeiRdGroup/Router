@@ -19,6 +19,7 @@ import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.route.InternalCallback;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.HashMap;
@@ -54,10 +55,11 @@ public class App extends Application {
         });
 
         // 对Router设置Activity Route Callback,作辅助功能
-        Router.setGlobalRouteCallback(new RouteCallback() {
+        RouterConfiguration.get().setCallback(new RouteCallback() {
 
             @Override
             public void notFound(Uri uri, NotFoundException e) {
+                RouteBundleExtras extras = RouterConfiguration.get().restoreExtras(uri);
                 Toast.makeText(App.this, e.getNotFoundName() + " not find", Toast.LENGTH_SHORT).show();
             }
 
