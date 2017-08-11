@@ -38,13 +38,21 @@ import java.util.List;
  * @author haoge
  * @see com.lzh.nonview.router.route.IBaseRoute
  */
-public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
+public final class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
     private Bundle extras = new Bundle();
     private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
     private RouteCallback callback;
-    protected RouteBundleExtras() {}
+    private int requestCode = -1;
+    private int inAnimation = -1;
+    private int outAnimation = -1;
+    private int flags = 0;
+    public RouteBundleExtras() {}
 
     protected RouteBundleExtras(Parcel in) {
+        requestCode = in.readInt();
+        inAnimation = in.readInt();
+        outAnimation = in.readInt();
+        flags = in.readInt();
         extras = in.readBundle(getClass().getClassLoader());
         int parcelableInterceptorSize = in.readInt();
         // restore interceptors
@@ -88,6 +96,11 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(requestCode);
+        dest.writeInt(inAnimation);
+        dest.writeInt(outAnimation);
+        dest.writeInt(this.flags);
+
         dest.writeBundle(extras);
 
         List<RouteInterceptor> parcelInterceptors = new ArrayList<>();
@@ -165,5 +178,37 @@ public class RouteBundleExtras implements Parcelable, RouteInterceptorAction<Rou
 
     public RouteCallback getCallback() {
         return callback;
+    }
+
+    public int getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public int getInAnimation() {
+        return inAnimation;
+    }
+
+    public void setInAnimation(int inAnimation) {
+        this.inAnimation = inAnimation;
+    }
+
+    public int getOutAnimation() {
+        return outAnimation;
+    }
+
+    public void setOutAnimation(int outAnimation) {
+        this.outAnimation = outAnimation;
+    }
+
+    public int getFlags() {
+        return flags;
+    }
+
+    public void addFlags(int flags) {
+        this.flags |= flags;
     }
 }

@@ -20,8 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.exception.NotFoundException;
-import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
@@ -114,10 +112,10 @@ public final class Router{
      */
     public static IRoute resume(Uri uri, RouteBundleExtras extras) {
         IRoute route = Router.create(uri).getRoute();
-        if (route instanceof ActivityRoute && extras instanceof ActivityRouteBundleExtras) {
-            ((ActivityRoute) route).replaceExtras((ActivityRouteBundleExtras) extras);
-        } else if (route instanceof ActionRoute && extras instanceof ActionRouteBundleExtras) {
-            ((ActionRoute) route).replaceExtras((ActionRouteBundleExtras) extras);
+        if (route instanceof ActivityRoute) {
+            ((ActivityRoute) route).replaceExtras(extras);
+        } else if (route instanceof ActionRoute) {
+            ((ActionRoute) route).replaceExtras(extras);
         }
         return route;
     }

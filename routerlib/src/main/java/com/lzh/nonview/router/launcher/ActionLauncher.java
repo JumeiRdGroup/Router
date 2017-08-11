@@ -15,7 +15,6 @@
  */
 package com.lzh.nonview.router.launcher;
 
-import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.tools.Cache;
 
@@ -28,7 +27,7 @@ import java.util.concurrent.Executor;
  *     The default impl is {@link DefaultActionLauncher}
  * </p>
  */
-public abstract class ActionLauncher extends Launcher<ActionRouteRule, ActionRouteBundleExtras> {
+public abstract class ActionLauncher extends Launcher<ActionRouteRule> {
 
     /**
      * @return returns a executor instance to switching thread.

@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtras> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
+public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRoute<T>, RouteInterceptorAction<T> {
     protected Bundle bundle;
-    protected E extras;
+    protected RouteBundleExtras extras;
     RouteCallback.InternalCallback callback;
     protected Uri uri;
     protected Bundle remote;
@@ -49,7 +49,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
             this.uri = uri;
             this.remote = remote;
             this.callback = callback;
-            this.extras = createExtras();
+            this.extras = new RouteBundleExtras();
             this.extras.setCallback(callback.getCallback());
             this.routeRule = rule;
             this.bundle = Utils.parseRouteMapToBundle(new URIParser(uri), routeRule);
@@ -127,7 +127,7 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     }
 
     // ========getter/setter============
-    public void replaceExtras(E extras) {
+    public void replaceExtras(RouteBundleExtras extras) {
         if (extras != null) {
             this.extras = extras;
             this.callback.setCallback(extras.getCallback());
@@ -139,8 +139,6 @@ public abstract class BaseRoute<T extends IBaseRoute, E extends RouteBundleExtra
     }
 
     // ============abstract methods============
-    protected abstract E createExtras();
-
     protected abstract Launcher obtainLauncher() throws Exception;
 
 }

@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.List;
 public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
     /**
-     * Create intent by {@link ActivityRouteBundleExtras} and {@link Bundle} that parsed by uri
+     * Create intent by {@link RouteBundleExtras} and {@link Bundle} that parsed by uri
      * @param context The context to create intent
      * @return Intent that contains of extras data and bundle that parsed by uri
      */

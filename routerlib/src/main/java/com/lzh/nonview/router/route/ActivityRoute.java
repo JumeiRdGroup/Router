@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.lzh.nonview.router.exception.NotFoundException;
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
@@ -34,7 +33,7 @@ import com.lzh.nonview.router.tools.Utils;
  * A route tool to check route rule by uri and launch activity
  * Created by lzh on 16/9/5.
  */
-public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundleExtras> implements IActivityRoute {
+public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivityRoute {
 
     @Override
     public Intent createIntent(Context context) {
@@ -96,10 +95,6 @@ public class ActivityRoute extends BaseRoute<IActivityRoute, ActivityRouteBundle
         }
     }
 
-    @Override
-    protected ActivityRouteBundleExtras createExtras() {
-        return new ActivityRouteBundleExtras();
-    }
 
     @Override
     protected Launcher obtainLauncher() throws Exception{

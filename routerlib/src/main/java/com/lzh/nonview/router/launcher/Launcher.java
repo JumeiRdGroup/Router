@@ -26,12 +26,11 @@ import com.lzh.nonview.router.module.RouteRule;
 /**
  * The base launcher class.
  * @param <T> The route rule
- * @param <E> The route extras
  */
-public abstract class Launcher<T extends RouteRule, E extends RouteBundleExtras> {
+public abstract class Launcher<T extends RouteRule> {
     protected Uri uri;
     protected Bundle bundle;
-    protected E extras;
+    protected RouteBundleExtras extras;
     protected T rule;
     protected Bundle remote;
 
@@ -49,7 +48,7 @@ public abstract class Launcher<T extends RouteRule, E extends RouteBundleExtras>
      * @param extras The extras data you set via {@link Router#getRoute()}
      * @param rule The rule that associate with the uri.
      */
-    public final void set(Uri uri, Bundle bundle, E extras, T rule, Bundle remote) {
+    public final void set(Uri uri, Bundle bundle, RouteBundleExtras extras, T rule, Bundle remote) {
         this.uri = uri;
         this.bundle = bundle;
         this.extras = extras;

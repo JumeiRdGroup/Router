@@ -19,7 +19,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
-import com.lzh.nonview.router.extras.ActivityRouteBundleExtras;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 
 /**
@@ -29,7 +28,7 @@ import com.lzh.nonview.router.module.ActivityRouteRule;
  *     The default impl is {@link DefaultActivityLauncher}
  * </p>
  */
-public abstract class ActivityLauncher extends Launcher<ActivityRouteRule, ActivityRouteBundleExtras>{
+public abstract class ActivityLauncher extends Launcher<ActivityRouteRule>{
 
     /**
      * This method will be invoked when you call {@link com.lzh.nonview.router.route.ActivityRoute#createIntent(Context)}

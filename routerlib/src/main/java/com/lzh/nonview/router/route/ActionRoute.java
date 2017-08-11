@@ -15,18 +15,13 @@
  */
 package com.lzh.nonview.router.route;
 
-import com.lzh.nonview.router.extras.ActionRouteBundleExtras;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActionRouteRule;
 
-public class ActionRoute extends BaseRoute<IActionRoute, ActionRouteBundleExtras> implements IActionRoute {
+public class ActionRoute extends BaseRoute<IActionRoute> implements IActionRoute {
 
-    @Override
-    protected ActionRouteBundleExtras createExtras() {
-        return new ActionRouteBundleExtras();
-    }
 
     @Override
     protected Launcher obtainLauncher() throws Exception{
