@@ -21,6 +21,8 @@ import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
+import com.lzh.nonview.router.launcher.DefaultActionLauncher;
+import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.protocol.HostServiceWrapper;
@@ -41,9 +43,9 @@ public final class RouterConfiguration {
     private RouteInterceptor interceptor;
     private RouteCallback callback;
 
-    private Class<? extends IRemoteFactory> remoteFactory = null;
-    private Class<? extends ActivityLauncher> activityLauncher = null;
-    private Class<? extends ActionLauncher> actionLauncher = null;
+    private IRemoteFactory remoteFactory = null;
+    private Class<? extends ActivityLauncher> activityLauncher;
+    private Class<? extends ActionLauncher> actionLauncher;
 
 
     public RouteInterceptor getInterceptor() {
@@ -76,24 +78,23 @@ public final class RouterConfiguration {
         return this;
     }
 
-    public Class<? extends IRemoteFactory> getRemoteFactory() {
+    public IRemoteFactory getRemoteFactory() {
         return remoteFactory;
     }
 
     /**
      * Set a default remote factory to used. the factory must contains a default empty construction.
-     * when you're not set a new factory to the {@link RouteRule#setFactory(IRemoteFactory)}, the default factory will be used.
      * @param remoteFactory The remote factory class
      * @return config itself
      * @see IRemoteFactory
      */
-    public RouterConfiguration setRemoteFactory(Class<? extends IRemoteFactory> remoteFactory) {
+    public RouterConfiguration setRemoteFactory(IRemoteFactory remoteFactory) {
         this.remoteFactory = remoteFactory;
         return this;
     }
 
     public Class<? extends ActivityLauncher> getActivityLauncher() {
-        return activityLauncher;
+        return activityLauncher == null ? DefaultActivityLauncher.class : activityLauncher;
     }
 
     /**
@@ -108,7 +109,7 @@ public final class RouterConfiguration {
     }
 
     public Class<? extends ActionLauncher> getActionLauncher() {
-        return actionLauncher;
+        return actionLauncher == null ? DefaultActionLauncher.class : actionLauncher;
     }
 
     /**

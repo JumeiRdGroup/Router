@@ -19,12 +19,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.launcher.Launcher;
-import com.lzh.nonview.router.protocol.IRemoteFactory;
 import com.lzh.nonview.router.route.ActionSupport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An entity to contains some data for route
@@ -63,19 +61,18 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
 
     /** The class name must be subclass of {@link Activity} or {@link ActionSupport}*/
     private String clzName;
-    private Map<String,Integer> params = new HashMap<>();
+    private HashMap<String,Integer> params = new HashMap<>();
     private Class<? extends L> launcher;
-    private IRemoteFactory factory;
 
     public String getRuleClz() {
         return clzName;
     }
 
-    public Map<String,Integer> getParams() {
+    public HashMap<String,Integer> getParams() {
         return params;
     }
 
-    R setParams(Map<String,Integer> params) {
+    R setParams(HashMap<String,Integer> params) {
         if (params != null) {
             this.params = params;
         }
@@ -91,14 +88,6 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
     public R addParam (String key, int type) {
         params.put(key,type);
         return (R) this;
-    }
-
-    public IRemoteFactory getFactory() {
-        return factory;
-    }
-
-    public void setFactory(IRemoteFactory factory) {
-        this.factory = factory;
     }
 
     public R setLauncher(Class<? extends L> launcher) {

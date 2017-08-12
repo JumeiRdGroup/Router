@@ -21,9 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
 
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.module.RemoteRule;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.route.ActionRoute;
@@ -37,7 +39,6 @@ import java.util.Map;
 
 public class HostServiceWrapper {
 
-    private static String hostPackage;
     private static Context context;
     private static IService service;
 
@@ -68,7 +69,6 @@ public class HostServiceWrapper {
         if (TextUtils.isEmpty(hostPackage)) {
             throw new IllegalArgumentException("Please provide a valid host package name.");
         }
-        HostServiceWrapper.hostPackage = hostPackage;
         HostServiceWrapper.context = context.getApplicationContext();
 
         Intent intent = new Intent();
@@ -112,10 +112,16 @@ public class HostServiceWrapper {
         Map<String, RemoteRule> dest = new HashMap<>();
         for (String route : source.keySet()) {
             RouteRule rule = source.get(route);
-            RemoteRule remote = RemoteRule.create(rule, rule.getFactory() == null ? null : rule.getFactory().createRemote(context, rule));
+            RemoteRule remote = RemoteRule.create(rule, getRemote(context, rule));
             dest.put(route, remote);
         }
         return dest;
+    }
+
+    private static Bundle getRemote(Context context, RouteRule rule){
+        IRemoteFactory factory = RouterConfiguration.get().getRemoteFactory();
+        return factory == null ? null : factory.createRemote(context, rule);
+
     }
 
 }

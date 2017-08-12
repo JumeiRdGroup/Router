@@ -19,6 +19,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
@@ -91,7 +92,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
         ActivityRouteRule rule = (ActivityRouteRule) routeRule;
         Class<? extends ActivityLauncher> launcher = rule.getLauncher();
         if (launcher == null) {
-            launcher = DefaultActivityLauncher.class;
+            launcher = RouterConfiguration.get().getActivityLauncher();
         }
         return launcher.newInstance();
     }

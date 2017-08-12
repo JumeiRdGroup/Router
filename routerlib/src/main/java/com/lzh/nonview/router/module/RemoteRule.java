@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RemoteRule implements Parcelable{
     private String name;
-    private Map<String,Integer> params;
+    private HashMap params;
     private Bundle extra;
     private int type;
 

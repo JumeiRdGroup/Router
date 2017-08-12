@@ -15,6 +15,7 @@
  */
 package com.lzh.nonview.router.route;
 
+import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
@@ -27,7 +28,7 @@ public class ActionRoute extends BaseRoute<IActionRoute> implements IActionRoute
         ActionRouteRule rule = (ActionRouteRule) routeRule;
         Class<? extends ActionLauncher> launcher = rule.getLauncher();
         if (launcher == null) {
-            launcher = DefaultActionLauncher.class;
+            launcher = RouterConfiguration.get().getActionLauncher();
         }
         return launcher.newInstance();
     }

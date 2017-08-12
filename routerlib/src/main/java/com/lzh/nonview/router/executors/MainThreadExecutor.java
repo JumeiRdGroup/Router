@@ -26,6 +26,7 @@ public class MainThreadExecutor implements Executor{
 
     @Override
     public void execute(Runnable command) {
+
         if (Looper.myLooper() == Looper.getMainLooper()) {
             command.run();
         } else {
