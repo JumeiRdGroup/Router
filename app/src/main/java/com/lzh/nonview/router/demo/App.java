@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.haoge.studio.RouterRuleCreator;
-import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
@@ -19,7 +19,7 @@ import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
-import com.lzh.nonview.router.route.InternalCallback;
+import com.lzh.nonview.router.protocol.IRemoteFactory;
 import com.lzh.nonview.router.route.RouteCallback;
 
 import java.util.HashMap;
@@ -33,47 +33,27 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // 添加route规则创建器
-        Router.startHostService("com.lzh.nonview.router.demo", this);
+
+
+        // 添加route规则创建器。RouteInit为用户手动创建的路由规则。
+        // RouterRuleCreator为用户使用注解后。自动生成的规则。均使用addRouteCreator将规则加入
         RouterConfiguration.get().addRouteCreator(new RouteInit());
         RouterConfiguration.get().addRouteCreator(new RouterRuleCreator());
-        RouterConfiguration.get().setInterceptor(new RouteInterceptor() {
 
-            @Override
-            public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
-                return !DataManager.INSTANCE.isLogin();
-            }
-
-            @Override
-            public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
-                Toast.makeText(App.this, "未登录.请先登录", Toast.LENGTH_SHORT).show();
-                Intent loginIntent = new Intent(context,LoginActivity.class);
-                loginIntent.putExtra("uri",uri);
-                loginIntent.putExtra("extras",extras);
-                context.startActivity(loginIntent);
-            }
-        });
+        // 设置全局路由拦截器。所有的路由操作均会在此被判断是否被拦截并做相应处理。
+        RouterConfiguration.get().setInterceptor(new DefaultInterceptor());
 
         // 对Router设置Activity Route Callback,作辅助功能
-        RouterConfiguration.get().setCallback(new RouteCallback() {
+        RouterConfiguration.get().setCallback(new DefaultCallback());
 
-            @Override
-            public void notFound(Uri uri, NotFoundException e) {
-                RouteBundleExtras extras = RouterConfiguration.get().restoreExtras(uri);
-                Toast.makeText(App.this, e.getNotFoundName() + " not find", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onOpenSuccess(Uri uri, RouteRule rule) {
-                // 可在此进行route追踪
-                Toast.makeText(App.this, String.format("Launch routing task %s success", rule.getRuleClz()), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onOpenFailed(Uri uri, Throwable e) {
-                Toast.makeText(App.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // 启动远程服务。一般在插件化环境下使用。
+//        Router.startHostService("com.lzh.nonview.router.demo", this);
+        // 对应于启动远程服务操作。可设置此远程数据创建者。也应在插件化环境下使用。
+//        RouterConfiguration.get().setRemoteFactory(new RemoteFactory());
+        // 当默认的动作路由启动方式不能满足你项目需要时。通过定制此接口来做替换
+//        RouterConfiguration.get().setActionLauncher(CustomActionLauncher.class);
+        // 当默认的页面路由启动方式不能满足你项目需要时，通过定制此接口来做替换
+//        RouterConfiguration.get().setActivityLauncher(CustomActivityLauncher.class);
     }
 
     private class RouteInit implements RouteCreator {
@@ -99,4 +79,51 @@ public class App extends Application {
             return routes;
         }
     }
+
+    private static class DefaultInterceptor implements RouteInterceptor {
+
+        @Override
+        public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
+            return !DataManager.INSTANCE.isLogin();
+        }
+
+        @Override
+        public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
+            Toast.makeText(context, "未登录.请先登录", Toast.LENGTH_SHORT).show();
+            Intent loginIntent = new Intent(context,LoginActivity.class);
+            loginIntent.putExtra("uri",uri);
+            loginIntent.putExtra("extras",extras);
+            context.startActivity(loginIntent);
+        }
+    }
+
+    private class DefaultCallback implements RouteCallback {
+
+        @Override
+        public void notFound(Uri uri, NotFoundException e) {
+            Toast.makeText(App.this, e.getNotFoundName() + " not find", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onOpenSuccess(Uri uri, RouteRule rule) {
+            // 可在此进行route追踪
+            Toast.makeText(App.this, String.format("Launch routing task %s success", rule.getRuleClz()), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onOpenFailed(Uri uri, Throwable e) {
+            Toast.makeText(App.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static class RemoteFactory implements IRemoteFactory {
+
+        @Override
+        public Bundle createRemote(Context application, RouteRule rule) {
+            Bundle bundle = new Bundle();
+            bundle.putString("package name", application.getPackageName());
+            return bundle;
+        }
+    }
+
 }

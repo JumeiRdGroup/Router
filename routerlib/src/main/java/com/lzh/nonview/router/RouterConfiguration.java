@@ -15,6 +15,7 @@
  */
 package com.lzh.nonview.router;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.lzh.nonview.router.extras.RouteBundleExtras;
@@ -140,6 +141,27 @@ public final class RouterConfiguration {
      */
     public void registerExecutors(Class<? extends Executor> key, Executor value) {
         Cache.registerExecutors(key, value);
+    }
+
+    /**
+     * @see RouterConfiguration#startHostService(String, Context, String)
+     */
+    public void startHostService(String hostPackage, Context context) {
+        startHostService(hostPackage, context, null);
+    }
+
+    /**
+     * @see HostServiceWrapper#startHostService(String, Context, String)
+     */
+    public void startHostService(String hostPackage, Context context, String pluginName) {
+        HostServiceWrapper.startHostService(hostPackage, context, pluginName);
+    }
+
+    /**
+     * @see HostServiceWrapper#isRegister(String)
+     */
+    public boolean isRegister(String pluginName) {
+        return HostServiceWrapper.isRegister(pluginName);
     }
 
     /**

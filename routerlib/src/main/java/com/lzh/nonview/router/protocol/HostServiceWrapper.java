@@ -41,6 +41,7 @@ public class HostServiceWrapper {
 
     private static Context context;
     private static IService service;
+    private static String pluginName;
 
     private static ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -61,8 +62,9 @@ public class HostServiceWrapper {
      *
      * @param hostPackage the package name of host.
      * @param context the context to start remote service.
+     * @param pluginName The plugin name to register to remote service. to help to judge if it should be
      */
-    public static void startHostService(String hostPackage, Context context) {
+    public static void startHostService(String hostPackage, Context context, String pluginName) {
         if (service != null) {
             throw new RuntimeException("You've bind a remote service before");
         }
@@ -70,6 +72,7 @@ public class HostServiceWrapper {
             throw new IllegalArgumentException("Please provide a valid host package name.");
         }
         HostServiceWrapper.context = context.getApplicationContext();
+        HostServiceWrapper.pluginName = TextUtils.isEmpty(pluginName) ? context.getPackageName() : pluginName;
 
         Intent intent = new Intent();
         intent.setPackage(hostPackage);
@@ -96,11 +99,20 @@ public class HostServiceWrapper {
         }
     }
 
+    public static boolean isRegister(String pluginName) {
+        try {
+            return service.isRegister(pluginName);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static void registerRulesToHostService() {
         try {
             if (service == null) {
                 return;
             }
+            service.register(pluginName);
             service.addActionRules(transform(Cache.getActionRules()));
             service.addActivityRules(transform(Cache.getActivityRules()));
         } catch (Exception e) {
@@ -121,7 +133,6 @@ public class HostServiceWrapper {
     private static Bundle getRemote(Context context, RouteRule rule){
         IRemoteFactory factory = RouterConfiguration.get().getRemoteFactory();
         return factory == null ? null : factory.createRemote(context, rule);
-
     }
 
 }

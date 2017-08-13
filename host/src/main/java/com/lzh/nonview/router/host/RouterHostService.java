@@ -26,7 +26,9 @@ import android.util.Log;
 import com.lzh.nonview.router.protocol.IService;
 import com.lzh.nonview.router.module.RemoteRule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +41,19 @@ public class RouterHostService extends Service{
     IService.Stub stub = new IService.Stub() {
         Map<String, RemoteRule> activities = new HashMap<>();
         Map<String, RemoteRule> actions = new HashMap<>();
+        List<String> plugins = new ArrayList<>();
+
+        @Override
+        public void register(String pluginName) throws RemoteException {
+            if (plugins.contains(pluginName)) {
+                plugins.add(pluginName);
+            }
+        }
+
+        @Override
+        public boolean isRegister(String pluginName) throws RemoteException {
+            return plugins.contains(pluginName);
+        }
 
         @Override
         public void addActivityRules(Map rules) throws RemoteException {

@@ -10,6 +10,9 @@ import com.lzh.nonview.router.module.RemoteRule;
  */
 interface IService {
 
+    void register(String pluginName);
+    boolean isRegister(String pluginName);
+
     void addActivityRules(in Map rules);
     void addActionRules(in Map rules);
 

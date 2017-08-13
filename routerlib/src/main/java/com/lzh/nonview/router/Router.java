@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.exception.NotFoundException;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
@@ -33,7 +34,6 @@ import com.lzh.nonview.router.route.IActivityRoute;
 import com.lzh.nonview.router.route.IBaseRoute;
 import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.InternalCallback;
-import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.route.RouteCallback;
 import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.Utils;
@@ -212,17 +212,4 @@ public final class Router{
     /** Consider to change entrance to {@link RouterConfiguration#registerExecutors(Class, Executor)}*/
     @Deprecated
     public static void registerExecutors(Class<? extends Executor> key, Executor value) {}
-
-    /**
-     * Request to launch a remote service with the host package name.
-     *
-     * <p>
-     *     The remote service used to store all the routing rules and provided for other process or plugins to matched with uri.
-     * </p>
-     * @param hostPackage host package name.
-     * @param context a valid context.
-     */
-    public static void startHostService(String hostPackage, Context context) {
-        HostServiceWrapper.startHostService(hostPackage, context);
-    }
 }
