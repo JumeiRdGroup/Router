@@ -15,6 +15,11 @@ import com.lzh.stub.ActivityManager;
 import com.lzh.stub.RouterBridgeActivity;
 import com.qihoo360.replugin.RePlugin;
 
+/**
+ * 所有宿主及插件所共同配置的路由回调。
+ *
+ * 用于在启动路由时。当路由未找到。判断是否已启动对应插件。若未启动。则启动插件并恢复路由。
+ */
 public class PluginCallback implements RouteCallback{
 
     @Override

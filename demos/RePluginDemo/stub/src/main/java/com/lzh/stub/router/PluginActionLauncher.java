@@ -11,6 +11,9 @@ import com.qihoo360.replugin.RePlugin;
 
 import java.lang.reflect.Method;
 
+/**
+ * 针对RePlugin框架定制的动作路由启动器。
+ */
 public class PluginActionLauncher extends ActionLauncher {
 
     @Override

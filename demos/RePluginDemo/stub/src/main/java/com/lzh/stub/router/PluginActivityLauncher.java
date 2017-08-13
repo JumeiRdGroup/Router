@@ -10,7 +10,7 @@ import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.qihoo360.replugin.RePlugin;
 
 /**
- * 用于给插件使用的插件启动器:
+ * 针对RePlugin框架定制的页面路由启动器
  */
 public class PluginActivityLauncher extends ActivityLauncher {
 

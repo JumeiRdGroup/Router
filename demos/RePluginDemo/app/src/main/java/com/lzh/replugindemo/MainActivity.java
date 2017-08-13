@@ -10,6 +10,7 @@ import com.lzh.nonview.router.anno.RouterRule;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+// 因为指定了baseUrl。 所以这里会使用baseUrl做组合。
 @RouterRule("main")
 public class MainActivity extends Activity {
 

@@ -15,6 +15,7 @@ public class RouterLoader {
     public void init (Context context) {
         // 启动远程服务
         RouterConfiguration.get().startHostService("com.lzh.replugindemo", context);
+
         RouterConfiguration.get().setCallback(new PluginCallback());
         RouterConfiguration.get().setActivityLauncher(PluginActivityLauncher.class);
         RouterConfiguration.get().setActionLauncher(PluginActionLauncher.class);
