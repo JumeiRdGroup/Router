@@ -196,20 +196,4 @@ public final class Router{
     private void notifyNotFound(String msg) {
         internalCallback.onOpenFailed(new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
     }
-
-    /** Consider to change entrance to {@link RouterConfiguration#setCallback(RouteCallback)}*/
-    @Deprecated
-    public static void setGlobalRouteCallback (RouteCallback callback) {}
-
-    /** Consider to change entrance to {@link RouterConfiguration#setInterceptor(RouteInterceptor)}*/
-    @Deprecated
-    public static void setGlobalRouteInterceptor (RouteInterceptor interceptor) {}
-
-    /** Consider to change entrance to {@link RouterConfiguration#addRouteCreator(RouteCreator)}*/
-    @Deprecated
-    public static void addRouteCreator(RouteCreator creator) {}
-
-    /** Consider to change entrance to {@link RouterConfiguration#registerExecutors(Class, Executor)}*/
-    @Deprecated
-    public static void registerExecutors(Class<? extends Executor> key, Executor value) {}
 }

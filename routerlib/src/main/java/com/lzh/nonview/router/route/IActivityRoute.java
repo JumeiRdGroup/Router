@@ -75,62 +75,6 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
      */
     void open(android.support.v4.app.Fragment fragment);
 
-    IActivityRoute EMPTY = new IActivityRoute() {
-        @Override
-        public Intent createIntent(Context context) {
-            return new Intent();
-        }
-
-        @Override
-        public IActivityRoute requestCode(int requestCode) {
-            return this;
-        }
-
-        @Override
-        public IActivityRoute setAnim(int enterAnim, int exitAnim) {
-            return this;
-        }
-
-        @Override
-        public IActivityRoute addFlags(int flag) {
-            return this;
-        }
-
-        @Override
-        public void open(Fragment fragment) {}
-
-        @Override
-        public void open(android.support.v4.app.Fragment fragment) {}
-
-        @Override
-        public IActivityRoute addInterceptor(RouteInterceptor interceptor) {
-            return this;
-        }
-
-        @Override
-        public IActivityRoute removeInterceptor(RouteInterceptor interceptor) {
-            return this;
-        }
-
-        @Override
-        public IActivityRoute removeAllInterceptors() {
-            return this;
-        }
-
-        @Override
-        public List<RouteInterceptor> getInterceptors() {
-            return new ArrayList<>();
-        }
-
-        @Override
-        public void open(Context context) {}
-
-        @Override
-        public IActivityRoute addExtras(Bundle extras) {
-            return this;
-        }
-    };
-
     class EmptyActivityRoute extends EmptyBaseRoute<IActivityRoute> implements IActivityRoute {
 
         public EmptyActivityRoute(InternalCallback internal) {

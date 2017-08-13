@@ -47,7 +47,7 @@ public class App extends Application {
         RouterConfiguration.get().setCallback(new DefaultCallback());
 
         // 启动远程服务。一般在插件化环境下使用。
-//        Router.startHostService("com.lzh.nonview.router.demo", this);
+//        RouterConfiguration.get().startHostService("com.lzh.nonview.router.demo", this);
         // 对应于启动远程服务操作。可设置此远程数据创建者。也应在插件化环境下使用。
 //        RouterConfiguration.get().setRemoteFactory(new RemoteFactory());
         // 当默认的动作路由启动方式不能满足你项目需要时。通过定制此接口来做替换

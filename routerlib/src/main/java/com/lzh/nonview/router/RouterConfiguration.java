@@ -143,23 +143,14 @@ public final class RouterConfiguration {
         Cache.registerExecutors(key, value);
     }
 
-    /**
-     * @see RouterConfiguration#startHostService(String, Context, String)
-     */
     public void startHostService(String hostPackage, Context context) {
         startHostService(hostPackage, context, null);
     }
 
-    /**
-     * @see HostServiceWrapper#startHostService(String, Context, String)
-     */
     public void startHostService(String hostPackage, Context context, String pluginName) {
         HostServiceWrapper.startHostService(hostPackage, context, pluginName);
     }
 
-    /**
-     * @see HostServiceWrapper#isRegister(String)
-     */
     public boolean isRegister(String pluginName) {
         return HostServiceWrapper.isRegister(pluginName);
     }
