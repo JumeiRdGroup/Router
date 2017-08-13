@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        applicationId "com.lzh.plugina"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+apply plugin: 'replugin-plugin-gradle'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.qihoo360.replugin:replugin-plugin-lib:2.1.7'
+
+    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:${ROUTER_VERSION}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${ButterKnife_version}"
+    testCompile 'junit:junit:4.12'
+    compile project(':stub')
+}
+
+repluginPluginConfig {
+    appModule = ':app'
+    //插件名
+    pluginName = "plugina"
+    //宿主app的包名
+    hostApplicationId = "com.lzh.replugindemo"
+    //宿主app的启动activity
+    hostAppLauncherActivity = "com.lzh.replugindemo.MainActivity"
+}
