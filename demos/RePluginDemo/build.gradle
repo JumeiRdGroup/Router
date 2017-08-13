@@ -25,7 +25,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    ROUTER_VERSION="7cc2dc15ac"
+    ROUTER_VERSION="2.4.2"
     PARCELER_VERSION="1.1.4"
     ButterKnife_version = "8.8.1"
 }
