@@ -1,4 +1,4 @@
-package com.lzh.smalldemo;
+package com.lzh.app.main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
-
-import net.wequick.small.Small;
 
 @RouterRule("main")
 public class MainActivity extends Activity {
@@ -22,7 +20,6 @@ public class MainActivity extends Activity {
 
     public void onClick(View v) {
         TextView txt = (TextView) v;
-        Router.create(txt.getText().toString())
-                .open(this);
+        Router.create(txt.getText().toString()).open(this);
     }
 }

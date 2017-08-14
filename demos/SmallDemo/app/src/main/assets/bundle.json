@@ -1,0 +1,13 @@
+{
+  "version":"1.0.0",
+  "bundles":[
+    {
+      "uri":"host",
+      "pkg":"com.lzh.smalldemo"
+    },
+    {
+      "uri":"main",
+      "pkg":"com.lzh.app.main"
+    }
+  ]
+}

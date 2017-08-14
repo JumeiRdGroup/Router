@@ -3,13 +3,16 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
+
     defaultConfig {
-        applicationId "com.lzh.smalldemo"
+        applicationId "com.lzh.app.main"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -22,7 +25,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "org.lzh.compiler.parceler:parceler-api:${Parceler}"
-    compile "com.github.yjfnypeu.Router:router-api:${Router}"
+    compile "com.github.yjfnypeu.Router:router-api:${Router}"// 插件依赖请使用api。
 
     annotationProcessor "com.github.yjfnypeu.Router:router-compiler:${Router}"
 }
