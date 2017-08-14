@@ -143,14 +143,30 @@ public final class RouterConfiguration {
         Cache.registerExecutors(key, value);
     }
 
+    /**
+     * @see RouterConfiguration#startHostService(String, Context, String)
+     * @param hostPackage The package name of host. it to launch a remote service of host.
+     * @param context The valid context
+     */
     public void startHostService(String hostPackage, Context context) {
         startHostService(hostPackage, context, null);
     }
 
+    /**
+     * start a remote host service
+     * @param hostPackage The package name of host. it to launch a remote service of host.
+     * @param context The valid context
+     * @param pluginName The unique identifier plugin name. or null to use the plugin-package name for it.
+     */
     public void startHostService(String hostPackage, Context context, String pluginName) {
         HostServiceWrapper.startHostService(hostPackage, context, pluginName);
     }
 
+    /**
+     * Check if the specified plug-in names have been registered to the remote service.
+     * @param pluginName The specified plug-in names
+     * @return True if it has been registered.
+     */
     public boolean isRegister(String pluginName) {
         return HostServiceWrapper.isRegister(pluginName);
     }
