@@ -6,6 +6,8 @@ import android.widget.Button;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
+import com.qihoo360.replugin.RePlugin;
+import com.qihoo360.replugin.RePluginCallbacks;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +21,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.toPluginA, R.id.toLogin, R.id.triggerActionHost, R.id.triggerActionPluginA, R.id.triggerActionUserCenter})

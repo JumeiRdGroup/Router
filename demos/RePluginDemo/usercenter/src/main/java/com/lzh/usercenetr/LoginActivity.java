@@ -33,6 +33,7 @@ public class LoginActivity extends Activity {
         ButterKnife.bind(this);
         name.setText(username);
         word.setText(password);
+
     }
 
     @OnClick(R.id.login)
