@@ -7,6 +7,9 @@ import android.widget.Toast;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.route.ActionSupport;
 
+/**
+ * host的测试动作路由
+ */
 @RouterRule("action")
 public class HostAction extends ActionSupport {
     @Override

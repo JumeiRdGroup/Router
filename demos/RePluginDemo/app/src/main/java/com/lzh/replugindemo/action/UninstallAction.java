@@ -4,16 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.lzh.compiler.parceler.Parceler;
 import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.route.ActionSupport;
 import com.qihoo360.replugin.RePlugin;
 
 /**
- * Created by haoge on 2017/8/15.
+ * 用于卸载指定外置插件的动作路由。
  */
-
 @RouterRule("uninstall")
 public class UninstallAction extends ActionSupport {
 
@@ -22,8 +20,6 @@ public class UninstallAction extends ActionSupport {
 
     @Override
     public void onRouteTrigger(Context context, Bundle bundle) {
-        Parceler.toEntity(this,bundle);
-
         if (RePlugin.isPluginInstalled(plugin)) {
             RePlugin.uninstall(plugin);
             Toast.makeText(context, "卸载插件" + plugin + "完成，请重启app生效", Toast.LENGTH_SHORT).show();
