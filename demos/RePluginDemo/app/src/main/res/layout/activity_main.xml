@@ -13,29 +13,41 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/toPluginA"
+        android:onClick="onClick"
         android:text="plugina://main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/toLogin"
+        android:onClick="onClick"
         android:text="usercenter://login?username=host&amp;password=123456"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/triggerActionHost"
+        android:onClick="onClick"
+        android:text="remote://main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:onClick="onClick"
+        android:text="host://unistall?plugin=remote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:onClick="onClick"
         android:text="host://action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/triggerActionPluginA"
+        android:onClick="onClick"
         android:text="plugina://action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/triggerActionUserCenter"
+        android:onClick="onClick"
         android:text="usercenter://action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

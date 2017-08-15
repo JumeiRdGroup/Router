@@ -1,5 +1,7 @@
 package com.lzh.replugindemo.update;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import org.lzh.framework.updatepluginlib.callback.UpdateCheckCB;
@@ -14,6 +16,8 @@ import java.io.File;
 public class PluginUpgradeCallback implements UpdateCheckCB, UpdateDownloadCB {
 
     String pluginName;
+    Context context;
+    Intent intent;
 
     public PluginUpgradeCallback(String pluginName) {
         this.pluginName = pluginName;
