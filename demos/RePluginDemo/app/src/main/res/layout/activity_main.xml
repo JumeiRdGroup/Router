@@ -32,7 +32,7 @@
 
     <Button
         android:onClick="onClick"
-        android:text="host://unistall?plugin=remote"
+        android:text="host://uninstall?plugin=remote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

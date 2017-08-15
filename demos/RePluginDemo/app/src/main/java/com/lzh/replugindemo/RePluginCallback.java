@@ -60,7 +60,7 @@ public class RePluginCallback extends RePluginCallbacks {
                     }
                 })
                 .installStrategy(new RePluginInstall(plugin, context, intent))
-                .url("https://raw.githubusercontent.com/JumeiRdGroup/Router/master/demos/RePluginDemo/mocked/api/remote.json")
+                .url("https://raw.githubusercontent.com/JumeiRdGroup/Router/master/demos/RePluginDemo/mocked/api/" + plugin + ".json")
                 .jsonParser(new UpdateParser() {
                     @Override
                     public Update parse(String httpResponse) throws Exception {

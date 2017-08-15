@@ -2,6 +2,7 @@ package com.lzh.replugindemo.action;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.lzh.compiler.parceler.Parceler;
 import com.lzh.compiler.parceler.annotation.Arg;
@@ -25,6 +26,9 @@ public class UninstallAction extends ActionSupport {
 
         if (RePlugin.isPluginInstalled(plugin)) {
             RePlugin.uninstall(plugin);
+            Toast.makeText(context, "卸载插件" + plugin + "完成，请重启app生效", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "当前无此插件：" + plugin, Toast.LENGTH_SHORT).show();
         }
     }
 }
