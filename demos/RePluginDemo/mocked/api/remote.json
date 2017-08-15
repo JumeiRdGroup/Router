@@ -1,6 +1,6 @@
 {
-  "content": "",
-  "apk": "",
-  "version_code": 1,
-  "version_name": "1.0"
+  "updateContent": "需要下载远程插件，预计将耗费大约1M的流量，是否下载？",
+  "updateUrl": "https://raw.githubusercontent.com/JumeiRdGroup/Router/master/demos/RePluginDemo/mocked/apk/remote.apk",
+  "versionCode": 1,
+  "versionName": "1.0"
 }
