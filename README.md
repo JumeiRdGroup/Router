@@ -52,6 +52,13 @@ annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 
 查看 [releases](https://github.com/yjfnypeu/Router/releases)
 
+### 联系作者
+email: 470368500@qq.com
+
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=99e758d20823a18049a06131b6d1b2722878720a437b4690e238bce43aceb5e1"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="安卓交流会所" title="安卓交流会所"></a>
+
+或者手动加入QQ群: 108895031
+
 ## License
 ```
 Copyright 2015 Haoge
