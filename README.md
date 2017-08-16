@@ -1,5 +1,5 @@
-# Router 
-一款简单的，支持在单品、组件化、插件化等环境下使用的路由框架。
+# Router [![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
+一款简单的，支持在**单品、组件化、插件化**等环境下使用的路由框架。
 
 
 ### 什么是router框架
@@ -34,7 +34,7 @@ allprojects {
 }
 ```
 
-基本配置:
+- 基本配置:
 
 LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
 
