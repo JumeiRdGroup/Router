@@ -1,11 +1,29 @@
-# Router ![svg](https://travis-ci.org/yjfnypeu/Router.svg?branch=master)
-<a href="http://www.methodscount.com/?lib=com.github.yjfnypeu.Router%3Arouter-api%3A0.9"><img src="https://img.shields.io/badge/Methods count-core: 239 | deps: 2-e91e63.svg"/></a>
+# Router 
+一款简单的，支持在单品、组件化、插件化等环境下使用的路由框架。
 
-This is a framework for starting an activity by url*(“Scheme”)* on Android.
 
-### Dependencies
+### 什么是router框架
+简单来说.即通过一行url去指定打开指定页面Activity的框架.充分做到页面间解耦.
 
-add JitPack to your root project build.gradle:
+### 我希望的router框架所能支持的功能
+
+```
+1.可传递Activity跳转时.bundle所支持的所有数据类型,能与原生做到无缝对接
+2.支持拦截器.方便对于部分页面跳转时需要检查是否登录.并跳转登录界面做统一配置
+3.如果使用http/https地址时.可以直接跳转至使用浏览器
+4.能支持原生跳转的各种方式,如请求码.转场动画的设置.
+5.能灵活配置route规则.方便对各种开发环境灵活做兼容适配.如插件化.
+```
+
+### 效果图
+
+![route](./pics/route.gif)
+
+### 版本依赖
+
+- 添加gradle依赖:
+
+添加JitPack仓库到root project下的build.gradle中：
 
 ```
 allprojects {
@@ -14,55 +32,29 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
-
 ```
+
+基本配置:
 
 LatestVersion=[![](https://jitpack.io/v/yjfnypeu/Router.svg)](https://jitpack.io/#yjfnypeu/Router)
 
-Basic config:
 ```Groovy
-// add it to your build.gradle on app project
 compile "com.github.yjfnypeu.Router:router-api:$LatestVersion"
+annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 ```
 
-If you've added *[Parceler](https://github.com/yjfnypeu/Parceler)* into your app, the best practice is to add a Compile-time framework to create route rules with annotations *RouterRule* to make *Parceler* more convenient:
+**针对插件化环境。需要有不同的配置方式。请参考：[插件化配置说明](https://github.com/JumeiRdGroup/Router/wiki/%E6%8F%92%E4%BB%B6%E5%8C%96%E9%85%8D%E7%BD%AE)**
 
-```Groovy
-// add it to your build.gradle on app project
-apt "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
-```
+### 用法
+[具体用法请参考wiki](https://github.com/JumeiRdGroup/Router/wiki)
 
-### Features
+## 更新日志
 
-* Support all types of *Bundle*  
-* Support interceptor, for example, you can config an interceptor to **force request login** before open an activity that requires a login.
-* Support open with browser when your scheme is **http/https**
-* Support add extras while open an Activity  
-* Support set request code and launch mode and animation when open activity by route*  
-* Flexible config: You can config your route rules automatically*(by use RouteRule annotation)* or manually
-
-### Picture
-
-![route](./pics/route.gif)
-### Usage
-
-[参考Router wiki](https://github.com/yjfnypeu/Router/wiki)
-
-### ChangeLog
-
-see [releases](https://github.com/yjfnypeu/Router/releases)
-
-### Contacts
-
-Email:470368500@qq.com  
-
-<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=99e758d20823a18049a06131b6d1b2722878720a437b4690e238bce43aceb5e1"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="安卓交流会所" title="安卓交流会所"></a>
-
-QQ group:108895031
+查看 [releases](https://github.com/yjfnypeu/Router/releases)
 
 ## License
 ```
-Copyright 2015 
+Copyright 2015 Haoge
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
