@@ -16,7 +16,10 @@
 package com.lzh.nonview.router.host;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -37,6 +40,12 @@ import java.util.Map;
  * @author haoge
  */
 public class RouterHostService extends Service{
+
+    private static RemoteVerify verify;
+
+    public static void setVerify(RemoteVerify verify) {
+        RouterHostService.verify = verify;
+    }
 
     IService.Stub stub = new IService.Stub() {
         Map<String, RemoteRule> activities = new HashMap<>();
@@ -73,6 +82,16 @@ public class RouterHostService extends Service{
         @Override
         public RemoteRule getActivityRule(Uri uri) throws RemoteException {
             return findRule(uri, activities);
+        }
+
+        @Override
+        public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+            // check for security verification
+            if (verify != null && !verify.verify(RouterHostService.this, this)) {
+                return false;
+            }
+
+            return super.onTransact(code, data, reply, flags);
         }
     };
 
