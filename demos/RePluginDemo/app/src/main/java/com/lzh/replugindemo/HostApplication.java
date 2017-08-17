@@ -2,6 +2,8 @@ package com.lzh.replugindemo;
 
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
+import com.lzh.nonview.router.host.RouterHostService;
+import com.lzh.replugindemo.verify.RePluginVerification;
 import com.lzh.router.RouterRuleCreator;
 import com.lzh.stub.ActivityManager;
 import com.lzh.stub.router.HostRemoteFactory;
@@ -26,6 +28,8 @@ public class HostApplication extends RePluginApplication{
     public void onCreate() {
         super.onCreate();
 
+        // 启动远程路由前。加入安全验证器。
+        RouterHostService.setVerify(new RePluginVerification());
         // 初始化路由操作
         RouterLoader.get().init(this);
         // 添加路由规则。
