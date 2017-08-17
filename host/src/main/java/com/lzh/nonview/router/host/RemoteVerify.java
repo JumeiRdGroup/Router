@@ -1,17 +1,16 @@
 package com.lzh.nonview.router.host;
 
-import android.app.Service;
-import android.os.Binder;
+import android.content.Context;
 
 /**
  * Provide an interface for security verification.
  */
 public interface RemoteVerify {
     /**
-     * Verify the plug-in you are connecting to.
-     * @param service The remote service.
-     * @param binder The remote binder
+     * Verify the client you are connecting to.
+     * @param context The application context to provide managers.
      * @return returns true if safety
+     * @throws Exception error occurs
      */
-    boolean verify(Service service, Binder binder);
+    boolean verify(Context context) throws Exception;
 }

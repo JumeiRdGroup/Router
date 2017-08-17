@@ -16,18 +16,14 @@
 package com.lzh.nonview.router.host;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.util.Log;
 
-import com.lzh.nonview.router.protocol.IService;
 import com.lzh.nonview.router.module.RemoteRule;
+import com.lzh.nonview.router.protocol.IService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,12 +32,11 @@ import java.util.Map;
 
 /**
  * Remote service to store route rules.
- *
  * @author haoge
  */
 public class RouterHostService extends Service{
 
-    private static RemoteVerify verify;
+    private static RemoteVerify verify = new DefaultVerify();
 
     public static void setVerify(RemoteVerify verify) {
         RouterHostService.verify = verify;
@@ -86,12 +81,16 @@ public class RouterHostService extends Service{
 
         @Override
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-            // check for security verification
-            if (verify != null && !verify.verify(RouterHostService.this, this)) {
+            try {
+                // check for security verification
+                if (verify != null && !verify.verify(getApplicationContext())) {
+                    return false;
+                }
+                return super.onTransact(code, data, reply, flags);
+            } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
-
-            return super.onTransact(code, data, reply, flags);
         }
     };
 
