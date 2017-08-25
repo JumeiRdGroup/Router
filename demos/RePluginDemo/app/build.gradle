@@ -22,10 +22,12 @@ apply plugin: 'replugin-host-gradle'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.qihoo360.replugin:replugin-host-lib:2.1.7'
-    compile "com.github.yjfnypeu.Router:router-host:${ROUTER_VERSION}"
+
     annotationProcessor "com.github.yjfnypeu.Router:router-compiler:${ROUTER_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${ButterKnife_version}"
+
+    compile 'com.qihoo360.replugin:replugin-host-lib:2.1.7'
+    compile "com.github.yjfnypeu.Router:router-host:${ROUTER_VERSION}"
     compile "org.lzh.compiler.parceler:parceler-api:${PARCELER_VERSION}"
     compile "org.lzh.nonview.updateplugin:UpdatePlugin:${UpdatePlugin_version}"
     compile 'com.alibaba:fastjson:1.1.61.android'

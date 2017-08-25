@@ -29,5 +29,5 @@ ext {
     PARCELER_VERSION="1.1.4"
     ButterKnife_version = "8.8.1"
     UpdatePlugin_version = "2.4.3"
-    Router_RePlugin_version = "faaee68cf0"
+    Router_RePlugin_version = "0.2.0"
 }
