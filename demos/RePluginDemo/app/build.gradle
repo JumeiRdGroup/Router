@@ -26,7 +26,10 @@ dependencies {
     compile "com.github.yjfnypeu.Router:router-host:${ROUTER_VERSION}"
     annotationProcessor "com.github.yjfnypeu.Router:router-compiler:${ROUTER_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${ButterKnife_version}"
+    compile "org.lzh.compiler.parceler:parceler-api:${PARCELER_VERSION}"
     compile "org.lzh.nonview.updateplugin:UpdatePlugin:${UpdatePlugin_version}"
-    compile project(':stub')
     compile 'com.alibaba:fastjson:1.1.61.android'
+    compile 'com.android.support:support-v4:25.3.1'
+
+    compile "com.github.yjfnypeu.Router-RePlugin:host:${Router_RePlugin_version}"
 }

@@ -25,10 +25,14 @@ apply plugin: 'replugin-plugin-gradle'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.qihoo360.replugin:replugin-plugin-lib:2.1.7'
+    compile "com.github.yjfnypeu.Router-RePlugin:plugin:${Router_RePlugin_version}"
 
     annotationProcessor "com.github.yjfnypeu.Router:router-compiler:${ROUTER_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${ButterKnife_version}"
-    compile project(':stub')
+//    compile project(':stub')
+    compile "org.lzh.compiler.parceler:parceler-api:${PARCELER_VERSION}"
+    compile "com.jakewharton:butterknife:${ButterKnife_version}"
+    compile "com.github.yjfnypeu.Router:router-api:${ROUTER_VERSION}"
 }
 
 repluginPluginConfig {

@@ -7,11 +7,6 @@ import android.widget.Button;
 
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
-import com.qihoo360.replugin.RePlugin;
-import com.qihoo360.replugin.RePluginCallbacks;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 // 因为指定了baseUrl。 所以这里会使用baseUrl做组合。
 @RouterRule("main")

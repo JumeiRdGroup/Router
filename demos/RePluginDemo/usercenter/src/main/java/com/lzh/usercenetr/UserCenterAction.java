@@ -7,10 +7,6 @@ import android.widget.Toast;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.route.ActionSupport;
 
-/**
- * Created by haoge on 2017/8/13.
- */
-
 @RouterRule("action")
 public class UserCenterAction extends ActionSupport{
     @Override
