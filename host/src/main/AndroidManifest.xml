@@ -1,8 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="com.lzh.nonview.router.host">
 
     <application>
 
-        <service android:name="com.lzh.nonview.router.host.RouterHostService"
+        <service android:name=".RouterHostService"
             android:process=":routerHostService"
             android:exported="true">
             <intent-filter>
