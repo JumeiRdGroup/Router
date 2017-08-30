@@ -20,6 +20,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lzh.nonview.router.extras.RouteBundleExtras;
+
 /**
  * Default Activity Launcher for {@link com.lzh.nonview.router.route.ActivityRoute}
  */
@@ -39,12 +41,14 @@ public class DefaultActivityLauncher extends ActivityLauncher{
     public void open(Fragment fragment) throws Exception {
         Intent intent = createIntent(fragment.getActivity());
         fragment.startActivityForResult(intent, extras.getRequestCode());
+        overridePendingTransition(fragment.getActivity(), extras);
     }
 
     @Override
     public void open(android.support.v4.app.Fragment fragment) throws Exception {
         Intent intent = createIntent(fragment.getContext());
         fragment.startActivityForResult(intent, extras.getRequestCode());
+        overridePendingTransition(fragment.getActivity(), extras);
     }
 
     @Override
@@ -52,14 +56,22 @@ public class DefaultActivityLauncher extends ActivityLauncher{
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
             ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
-            int inAnimation = extras.getInAnimation();
-            int outAnimation = extras.getOutAnimation();
-            if (inAnimation >= 0 && outAnimation >= 0) {
-                ((Activity) context).overridePendingTransition(inAnimation,outAnimation);
-            }
+            overridePendingTransition((Activity) context, extras);
         } else {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+        }
+    }
+
+    protected void overridePendingTransition(Activity activity, RouteBundleExtras extras) {
+        if (activity == null || extras == null) {
+            return;
+        }
+
+        int inAnimation = extras.getInAnimation();
+        int outAnimation = extras.getOutAnimation();
+        if (inAnimation >= 0 && outAnimation >= 0) {
+            activity.overridePendingTransition(inAnimation,outAnimation);
         }
     }
 }
