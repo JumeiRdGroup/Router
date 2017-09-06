@@ -61,9 +61,12 @@ public class URIParser {
         Map<String,String> params = new IdentityHashMap<>();
         String[] split = query.split("&");
         for (String param : split) {
-            String[] keyValue = param.split("=");
+            if (!param.contains("=")) {
+                continue;
+            }
+            int index = param.indexOf("=");
             //noinspection RedundantStringConstructorCall
-            params.put(new String(keyValue[0]), keyValue.length >= 2 ? Uri.decode(keyValue[1]) : "");
+            params.put(new String(param.substring(0, index)), Uri.decode(param.substring(index + 1)));
         }
         return params;
     }
