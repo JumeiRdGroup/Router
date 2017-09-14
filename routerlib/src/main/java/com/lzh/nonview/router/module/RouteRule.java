@@ -18,6 +18,7 @@ package com.lzh.nonview.router.module;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.route.ActionSupport;
 
@@ -63,6 +64,7 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
     private String clzName;
     private HashMap<String,Integer> params = new HashMap<>();
     private Class<? extends L> launcher;
+    private Class<? extends RouteInterceptor>[] interceptors = new Class[0];
 
     public String getRuleClz() {
         return clzName;
@@ -88,6 +90,22 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
     public R addParam (String key, int type) {
         params.put(key,type);
         return (R) this;
+    }
+
+    /**
+     * Set a serial of {@link RouteInterceptor} to used, it means when you launch this routing, the interceptors will be triggered.
+     * @param classes The array of {@link RouteInterceptor}
+     * @return RouteRule
+     */
+    public R setInterceptors(Class<? extends RouteInterceptor> ... classes) {
+        if (classes != null) {
+            this.interceptors = classes;
+        }
+        return (R) this;
+    }
+
+    public Class<? extends RouteInterceptor>[] getInterceptors() {
+        return interceptors;
     }
 
     public R setLauncher(Class<? extends L> launcher) {

@@ -11,6 +11,7 @@ import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
+import com.lzh.nonview.router.demo.interceptors.ToastInterceptors;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -47,7 +48,7 @@ public class App extends Application {
         RouterConfiguration.get().setCallback(new DefaultCallback());
 
         // 启动远程服务。一般在插件化环境下使用。
-        RouterConfiguration.get().startHostService("com.lzh.nonview.router.demo", this);
+//        RouterConfiguration.get().startHostService("com.lzh.nonview.router.demo", this);
         // 对应于启动远程服务操作。可设置此远程数据创建者。也应在插件化环境下使用。
 //        RouterConfiguration.get().setRemoteFactory(new RemoteFactory());
         // 当默认的动作路由启动方式不能满足你项目需要时。通过定制此接口来做替换
@@ -67,6 +68,7 @@ public class App extends Application {
                             .addParam("bookName", RouteRule.STRING)
                             .addParam("books", RouteRule.STRING_LIST)
                             .addParam("prices", RouteRule.INT_LIST)
+                            .setInterceptors(ToastInterceptors.class)
                             .setLauncher(DefaultActivityLauncher.class)
             );
             return routes;

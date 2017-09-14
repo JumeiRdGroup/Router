@@ -8,6 +8,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -85,15 +86,33 @@ public class RuleFactory {
                 schema, ClassName.bestGuess(className), actType);
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
+            codeBuilder.add("\r\n\t\t");
             codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));
         }
 
         if (Constants.CLASSNAME_ACTION_ROUTE_MAP.equals(className)) {
+            codeBuilder.add("\r\n\t\t");
             codeBuilder.add(".setExecutorClass($T.class)", parser.getExecutorClass());
         }
 
         if (parser.getConfigurations().getLauncher() != null) {
+            codeBuilder.add("\r\n\t\t");
             codeBuilder.add(".setLauncher($T.class)", parser.getConfigurations().getLauncher());
+        }
+
+        // add interceptors
+        TypeName[] interceptors = parser.getConfigurations().getInterceptors();
+        if (interceptors.length != 0) {
+            codeBuilder.add("\r\n\t\t");
+            codeBuilder.add(".setInterceptors(");
+            for (int i = 0; i < interceptors.length; i++) {
+                TypeName interceptor = interceptors[i];
+                if (i > 0) {
+                    codeBuilder.add(",");
+                }
+                codeBuilder.add("$T.class", interceptor);
+            }
+            codeBuilder.add(")");
         }
 
         codeBuilder.addStatement(")");

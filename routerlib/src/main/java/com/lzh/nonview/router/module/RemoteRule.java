@@ -5,12 +5,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class RemoteRule implements Parcelable{
+    // target class name
     private String name;
+    // params in RouteRule
     private HashMap params;
+    // the extra bundle created by IRemoteFactory.
     private Bundle extra;
+    // type in [Action, Activity]
     private int type;
 
     private RouteRule rule;

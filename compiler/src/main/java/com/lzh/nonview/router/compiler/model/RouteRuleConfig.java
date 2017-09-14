@@ -2,16 +2,21 @@ package com.lzh.nonview.router.compiler.model;
 
 import com.lzh.nonview.router.anno.ActionLauncher;
 import com.lzh.nonview.router.anno.ActivityLauncher;
+import com.lzh.nonview.router.anno.RouteInterceptors;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.compiler.Constants;
 import com.lzh.nonview.router.compiler.util.UtilMgr;
 import com.lzh.nonview.router.compiler.util.Utils;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.MirroredTypeException;
+import javax.lang.model.type.MirroredTypesException;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 
@@ -26,17 +31,38 @@ public class RouteRuleConfig {
     private String[] routes;
     private String pack;
     private ClassName launcher;
+    private TypeName[] interceptors;
 
     public static RouteRuleConfig create(RouterRule rule, BasicConfigurations basicConfigurations, TypeElement type) {
         RouteRuleConfig config = new RouteRuleConfig();
         config.routes = config.combineRoute(rule, basicConfigurations);
         config.pack = config.combinePack(rule, basicConfigurations);
+        config.interceptors = config.combineInterceptors(type);
         if (Utils.isSuperClass(type, Constants.CLASSNAME_ACTIVITY)) {
             config.launcher = config.combineActivityLauncher(type.getAnnotation(ActivityLauncher.class));
         } else if (Utils.isSuperClass(type, Constants.CLASSNAME_ACTION_SUPPORT)) {
             config.launcher = config.combineActionLauncher(type.getAnnotation(ActionLauncher.class));
         }
         return config;
+    }
+
+    private TypeName[] combineInterceptors(TypeElement type) {
+        ArrayList<TypeName> interceptors = new ArrayList<>();
+        RouteInterceptors routeInterceptors = type.getAnnotation(RouteInterceptors.class);
+        if (routeInterceptors != null) {
+            try {
+                Class[] value = routeInterceptors.value();
+                for (Class item : value) {
+                    interceptors.add(ClassName.get(item));
+                }
+            } catch (MirroredTypesException mirrored) {
+                List<? extends TypeMirror> typeMirrors = mirrored.getTypeMirrors();
+                for (TypeMirror mirror : typeMirrors) {
+                    interceptors.add(ClassName.get(mirror));
+                }
+            }
+        }
+        return interceptors.toArray(new TypeName[interceptors.size()]);
     }
 
     private String[] combineRoute(RouterRule rule, BasicConfigurations configurations) {
@@ -120,5 +146,9 @@ public class RouteRuleConfig {
 
     public ClassName getLauncher() {
         return launcher;
+    }
+
+    public TypeName[] getInterceptors () {
+        return interceptors;
     }
 }

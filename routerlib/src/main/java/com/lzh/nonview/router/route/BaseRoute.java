@@ -106,6 +106,7 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
 
     @Override
     public List<RouteInterceptor> getInterceptors() {
+
         List<RouteInterceptor> interceptors = new ArrayList<>();
         // add global interceptor
         if (RouterConfiguration.get().getInterceptor() != null) {
@@ -115,6 +116,17 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
         // add extra interceptors
         if (callback.getExtras() != null) {
             interceptors.addAll(callback.getExtras().getInterceptors());
+        }
+
+        // add interceptors in rule
+        for (Class<RouteInterceptor> interceptor : routeRule.getInterceptors()) {
+            if (interceptor != null) {
+                try {
+                    interceptors.add(interceptor.newInstance());
+                } catch (Exception e) {
+                    throw new RuntimeException(String.format("The interceptor class [%s] should provide a default empty construction", interceptor));
+                }
+            }
         }
 
         return interceptors;
