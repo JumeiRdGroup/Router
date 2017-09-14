@@ -20,7 +20,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.to_webview,R.id.use_simple_router,R.id.encode_query, R.id.action_say_hello, R.id.action_subthread})

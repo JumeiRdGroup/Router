@@ -9,13 +9,12 @@ import com.lzh.nonview.router.anno.ActivityLauncher;
 import com.lzh.nonview.router.anno.RouteInterceptors;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
-import com.lzh.nonview.router.demo.interceptors.ToastCopyInterceptors;
-import com.lzh.nonview.router.demo.interceptors.ToastInterceptors;
+import com.lzh.nonview.router.demo.interceptors.ToastInterceptor;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 
 import java.util.ArrayList;
 
-@RouteInterceptors({ToastInterceptors.class, ToastCopyInterceptors.class})
+@RouteInterceptors({ToastInterceptor.class})
 @ActivityLauncher(DefaultActivityLauncher.class)
 @RouterRule({"haoge.cn/parceler","http://haoge.cn/parceler"})
 public class ParcelerActivity extends BaseActivity {

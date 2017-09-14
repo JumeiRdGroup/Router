@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
-public class ToastInterceptors implements RouteInterceptor{
+public class ToastInterceptor implements RouteInterceptor{
 
     @Override
     public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {

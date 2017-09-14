@@ -11,7 +11,7 @@ import com.haoge.studio.RouterRuleCreator;
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
-import com.lzh.nonview.router.demo.interceptors.ToastInterceptors;
+import com.lzh.nonview.router.demo.interceptors.ToastInterceptor;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RouteConfig(
-        baseUrl = "haoge://page/",
+        baseUrl = "haoge://",
         pack = "com.haoge.studio")
 public class App extends Application {
 
@@ -68,7 +68,7 @@ public class App extends Application {
                             .addParam("bookName", RouteRule.STRING)
                             .addParam("books", RouteRule.STRING_LIST)
                             .addParam("prices", RouteRule.INT_LIST)
-                            .setInterceptors(ToastInterceptors.class)
+                            .setInterceptors(ToastInterceptor.class)
                             .setLauncher(DefaultActivityLauncher.class)
             );
             return routes;
