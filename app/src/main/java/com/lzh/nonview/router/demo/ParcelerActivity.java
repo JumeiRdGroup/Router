@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @RouteInterceptors({ToastInterceptor.class})
 @ActivityLauncher(DefaultActivityLauncher.class)
-@RouterRule({"haoge.cn/parceler","http://haoge.cn/parceler"})
+@RouterRule({"haoge.cn/parceler","http://haoge.cn"})
 public class ParcelerActivity extends BaseActivity {
 
     @Arg

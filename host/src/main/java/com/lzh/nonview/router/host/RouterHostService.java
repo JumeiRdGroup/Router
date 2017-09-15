@@ -49,7 +49,7 @@ public class RouterHostService extends Service{
 
         @Override
         public void register(String pluginName) throws RemoteException {
-            if (plugins.contains(pluginName)) {
+            if (!plugins.contains(pluginName)) {
                 plugins.add(pluginName);
             }
         }
