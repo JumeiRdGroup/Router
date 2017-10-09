@@ -25,7 +25,7 @@ android {
 }
 
 def AAVersion = '4.3.0'
-def PARCELER_VERSION="0.9.1"
+def PARCELER_VERSION="1.2"
 def ROUTER_VERSION="2.5.0"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -37,8 +37,8 @@ dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
-    annotationProcessor "org.lzh.compiler.parceler:parceler-compiler:$PARCELER_VERSION"
-    compile "org.lzh.compiler.parceler:parceler-api:$PARCELER_VERSION"
+    annotationProcessor "com.github.yjfnypeu.Parceler:compiler:$PARCELER_VERSION"
+    compile "com.github.yjfnypeu.Parceler:api:$PARCELER_VERSION"
 
     compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
     annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
