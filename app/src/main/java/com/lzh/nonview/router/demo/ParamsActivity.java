@@ -3,6 +3,7 @@ package com.lzh.nonview.router.demo;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 import butterknife.OnClick;
 
 public class ParamsActivity extends BaseActivity {
+
     TextView params;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
