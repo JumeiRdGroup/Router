@@ -22,7 +22,6 @@ import android.os.Bundle;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.route.ActionRoute;
@@ -37,8 +36,6 @@ import com.lzh.nonview.router.route.InternalCallback;
 import com.lzh.nonview.router.route.RouteCallback;
 import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.Utils;
-
-import java.util.concurrent.Executor;
 
 
 /**
