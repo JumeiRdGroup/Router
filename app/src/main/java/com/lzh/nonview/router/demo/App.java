@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.haoge.studio.RouterRuleCreator;
+import com.lzh.compiler.parceler.Parceler;
+import com.lzh.compiler.parceler.annotation.FastJsonConverter;
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
@@ -55,6 +57,8 @@ public class App extends Application {
 //        RouterConfiguration.get().setActionLauncher(CustomActionLauncher.class);
         // 当默认的页面路由启动方式不能满足你项目需要时，通过定制此接口来做替换
 //        RouterConfiguration.get().setActivityLauncher(CustomActivityLauncher.class);
+
+        Parceler.setDefaultConverter(FastJsonConverter.class);
     }
 
     private class RouteInit implements RouteCreator {
@@ -66,8 +70,6 @@ public class App extends Application {
                     new ActivityRouteRule(ParamsActivity.class)
                             .addParam("price", RouteRule.FLOAT)
                             .addParam("bookName", RouteRule.STRING)
-                            .addParam("books", RouteRule.STRING_LIST)
-                            .addParam("prices", RouteRule.INT_LIST)
                             .setInterceptors(ToastInterceptor.class)
                             .setLauncher(DefaultActivityLauncher.class)
             );

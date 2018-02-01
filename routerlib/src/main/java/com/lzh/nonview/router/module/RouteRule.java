@@ -22,7 +22,6 @@ import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.route.ActionSupport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -50,11 +49,6 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
     public static final int BOOLEAN = 6;
     /** Associate with {@link Bundle#putChar(String, char)} */
     public static final int CHAR = 7;
-
-    /** Associate with {@link Bundle#putIntegerArrayList(String, ArrayList)} */
-    public static final int INT_LIST = 8;
-    /** Associate with {@link Bundle#putStringArrayList(String, ArrayList)} */
-    public static final int STRING_LIST = 9;
 
     public RouteRule(String clzName) {
         this.clzName = clzName;

@@ -84,6 +84,9 @@ public class Compiler extends AbstractProcessor{
     private void processRouteRules(RoundEnvironment roundEnv, BasicConfigurations config) throws RouterException{
         List<Parser> parsers = new ArrayList<>();
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(RouterRule.class);
+        if (elements.isEmpty()) {
+            return;
+        }
         TypeElement type = null;
         try {
             for (Element ele : elements) {
@@ -99,7 +102,7 @@ public class Compiler extends AbstractProcessor{
                 parsers.add(parser);
             }
 
-            new RuleFactory(ClassName.get(config.pack, "RouterRuleCreator"), parsers);
+            new RuleFactory(ClassName.get(config.pack, "RouterRuleCreator"), parsers).generateCode();
         } catch (RouterException e) {
             throw e;
         } catch (Throwable e) {

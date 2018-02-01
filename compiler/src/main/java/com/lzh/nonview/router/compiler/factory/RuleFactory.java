@@ -147,10 +147,6 @@ public class RuleFactory {
                 return "DOUBLE";
             case "java.lang.String":
                 return "STRING";
-            case "java.util.ArrayList<java.lang.String>":
-                return "STRING_LIST";
-            case "java.util.ArrayList<java.lang.Integer>":
-                return "INT_LIST";
         }
         return "STRING";
     }

@@ -25,7 +25,6 @@ import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.BundleWrapper;
-import com.lzh.nonview.router.parser.ListBundle;
 import com.lzh.nonview.router.parser.SimpleBundle;
 import com.lzh.nonview.router.parser.URIParser;
 
@@ -109,7 +108,6 @@ public class Utils {
      * create {@link BundleWrapper} instance by type.
      * <p>
      *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
-     *     When <i>type</i> between 8 and 9,should create subclass of {@link ListBundle}with type <br>
      *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteRule#STRING}
      * </p>
      * @return The type to indicate how tyce should be use to create wrapper instance
@@ -126,9 +124,6 @@ public class Utils {
             case RouteRule.BOOLEAN:
             case RouteRule.CHAR:
                 return new SimpleBundle(type);
-            case RouteRule.INT_LIST:
-            case RouteRule.STRING_LIST:
-                return new ListBundle(type);
             default:
                 return new SimpleBundle(RouteRule.STRING);
         }

@@ -33,6 +33,7 @@ dependencies {
     compile 'com.android.support:support-annotations:26.0.0-alpha1'
     compile 'com.jakewharton:butterknife:7.0.0'
     compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.alibaba:fastjson:1.1.67.android'
 
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
@@ -40,9 +41,9 @@ dependencies {
     annotationProcessor "com.github.yjfnypeu.Parceler:compiler:$PARCELER_VERSION"
     compile "com.github.yjfnypeu.Parceler:api:$PARCELER_VERSION"
 
-    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
-    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
+//    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
+//    annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
 
-//    compile project(':routerlib')
-//    annotationProcessor project(':compiler')
+    compile project(':routerlib')
+    annotationProcessor project(':compiler')
 }

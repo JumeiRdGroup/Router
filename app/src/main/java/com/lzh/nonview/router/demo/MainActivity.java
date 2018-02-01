@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
+import com.lzh.nonview.router.demo.pojo.User;
+
+import java.net.URLEncoder;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,7 +39,14 @@ public class MainActivity extends BaseActivity {
         extras.putString("username","haoge");
         extras.putString("password","lzh");
         extras.putString("usertype","VIP");
-        Router.create("jumei://main")
+
+        User user = new User();
+        user.username = "haoge";
+        user.password = "123456";
+        String json = URLEncoder.encode(JSON.toJSONString(user));
+        String url = String.format("jumei://main?user=%s", json);
+
+        Router.create(url)
                 .getActivityRoute()
                 .addExtras(extras)// 添加额外参数
                 .requestCode(100)
