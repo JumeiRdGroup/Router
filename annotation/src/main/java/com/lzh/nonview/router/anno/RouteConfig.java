@@ -11,11 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.TYPE})
 public @interface RouteConfig {
-    /**
-     * @deprecated The methods will be removing in the future. consider to use baseUrl() instead.
-     */
-    @Deprecated
-    String schema() default "";
 
     /**
      * @return a base url to combine with the route you set via {@link RouterRule}.

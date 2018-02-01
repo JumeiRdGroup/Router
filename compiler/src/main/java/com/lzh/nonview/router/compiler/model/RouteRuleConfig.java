@@ -29,14 +29,12 @@ import javax.lang.model.util.Elements;
  */
 public class RouteRuleConfig {
     private String[] routes;
-    private String pack;
     private ClassName launcher;
     private TypeName[] interceptors;
 
     public static RouteRuleConfig create(RouterRule rule, BasicConfigurations basicConfigurations, TypeElement type) {
         RouteRuleConfig config = new RouteRuleConfig();
         config.routes = config.combineRoute(rule, basicConfigurations);
-        config.pack = config.combinePack(rule, basicConfigurations);
         config.interceptors = config.combineInterceptors(type);
         if (Utils.isSuperClass(type, Constants.CLASSNAME_ACTIVITY)) {
             config.launcher = config.combineActivityLauncher(type.getAnnotation(ActivityLauncher.class));
@@ -86,12 +84,6 @@ public class RouteRuleConfig {
         return routes;
     }
 
-    private String combinePack(RouterRule rule, BasicConfigurations configurations) {
-        return Utils.isEmpty(rule.pack())
-                ? Utils.isEmpty(configurations.pack)
-                ? "com.lzh.router" : configurations.pack : rule.pack();
-    }
-
     private ClassName combineActivityLauncher(ActivityLauncher rule) {
         ClassName launcher = null;
         try {
@@ -138,10 +130,6 @@ public class RouteRuleConfig {
 
     public String[] getRoute() {
         return routes == null ? new String[0] : routes;
-    }
-
-    public String getPack() {
-        return pack;
     }
 
     public ClassName getLauncher() {

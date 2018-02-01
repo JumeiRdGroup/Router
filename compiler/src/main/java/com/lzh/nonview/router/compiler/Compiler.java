@@ -82,7 +82,7 @@ public class Compiler extends AbstractProcessor{
      * @throws RouterException pack all of the exception when a error occurs.
      */
     private void processRouteRules(RoundEnvironment roundEnv, BasicConfigurations config) throws RouterException{
-        Map<String, List<Parser>> map = new HashMap<>();
+        List<Parser> parsers = new ArrayList<>();
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(RouterRule.class);
         TypeElement type = null;
         try {
@@ -96,18 +96,10 @@ public class Compiler extends AbstractProcessor{
                 Parser parser = Parser.create(type, ruleConfig);
                 parser.parse();
 
-                String packName = ruleConfig.getPack();
-
-                if (!map.containsKey(packName)) {
-                    map.put(packName,new ArrayList<Parser>());
-                }
-                map.get(packName).add(parser);
+                parsers.add(parser);
             }
 
-            Set<String> keySet = map.keySet();
-            for (String key : keySet) {
-                new RuleFactory(ClassName.get(key,"RouterRuleCreator"),map.get(key)).generateCode();
-            }
+            new RuleFactory(ClassName.get(config.pack, "RouterRuleCreator"), parsers);
         } catch (RouterException e) {
             throw e;
         } catch (Throwable e) {

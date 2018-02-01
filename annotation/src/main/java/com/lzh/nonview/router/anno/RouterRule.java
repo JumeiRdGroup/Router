@@ -13,10 +13,4 @@ public @interface RouterRule {
      * @return scheme
      */
     String[] value();
-
-    /**
-     * Set a package name of generate class.if not set,it'll be <i>com.lzh.router</i>
-     * @return package name
-     */
-    String pack () default "";
 }
