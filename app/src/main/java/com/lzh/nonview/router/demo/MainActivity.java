@@ -47,7 +47,6 @@ public class MainActivity extends BaseActivity {
         String url = String.format("jumei://main?user=%s", json);
 
         Router.create(url)
-                .getActivityRoute()
                 .addExtras(extras)// 添加额外参数
                 .requestCode(100)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

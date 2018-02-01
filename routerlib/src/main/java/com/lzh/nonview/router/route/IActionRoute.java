@@ -15,14 +15,6 @@
  */
 package com.lzh.nonview.router.route;
 
-import android.content.Context;
-import android.os.Bundle;
-
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <p>
  *  Base on the {@link IBaseRoute}

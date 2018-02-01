@@ -89,6 +89,32 @@ public final class Router{
         return this;
     }
 
+    public Router addInterceptor(RouteInterceptor interceptor) {
+        this.internalCallback.getExtras().addInterceptor(interceptor);
+        return this;
+    }
+
+    public Router requestCode(int requestCode) {
+        this.internalCallback.getExtras().setRequestCode(requestCode);
+        return this;
+    }
+
+    public Router addFlags(int flag) {
+        this.internalCallback.getExtras().addFlags(flag);
+        return this;
+    }
+
+    public Router setAnim(int enterAnim, int exitAnim) {
+        this.internalCallback.getExtras().setInAnimation(enterAnim);
+        this.internalCallback.getExtras().setOutAnimation(exitAnim);
+        return this;
+    }
+
+    public Router addExtras(Bundle extras) {
+        this.internalCallback.getExtras().addExtras(extras);
+        return this;
+    }
+
     /**
      * Restore a Routing event from last uri and extras.
      * @param uri last uri
