@@ -29,9 +29,7 @@ import com.lzh.nonview.router.module.RouteRule;
 public interface RouteCallback {
 
     /**
-     * There are two types of not found exception:<br>
-     *     <i><b>{@link NotFoundException#TYPE_SCHEMA}: </b>This uri can't match the corresponding routing</i><br>
-     *     <i><b>{@link NotFoundException#TYPE_CLZ}: </b>The special routing event that matched with uri does not exist.</i>
+     * This method will be invoked when there is no routing matched with uri.
      * @param uri uri the uri to open
      * @param e {@link NotFoundException}
      */

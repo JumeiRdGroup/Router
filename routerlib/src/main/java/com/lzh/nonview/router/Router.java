@@ -217,6 +217,6 @@ public final class Router{
     }
 
     private void notifyNotFound(String msg) {
-        internalCallback.onOpenFailed(new NotFoundException(msg, NotFoundException.TYPE_SCHEMA, uri.toString()));
+        internalCallback.onOpenFailed(new NotFoundException(msg));
     }
 }

@@ -105,7 +105,7 @@ public class App extends Application {
 
         @Override
         public void notFound(Uri uri, NotFoundException e) {
-            Toast.makeText(App.this, e.getNotFoundName() + " not find", Toast.LENGTH_SHORT).show();
+            Toast.makeText(App.this, uri + " not find", Toast.LENGTH_SHORT).show();
         }
 
         @Override
