@@ -52,6 +52,7 @@ public final class Router{
      * </pre>
      */
     public static final String RAW_URI = "_ROUTER_RAW_URI_KEY_";
+    public static boolean DEBUG = false;
 
     private Uri uri;
     private InternalCallback internalCallback;

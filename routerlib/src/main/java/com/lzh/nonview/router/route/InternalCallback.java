@@ -6,6 +6,7 @@ import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.exception.NotFoundException;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.tools.RouterLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,26 +54,44 @@ public final class InternalCallback {
 
     void invoke() {
         cache.put(uri, extras);
-        RouteCallback global = RouterConfiguration.get().getCallback();
-        invokeWithCallback(global);
-
-        RouteCallback callback = extras.getCallback();
-        invokeWithCallback(callback);
+        invokeWithCallback(RouterConfiguration.get().getCallback(),
+                extras.getCallback());
         cache.remove(uri);
     }
 
-    private void invokeWithCallback(RouteCallback callback) {
-        if (callback == null) {
-            return;
-        }
+    private void invokeWithCallback(RouteCallback global, RouteCallback callback) {
         if (error != null && error instanceof NotFoundException) {
-            callback.notFound(uri, (NotFoundException) error);
+            RouterLog.d("[RouterLog] Could not found matched route for " + uri);
+            if (global != null) {
+                global.notFound(uri, (NotFoundException) error);
+            }
+            if (callback != null) {
+                callback.notFound(uri, (NotFoundException) error);
+            }
         } else if (error != null) {
-            callback.onOpenFailed(uri, error);
+            RouterLog.e("[RouterLog] Launch route with " + uri + " failed.", error);
+            if (global != null) {
+                global.onOpenFailed(uri, error);
+            }
+            if (callback != null) {
+                callback.onOpenFailed(uri, error);
+            }
         } else if (rule != null) {
-            callback.onOpenSuccess(uri, rule);
+            RouterLog.d("[RouterLog] Launch route with " + uri + " successful!, target class name is " + rule.getRuleClz());
+            if (global != null) {
+                global.onOpenSuccess(uri, rule);
+            }
+            if (callback != null) {
+                callback.onOpenSuccess(uri, rule);
+            }
         } else {
-            callback.onOpenFailed(uri, new RuntimeException("Unknown error"));
+            RouterLog.e("[RouterLog] Launch route with " + uri + " failed.", null);
+            if (global != null) {
+                global.onOpenFailed(uri, new RuntimeException("Unknown error"));
+            }
+            if (callback != null) {
+                callback.onOpenFailed(uri, new RuntimeException("Unknown error"));
+            }
         }
     }
 

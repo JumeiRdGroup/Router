@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.haoge.studio.RouterRuleCreator;
 import com.lzh.compiler.parceler.Parceler;
 import com.lzh.compiler.parceler.annotation.FastJsonConverter;
+import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.anno.RouteConfig;
 import com.lzh.nonview.router.demo.action.SayHelloAction;
@@ -48,6 +49,9 @@ public class App extends Application {
 
         // 对Router设置Activity Route Callback,作辅助功能
         RouterConfiguration.get().setCallback(new DefaultCallback());
+
+        // 在开发环境下开启日志打印
+        Router.DEBUG = BuildConfig.DEBUG;
 
         // 启动远程服务。一般在插件化环境下使用。
 //        RouterConfiguration.get().startHostService("com.lzh.nonview.router.demo", this);
