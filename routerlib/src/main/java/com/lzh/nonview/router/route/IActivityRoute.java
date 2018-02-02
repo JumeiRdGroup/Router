@@ -21,10 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.extras.RouteBundleExtras;
-import com.lzh.nonview.router.interceptors.RouteInterceptor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>

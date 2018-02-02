@@ -25,7 +25,6 @@ import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.DefaultActionLauncher;
 import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.module.RouteCreator;
-import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.protocol.IRemoteFactory;
 import com.lzh.nonview.router.route.ActionRoute;

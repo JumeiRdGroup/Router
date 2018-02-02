@@ -21,7 +21,6 @@ import android.content.Intent;
 
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
-import com.lzh.nonview.router.launcher.DefaultActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActivityRouteRule;
 import com.lzh.nonview.router.tools.Utils;
