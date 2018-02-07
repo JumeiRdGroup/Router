@@ -49,7 +49,10 @@ annotationProcessor "com.github.yjfnypeu.Router:router-compiler:$LatestVersion"
 **针对插件化环境。需要有不同的配置方式。请参考：[插件化配置说明](https://github.com/JumeiRdGroup/Router/wiki/%E6%8F%92%E4%BB%B6%E5%8C%96%E9%85%8D%E7%BD%AE)**
 
 ### 用法
-[具体用法请参考wiki](https://github.com/JumeiRdGroup/Router/wiki)
+
+基本使用方式说明，请参考[Router:一款单品、组件化、插件化全支持的路由框架](https://juejin.im/post/5a37771f6fb9a0450e7636e0)
+
+插件化中的使用方式，请参考[Router: 教你如何进行任意插件化环境下的路由适配](https://juejin.im/post/5a7a9e9a6fb9a06332299210)
 
 ## 更新日志
 
