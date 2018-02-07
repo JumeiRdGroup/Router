@@ -20,6 +20,7 @@ import android.text.TextUtils;
 
 import com.lzh.nonview.router.tools.Utils;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class URIParser {
             }
             int index = param.indexOf("=");
             //noinspection RedundantStringConstructorCall
-            params.put(new String(param.substring(0, index)), Uri.decode(param.substring(index + 1)));
+            params.put(new String(param.substring(0, index)), URLDecoder.decode(param.substring(index + 1)));
         }
         return params;
     }
