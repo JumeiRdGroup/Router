@@ -1,7 +1,10 @@
 package com.lzh.nonview.router.demo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +13,8 @@ import com.lzh.nonview.router.Router;
 import com.lzh.nonview.router.anno.RouterRule;
 import com.lzh.nonview.router.demo.base.BaseActivity;
 import com.lzh.nonview.router.demo.pojo.User;
+import com.lzh.nonview.router.extras.RouteBundleExtras;
+import com.lzh.nonview.router.interceptors.RouteInterceptor;
 
 import java.net.URLEncoder;
 
@@ -48,9 +53,29 @@ public class MainActivity extends BaseActivity {
 
         Router.create(url)
                 .addExtras(extras)// 添加额外参数
-                .requestCode(100)
+                .requestCode(0x0000ffff)
+                .addInterceptor(new LogInterceptor())
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .setAnim(R.anim.anim_fade_in,R.anim.anim_fade_out)
                 .open(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // 用于测试路由被拦截后再次恢复时，是否正确恢复
+    public static class LogInterceptor implements RouteInterceptor {
+
+        @Override
+        public boolean intercept(Uri uri, RouteBundleExtras extras, Context context) {
+            Log.e("MainActivity", "This is a log interceptor");
+            return false;
+        }
+
+        @Override
+        public void onIntercepted(Uri uri, RouteBundleExtras extras, Context context) {
+        }
     }
 }

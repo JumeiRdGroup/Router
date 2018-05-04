@@ -1,3 +1,0 @@
-include ':app', ':usercenter', ':remote'
-include ':plugina'
-//include ':stub'
