@@ -33,13 +33,18 @@ public class CacheStore {
         return INSTANCE;
     }
 
-    public Object get(int index) {
+    public <T> T get(int index) {
         if (index < 0 || index >= stores.length) {
             return null;
         }
         Object value = stores[index];
         stores[index] = null;
-        return value;
+        try {
+            //noinspection unchecked
+            return (T) value;
+        } catch (ClassCastException cast) {
+            return null;
+        }
     }
 
     public int put(Object value) {

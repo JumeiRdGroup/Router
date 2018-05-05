@@ -128,37 +128,8 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
         outAnimation = in.readInt();
         flags = in.readInt();
         extras = in.readBundle(getClass().getClassLoader());
-        try {
-            interceptors = (ArrayList<RouteInterceptor>) CacheStore.get().get(in.readInt());
-        } catch (ClassCastException e) {
-            // ignore
-        }
-        try {
-            callback = (RouteCallback) CacheStore.get().get(in.readInt());
-        } catch (ClassCastException e) {
-            // ignore
-        }
-//        int parcelableInterceptorSize = in.readInt();
-//        // restore interceptors
-//        for (int i = 0; i < parcelableInterceptorSize; i++) {
-//            int type = in.readInt();
-//            RouteInterceptor interceptor;
-//            if (type == 0) {
-//                interceptor = in.readParcelable(getClass().getClassLoader());
-//            } else {
-//                interceptor = (RouteInterceptor) in.readSerializable();
-//            }
-//            addInterceptor(interceptor);
-//        }
-//        int type = in.readInt();
-//        switch (type) {
-//            case 0:
-//                callback = in.readParcelable(getClass().getClassLoader());
-//                break;
-//            case 1:
-//                callback = (RouteCallback) in.readSerializable();
-//                break;
-//        }
+        interceptors = CacheStore.get().get(in.readInt());
+        callback = CacheStore.get().get(in.readInt());
     }
 
     public static final Creator<RouteBundleExtras> CREATOR = new Creator<RouteBundleExtras>() {
@@ -189,36 +160,6 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
 
         dest.writeInt(CacheStore.get().put(interceptors));
         dest.writeInt(CacheStore.get().put(callback));
-
-//        List<RouteInterceptor> parcelInterceptors = new ArrayList<>();
-//        for (RouteInterceptor interceptor : interceptors) {
-//            if (interceptor instanceof Parcelable
-//                    || interceptor instanceof Serializable) {
-//                parcelInterceptors.add(interceptor);
-//            }
-//        }
-//        dest.writeInt(parcelInterceptors.size());
-//        for (RouteInterceptor interceptor : parcelInterceptors) {
-//            if (interceptor instanceof Parcelable) {
-//                Parcelable parcelable = (Parcelable) interceptor;
-//                dest.writeInt(0);
-//                dest.writeParcelable(parcelable,flags);
-//            } else {
-//                Serializable serializable = (Serializable) interceptor;
-//                dest.writeInt(1);
-//                dest.writeSerializable(serializable);
-//            }
-//        }
-//
-//        if (callback != null && callback instanceof Parcelable) {
-//            dest.writeInt(0);
-//            dest.writeParcelable((Parcelable) callback, flags);
-//        } else if (callback != null && callback instanceof Serializable){
-//            dest.writeInt(1);
-//            dest.writeSerializable((Serializable) callback);
-//        } else {
-//            dest.writeInt(-1);
-//        }
     }
 
     public Bundle getExtras() {
