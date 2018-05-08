@@ -23,7 +23,7 @@ public final class ActivityResultDispatcher {
     }
 
     public void bindRequestArgs(Activity activity, int requestCode, ActivityResultCallback callback) {
-        if (Utils.isValid(activity)
+        if (!Utils.isValid(activity)
                 || callback == null
                 || requestCode == -1) {
             return;

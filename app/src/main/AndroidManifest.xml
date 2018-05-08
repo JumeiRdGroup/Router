@@ -18,9 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ParamsActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ParcelerActivity"></activity>
+        <activity android:name=".IntentPrinterActivity" />
+        <activity android:name=".UserActivity" />
+        <activity android:name=".ResultActivity" />
     </application>
 
 </manifest>

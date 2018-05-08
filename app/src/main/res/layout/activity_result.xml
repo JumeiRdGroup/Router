@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="只是个模拟页面。模拟登陆操作"
-        android:padding="10dp"
-        android:gravity="center"
+    <Button
+        android:id="@+id/backWithoutIntent"
+        android:text="销毁页面不返回数据"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/login"
-        android:text="登陆"
+        android:id="@+id/backWithIntent"
+        android:text="销毁页面并返回数据"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

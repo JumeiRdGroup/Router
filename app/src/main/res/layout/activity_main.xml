@@ -8,50 +8,55 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:id="@+id/to_webview"
-            android:text="www.baidu.com"
-            android:textAllCaps="false"
-            android:onClick="onSimpleClick"
+            android:id="@+id/open_browser"
+            android:text="打开浏览器百度首页"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/use_simple_router"
-            android:text="jumei://main?username=Haoge&amp;password=&amp;books=Android从入门到放弃&amp;books=颈椎病康复指南&amp;prices=9"
-            android:textAllCaps="false"
-            android:onClick="onSimpleClick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/encode_query"
-            android:text="haoge://haoge.cn/parceler?url=haoge%3A%2F%2Faction%2Fsupport%3Fusername%3Dhaoge"
-            android:textAllCaps="false"
+            android:id="@+id/toPrinterActivityWithRequestLogin"
+            android:text="跳转到数据打印页(使用动态登录检查)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/action_say_hello"
-            android:text="haoge://action/support?username=haoge&amp;address=China&amp;strList=hello&amp;strList=world"
-            android:textAllCaps="false"
-            android:onClick="onSimpleClick"
+            android:id="@+id/toPrinterActivityWithInterceptor"
+            android:text="跳转到数据打印页(使用指定登录拦截器)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/action_subthread"
-            android:text="haoge://test/sub/thread/"
-            android:textAllCaps="false"
-            android:onClick="onSimpleClick"
+            android:id="@+id/toPrinterActivityWithoutInterceptor"
+            android:text="跳转到数据打印页(不触发拦截器)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/addExtras"
-            android:text="添加额外数据跳转"
+            android:id="@+id/toUserActivity"
+            android:text="跳转到用户信息页(自带登录拦截器)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/toPrinterActivityWithExtras"
+            android:text="跳转到数据打印页(添加额外数据)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/launchActionRoute"
+            android:text="启动一个简单的动作路由"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/toResultActivity"
+            android:text="使用ActivityResult回调"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>

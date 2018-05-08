@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.lzh.nonview.router.activityresult.ActivityResultCallback;
+import com.lzh.nonview.router.activityresult.ActivityResultDispatcher;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.tools.Constants;
 import com.lzh.nonview.router.tools.Utils;
@@ -85,8 +86,10 @@ public class DefaultActivityLauncher extends ActivityLauncher{
 
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,requestCode);
+            Activity activity = (Activity) context;
+            activity.startActivityForResult(intent,requestCode);
             overridePendingTransition((Activity) context, extras);
+            ActivityResultDispatcher.get().bindRequestArgs(activity, requestCode, callback);
         } else {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

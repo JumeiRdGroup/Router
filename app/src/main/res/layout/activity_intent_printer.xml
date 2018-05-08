@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:text="只是个模拟页面。模拟登陆操作"
-        android:padding="10dp"
+        android:text="此页面用于打印传递过来的Intent数据。"
         android:gravity="center"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/login"
-        android:text="登陆"
+    <TextView
+        android:id="@+id/printer_tv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
