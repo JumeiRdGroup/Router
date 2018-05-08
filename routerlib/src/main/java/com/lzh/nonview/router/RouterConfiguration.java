@@ -15,9 +15,12 @@
  */
 package com.lzh.nonview.router;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 
+import com.lzh.nonview.router.activityresult.ActivityResultDispatcher;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.ActionLauncher;
@@ -178,6 +181,10 @@ public final class RouterConfiguration {
      */
     public RouteBundleExtras restoreExtras(Uri uri) {
         return InternalCallback.findExtrasByUri(uri);
+    }
+
+    public boolean dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        return ActivityResultDispatcher.get().dispatchActivityResult(activity, requestCode, resultCode, data);
     }
 
     private static RouterConfiguration config = new RouterConfiguration();

@@ -15,8 +15,10 @@
  */
 package com.lzh.nonview.router.tools;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -70,14 +72,14 @@ public class Utils {
         return uri;
     }
 
-    public static boolean checkInterceptor(Uri uri, RouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
+    public static void checkInterceptor(Uri uri, RouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
         for (RouteInterceptor interceptor : interceptors) {
             if (interceptor.intercept(uri,extras,context)) {
+                extras.putValue(Constants.KEY_RESUME_CONTEXT, context);
                 interceptor.onIntercepted(uri,extras,context);
                 throw new InterceptorException(interceptor);
             }
         }
-        return false;
     }
 
     public static Bundle parseRouteMapToBundle(URIParser parser, RouteRule routeRule) {
@@ -102,6 +104,12 @@ public class Utils {
             wrappers.get(key).put(bundle,key);
         }
         return bundle;
+    }
+
+    public static boolean isValid(Activity activity) {
+        return activity != null
+                && !activity.isFinishing()
+                && !(Build.VERSION.SDK_INT >= 17 && activity.isDestroyed());
     }
 
     /**

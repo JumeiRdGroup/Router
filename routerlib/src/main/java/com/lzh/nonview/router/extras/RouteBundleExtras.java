@@ -18,17 +18,17 @@ package com.lzh.nonview.router.extras;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
-import com.lzh.nonview.router.interceptors.RouteInterceptorAction;
 import com.lzh.nonview.router.route.IBaseRoute;
 import com.lzh.nonview.router.route.RouteCallback;
-import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.CacheStore;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An extra container contains {@link RouteBundleExtras#extras} and {@link RouteBundleExtras#interceptors}
@@ -40,11 +40,13 @@ import java.util.List;
  * @author haoge
  * @see com.lzh.nonview.router.route.IBaseRoute
  */
-public final class RouteBundleExtras implements Parcelable, RouteInterceptorAction<RouteBundleExtras>{
-    private Bundle extras = new Bundle();
+public final class RouteBundleExtras implements Parcelable{
+
     private ArrayList<RouteInterceptor> interceptors = new ArrayList<>();
     private RouteCallback callback;
+    private Map<String, Object> additionalMap = new HashMap<>();
 
+    private Bundle extras = new Bundle();
     // the extras belows is only supports for ActivityRoute.
     private int requestCode = -1;
     private int inAnimation = -1;
@@ -53,30 +55,22 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
 
     public RouteBundleExtras() {}
 
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public RouteBundleExtras addInterceptor(RouteInterceptor interceptor) {
+    public void addInterceptor(RouteInterceptor interceptor) {
         if (interceptor != null && !interceptors.contains(interceptor)) {
             interceptors.add(interceptor);
         }
-        return this;
     }
 
-    @Override
-    public RouteBundleExtras removeInterceptor(RouteInterceptor interceptor) {
+    public void removeInterceptor(RouteInterceptor interceptor) {
         if (interceptor != null) {
             interceptors.remove(interceptor);
         }
-        return this;
     }
 
-    @Override
-    public RouteBundleExtras removeAllInterceptors() {
+    public void removeAllInterceptors() {
         interceptors.clear();
-        return this;
     }
 
-    @Override
     public List<RouteInterceptor> getInterceptors() {
         return interceptors;
     }
@@ -121,6 +115,27 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
         this.flags |= flags;
     }
 
+    public <T> T getValue(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        }
+
+        try {
+            //noinspection unchecked
+            return (T) additionalMap.get(key);
+        } catch (ClassCastException cast) {
+            return null;
+        }
+    }
+
+    public void putValue(String key, Object value) {
+        if (TextUtils.isEmpty(key) || value == null) {
+            return;
+        }
+
+        additionalMap.put(key, value);
+    }
+
     // ------------------------- divider for parcelable ------------------------
     private RouteBundleExtras(Parcel in) {
         requestCode = in.readInt();
@@ -128,8 +143,10 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
         outAnimation = in.readInt();
         flags = in.readInt();
         extras = in.readBundle(getClass().getClassLoader());
+
         interceptors = CacheStore.get().get(in.readInt());
         callback = CacheStore.get().get(in.readInt());
+        additionalMap = CacheStore.get().get(in.readInt());
     }
 
     public static final Creator<RouteBundleExtras> CREATOR = new Creator<RouteBundleExtras>() {
@@ -160,6 +177,7 @@ public final class RouteBundleExtras implements Parcelable, RouteInterceptorActi
 
         dest.writeInt(CacheStore.get().put(interceptors));
         dest.writeInt(CacheStore.get().put(callback));
+        dest.writeInt(CacheStore.get().put(additionalMap));
     }
 
     public Bundle getExtras() {

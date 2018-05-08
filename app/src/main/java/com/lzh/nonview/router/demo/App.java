@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RouteConfig(
-        baseUrl = "haoge://",
+        baseUrl = "haoge://page/",
         pack = "com.haoge.studio")
 public class App extends Application {
 

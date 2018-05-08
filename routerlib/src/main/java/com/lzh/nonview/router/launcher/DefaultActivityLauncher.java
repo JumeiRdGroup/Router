@@ -20,12 +20,19 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 
+import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
+import com.lzh.nonview.router.tools.Constants;
+import com.lzh.nonview.router.tools.Utils;
+
+import java.util.Random;
 
 /**
  * Default Activity Launcher for {@link com.lzh.nonview.router.route.ActivityRoute}
  */
 public class DefaultActivityLauncher extends ActivityLauncher{
+
+    private static Random sCodeGenerator = new Random();
 
     @Override
     public Intent createIntent(Context context) {
@@ -38,24 +45,47 @@ public class DefaultActivityLauncher extends ActivityLauncher{
     }
 
     @Override
-    public void open(Fragment fragment) throws Exception {
-        Intent intent = createIntent(fragment.getActivity());
-        fragment.startActivityForResult(intent, extras.getRequestCode());
-        overridePendingTransition(fragment.getActivity(), extras);
+    public void open(Fragment fragment) {
+        if (getResumeActivity() != null) {
+            open(getResumeActivity());
+        } else if (getResultCallback() != null) {
+            open(fragment.getActivity());
+        } else {
+            Intent intent = createIntent(fragment.getActivity());
+            fragment.startActivityForResult(intent, extras.getRequestCode());
+            overridePendingTransition(fragment.getActivity(), extras);
+        }
     }
 
     @Override
-    public void open(android.support.v4.app.Fragment fragment) throws Exception {
-        Intent intent = createIntent(fragment.getContext());
-        fragment.startActivityForResult(intent, extras.getRequestCode());
-        overridePendingTransition(fragment.getActivity(), extras);
+    public void open(android.support.v4.app.Fragment fragment) {
+        if (getResumeActivity() != null) {
+            open(getResumeActivity());
+        } else if (getResultCallback() != null) {
+            open(fragment.getActivity());
+        } else {
+            Intent intent = createIntent(fragment.getActivity());
+            fragment.startActivityForResult(intent, extras.getRequestCode());
+            overridePendingTransition(fragment.getActivity(), extras);
+        }
     }
 
     @Override
-    public void open(Context context) throws Exception{
+    public void open(Context context) {
+        Activity resume = getResumeActivity();
+        if (resume != null) {
+            context = resume;
+        }
+
+        ActivityResultCallback callback = getResultCallback();
+        int requestCode = extras.getRequestCode();
+        if (callback != null && requestCode == -1) {
+            requestCode = sCodeGenerator.nextInt(0x0000ffff);
+        }
+
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
-            ((Activity) context).startActivityForResult(intent,extras.getRequestCode());
+            ((Activity) context).startActivityForResult(intent,requestCode);
             overridePendingTransition((Activity) context, extras);
         } else {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -74,4 +104,14 @@ public class DefaultActivityLauncher extends ActivityLauncher{
             activity.overridePendingTransition(inAnimation,outAnimation);
         }
     }
+
+    private Activity getResumeActivity() {
+        Activity activity = extras.getValue(Constants.KEY_RESUME_CONTEXT);
+        return Utils.isValid(activity) ? activity : null;
+    }
+
+    private ActivityResultCallback getResultCallback() {
+        return extras.getValue(Constants.KEY_RESULT_CALLBACK);
+    }
+
 }

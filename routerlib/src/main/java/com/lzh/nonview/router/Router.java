@@ -25,6 +25,7 @@ import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.protocol.HostServiceWrapper;
 import com.lzh.nonview.router.route.ActionRoute;
+import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.route.ActivityRoute;
 import com.lzh.nonview.router.route.BaseRoute;
 import com.lzh.nonview.router.route.BrowserRoute;
@@ -35,6 +36,7 @@ import com.lzh.nonview.router.route.IRoute;
 import com.lzh.nonview.router.route.InternalCallback;
 import com.lzh.nonview.router.route.RouteCallback;
 import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Constants;
 import com.lzh.nonview.router.tools.Utils;
 
 
@@ -97,6 +99,11 @@ public final class Router{
 
     public Router requestCode(int requestCode) {
         this.internalCallback.getExtras().setRequestCode(requestCode);
+        return this;
+    }
+
+    public Router resultCallback(ActivityResultCallback callback) {
+        this.internalCallback.getExtras().putValue(Constants.KEY_RESULT_CALLBACK, callback);
         return this;
     }
 

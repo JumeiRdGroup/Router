@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.lzh.nonview.router.RouterConfiguration;
+import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.launcher.ActivityLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActivityRouteRule;
+import com.lzh.nonview.router.tools.Constants;
 import com.lzh.nonview.router.tools.Utils;
 
 /**
@@ -41,6 +43,12 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     @Override
     public IActivityRoute requestCode(int requestCode) {
         this.callback.getExtras().setRequestCode(requestCode);
+        return this;
+    }
+
+    @Override
+    public IActivityRoute resultCallback(ActivityResultCallback callback) {
+        this.callback.getExtras().putValue(Constants.KEY_RESULT_CALLBACK, callback);
         return this;
     }
 

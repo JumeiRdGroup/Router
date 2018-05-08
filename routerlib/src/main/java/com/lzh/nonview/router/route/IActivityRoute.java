@@ -20,7 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
+import com.lzh.nonview.router.tools.Constants;
 
 /**
  * <p>
@@ -44,8 +46,10 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
      */
     IActivityRoute requestCode(int requestCode);
 
+    IActivityRoute resultCallback(ActivityResultCallback callback);
+
     /**
-     * Set anim to apply to {@link android.app.Activity#overridePendingTransition(int, int)}
+     * Set anim for {@link android.app.Activity#overridePendingTransition(int, int)}
      * @param enterAnim enter animation
      * @param exitAnim exit animation
      * @return IActivityRoute
@@ -86,6 +90,12 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
         @Override
         public IActivityRoute requestCode(int requestCode) {
             internal.getExtras().setRequestCode(requestCode);
+            return this;
+        }
+
+        @Override
+        public IActivityRoute resultCallback(ActivityResultCallback callback) {
+            internal.getExtras().putValue(Constants.KEY_RESULT_CALLBACK, callback);
             return this;
         }
 
