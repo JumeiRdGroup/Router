@@ -3,13 +3,14 @@ package com.lzh.nonview.router.demo
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import butterknife.OnClick
+import com.alibaba.fastjson.JSON
 import com.lzh.compiler.parceler.Parceler
 import com.lzh.nonview.router.Router
 import com.lzh.nonview.router.anno.RouterRule
 import com.lzh.nonview.router.demo.interceptors.LoginInterceptor
+import com.lzh.nonview.router.demo.pojo.User
 import com.lzh.nonview.router.exception.NotFoundException
 import com.lzh.nonview.router.launcher.Launcher
 import com.lzh.nonview.router.module.RouteRule
@@ -92,5 +93,29 @@ class MainActivity : BaseActivity() {
                 // 指定返回数据回调
                 .resultCallback { resultCode, data -> Toast.makeText(this, "返回码是$resultCode", Toast.LENGTH_SHORT).show() }
                 .open(this)
+    }
+
+    @OnClick(R.id.toArgsActivity)
+    fun toArgsActivity() {
+        val url = Uri.parse("haoge://page/parceler-args")
+                .buildUpon()
+                // 添加基本数据类型
+                .appendQueryParameter("mBoolean", "true")
+                .appendQueryParameter("mByte", "0")
+                .appendQueryParameter("mShort", "1")
+                .appendQueryParameter("mChar", "c")
+                .appendQueryParameter("mInt", "3")
+                .appendQueryParameter("mFloat", "3.14")
+                .appendQueryParameter("mDouble", "3.14")
+                .appendQueryParameter("mLong", "5")
+                .appendQueryParameter("mString", "HaogeStudio")
+                // 非可序列化对象可通过json格式传递
+                .appendQueryParameter("mUser", JSON.toJSONString(User("HaogeStudio")))
+                // 转义字符串。比如参数中需要传递网址时
+                // appendQueryParameter本身会将数据先进行转义后再拼接上。所以此处是转义的链接
+                .appendQueryParameter("mUrl", "https://www.baidu.com")
+                .build()
+
+        Router.create(url).open(this)
     }
 }

@@ -4,11 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import butterknife.ButterKnife
+import com.lzh.compiler.parceler.BundleFactory
 
 import com.lzh.compiler.parceler.Parceler
 import com.lzh.nonview.router.RouterConfiguration
 
 abstract class BaseActivity : Activity() {
+
+    protected val bundleFactory by lazy { Parceler.createFactory(intent?.extras) }
+
     // Parceler基础注入配置
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -27,9 +27,8 @@ android {
     }
 }
 
-def AAVersion = '4.3.0'
-def PARCELER_VERSION="1.3.9"
-def ROUTER_VERSION="2.6.1"
+def parceler_version="1.3.9"
+def router_version="2.6.1"
 def butterknife_version='8.8.1'
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -39,11 +38,11 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    kapt "com.github.yjfnypeu.Parceler:compiler:$PARCELER_VERSION"
-    compile "com.github.yjfnypeu.Parceler:api:$PARCELER_VERSION"
+    kapt "com.github.yjfnypeu.Parceler:compiler:$parceler_version"
+    compile "com.github.yjfnypeu.Parceler:api:$parceler_version"
 
-//    compile "com.github.yjfnypeu.Router:router-api:$ROUTER_VERSION"
-//    kapt "com.github.yjfnypeu.Router:router-compiler:$ROUTER_VERSION"
+//    compile "com.github.yjfnypeu.Router:router-api:$router_version"
+//    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
 
     compile project(':routerlib')
     kapt project(':compiler')

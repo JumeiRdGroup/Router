@@ -1,8 +1,10 @@
 package com.lzh.nonview.router.demo
 
 import android.app.Application
+import com.alibaba.fastjson.support.spring.FastJsonContainer
 import com.haoge.studio.RouterRuleCreator
 import com.lzh.compiler.parceler.Parceler
+import com.lzh.compiler.parceler.annotation.FastJsonConverter
 import com.lzh.nonview.router.Router
 import com.lzh.nonview.router.RouterConfiguration
 import com.lzh.nonview.router.anno.RouteConfig
@@ -21,5 +23,7 @@ class App : Application() {
         // 开启Router日志打印
         Router.DEBUG = true
 
+        // 配置Parceler转换器
+        Parceler.setDefaultConverter(FastJsonConverter::class.java)
     }
 }
