@@ -39,6 +39,8 @@ import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.Constants;
 import com.lzh.nonview.router.tools.Utils;
 
+import java.util.concurrent.Executor;
+
 
 /**
  * Entry of Router。
@@ -120,6 +122,11 @@ public final class Router{
 
     public Router addExtras(Bundle extras) {
         this.internalCallback.getExtras().addExtras(extras);
+        return this;
+    }
+
+    public Router setExecutor(Executor executor) {
+        this.internalCallback.getExtras().putValue(Constants.KEY_ACTION_EXECUTOR, executor);
         return this;
     }
 

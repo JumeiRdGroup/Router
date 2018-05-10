@@ -15,9 +15,18 @@ import com.lzh.nonview.router.exception.NotFoundException
 import com.lzh.nonview.router.launcher.Launcher
 import com.lzh.nonview.router.module.RouteRule
 import com.lzh.nonview.router.route.RouteCallback
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @RouterRule("main")
 class MainActivity : BaseActivity() {
+
+    val pool: ExecutorService = Executors.newSingleThreadExecutor { runnable ->
+        val thread:Thread = Thread(runnable)
+        thread.name = "action_executor"
+        return@newSingleThreadExecutor thread
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,11 +91,6 @@ class MainActivity : BaseActivity() {
 
     }
 
-    @OnClick(R.id.launchActionRoute)
-    fun launchActionRoute() {
-        Router.create("haoge://page/simple-action").open(this)
-    }
-
     @OnClick(R.id.toResultActivity)
     fun toResultActivity() {
         Router.create("haoge://page/result")
@@ -117,5 +121,22 @@ class MainActivity : BaseActivity() {
                 .build()
 
         Router.create(url).open(this)
+    }
+
+    @OnClick(R.id.launchActionRoute)
+    fun launchActionRoute() {
+        Router.create("haoge://page/say/hello").open(this)
+    }
+
+    @OnClick(R.id.launchActionRouteWithExecutorAnnotation)
+    fun launchActionRouteWithExecutorAnnotation() {
+        Router.create("haoge://page/executor/switcher").open(this)
+    }
+
+    @OnClick(R.id.launchActionRouteWithExecutorConfig)
+    fun launchActionRouteWithExecutorConfig() {
+        Router.create("haoge://page/executor/switcher")
+                .setExecutor(pool)
+                .open(this)
     }
 }

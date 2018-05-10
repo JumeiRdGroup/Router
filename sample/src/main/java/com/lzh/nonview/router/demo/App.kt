@@ -9,6 +9,7 @@ import com.lzh.nonview.router.Router
 import com.lzh.nonview.router.RouterConfiguration
 import com.lzh.nonview.router.anno.RouteConfig
 import com.lzh.nonview.router.demo.interceptors.DefaultInterceptor
+import com.lzh.nonview.router.demo.tools.SingleCache
 
 @RouteConfig(baseUrl = "haoge://page/", pack = "com.haoge.studio")
 class App : Application() {
@@ -25,5 +26,7 @@ class App : Application() {
 
         // 配置Parceler转换器
         Parceler.setDefaultConverter(FastJsonConverter::class.java)
+
+        SingleCache.init(this)
     }
 }

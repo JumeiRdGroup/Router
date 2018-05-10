@@ -19,6 +19,9 @@ import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.launcher.ActionLauncher;
 import com.lzh.nonview.router.launcher.Launcher;
 import com.lzh.nonview.router.module.ActionRouteRule;
+import com.lzh.nonview.router.tools.Constants;
+
+import java.util.concurrent.Executor;
 
 public class ActionRoute extends BaseRoute<IActionRoute> implements IActionRoute {
 
@@ -30,5 +33,10 @@ public class ActionRoute extends BaseRoute<IActionRoute> implements IActionRoute
             launcher = RouterConfiguration.get().getActionLauncher();
         }
         return launcher.newInstance();
+    }
+
+    @Override
+    public void setExecutor(Executor executor) {
+        callback.getExtras().putValue(Constants.KEY_ACTION_EXECUTOR, executor);
     }
 }

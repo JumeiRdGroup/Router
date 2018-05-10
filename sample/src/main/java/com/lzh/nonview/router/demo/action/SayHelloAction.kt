@@ -2,17 +2,16 @@ package com.lzh.nonview.router.demo.action
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import com.lzh.nonview.router.anno.RouterRule
+import com.lzh.nonview.router.demo.tools.SingleCache
 import com.lzh.nonview.router.route.ActionSupport
 
 /**
- * DATE: 2018/5/8
- * AUTHOR: haoge
+ * @author haoge on 2018/5/10
  */
-@RouterRule("simple-action")
-class SimpleAction : ActionSupport(){
+@RouterRule("say/hello")
+class SayHelloAction:ActionSupport() {
     override fun onRouteTrigger(context: Context?, bundle: Bundle?) {
-        Toast.makeText(context, "simple-action被触发", Toast.LENGTH_SHORT).show()
+        SingleCache.toast?.show("Hello! this is an action route!")
     }
 }

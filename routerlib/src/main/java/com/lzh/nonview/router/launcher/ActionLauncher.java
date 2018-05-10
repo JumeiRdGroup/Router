@@ -17,6 +17,7 @@ package com.lzh.nonview.router.launcher;
 
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.tools.Cache;
+import com.lzh.nonview.router.tools.Constants;
 
 import java.util.concurrent.Executor;
 
@@ -33,6 +34,10 @@ public abstract class ActionLauncher extends Launcher<ActionRouteRule> {
      * @return returns a executor instance to switching thread.
      */
     protected Executor getExecutor() {
-        return Cache.findOrCreateExecutor(rule.getExecutor());
+        Executor executor = extras.getValue(Constants.KEY_ACTION_EXECUTOR);
+        if (executor == null) {
+            executor = Cache.findOrCreateExecutor(rule.getExecutor());
+        }
+        return executor;
     }
 }

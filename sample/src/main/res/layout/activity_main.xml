@@ -46,12 +46,6 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/launchActionRoute"
-            android:text="启动一个简单的动作路由"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:id="@+id/toResultActivity"
             android:text="使用ActivityResult回调"
             android:layout_width="match_parent"
@@ -62,6 +56,24 @@
             android:text="跳转到Arg参数自动解析示例页"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/launchActionRoute"
+            android:text="启动一个简单的动作路由"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/launchActionRouteWithExecutorAnnotation"
+            android:text="启动一个简单的动作路由(使用注解进行线程指定)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/launchActionRouteWithExecutorConfig"
+            android:text="启动一个简单的动作路由(使用执行器进行线程指定)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 
