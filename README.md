@@ -86,7 +86,7 @@ Router.create("haoge://page/example").open(context)
 
 ### 启动浏览器打开网页
 
-当路由链接为http/https时，且此时本地的也没有页面配置过此链接地址时，将触发使用跳转浏览器打开
+当路由链接为http/https时，且此时本地的也没有页面配置过此链接地址时，将触发使用**跳转浏览器打开链接**逻辑
 
 比如浏览器打开百度页面
 
@@ -99,6 +99,10 @@ Router.create("https://www.baidu.com").open(context)
 ```java
 Router.DEBUG = true
 ```
+
+启用后，即可通过RouterLog进行过滤查看
+
+![](https://user-gold-cdn.xitu.io/2018/2/2/16155d64892fbb17?w=1168&h=299&f=png&s=110139)
 
 ### 添加额外数据启动
 
@@ -129,13 +133,13 @@ public interface RouteCallback {
 
 路由回调的配置分为两种：
 
-1. 全局路由回调：所有的路由启动事件均会回调到此
+1. **全局路由回调**：所有的路由启动事件均会回调到此
 
 ```java
 RouterConfiguration.get().setCallback(callback)
 ```
 
-2. 临时路由回调：只对当次路由事件生效
+2. **临时路由回调**：只对当次路由事件生效
 
 ```java
 Router.create(url).setCallback(callback).open(context)
@@ -176,13 +180,13 @@ Router.create(url).resultCallback(resultCallback).open(context)
 
 ### 使用路由拦截器拦截器
 
-拦截器，顾名思义，就是在路由启动过程中，进行中间状态判断，是否需要拦截掉此次路由事件。使其失败。
+拦截器，顾名思义，就是在路由启动过程中，进行中间状态判断，是否需要拦截掉此次路由事件。使其启动失败。
 
 拦截器的接口名为**RouteInterceptor**
 
 ```java
 public interface RouteInterceptor{
-	// 在此进行状态判断。判断是否需要拦截此次路由事件
+	// 在此进行状态判断。判断是否需要拦截此次路由事件，当返回true时，代表此次启动事件被拦截
 	boolean intercept (Uri uri, RouteBundleExtras extras, Context context);
 	// 当intercept方法返回true时，此方法被调用。
 	void onIntercepted(Uri uri, RouteBundleExtras extras, Context context);
