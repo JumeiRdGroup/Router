@@ -72,9 +72,6 @@ public final class RouteBundleExtras implements Parcelable{
     }
 
     public List<RouteInterceptor> getInterceptors() {
-        if (interceptors == null) {
-            interceptors = new ArrayList<>();
-        }
         return interceptors;
     }
 
@@ -147,9 +144,13 @@ public final class RouteBundleExtras implements Parcelable{
         flags = in.readInt();
         extras = in.readBundle(getClass().getClassLoader());
 
-        interceptors = CacheStore.get().get(in.readInt());
-        callback = CacheStore.get().get(in.readInt());
-        additionalMap = CacheStore.get().get(in.readInt());
+        ArrayList<RouteInterceptor> interceptors = CacheStore.get().get(in.readInt());
+        RouteCallback callback = CacheStore.get().get(in.readInt());
+        Map<String, Object> additionalMap = CacheStore.get().get(in.readInt());
+
+        if (interceptors != null) this.interceptors = interceptors;
+        if (callback != null) this.callback = callback;
+        if (additionalMap != null) this.additionalMap = additionalMap;
     }
 
     public static final Creator<RouteBundleExtras> CREATOR = new Creator<RouteBundleExtras>() {
