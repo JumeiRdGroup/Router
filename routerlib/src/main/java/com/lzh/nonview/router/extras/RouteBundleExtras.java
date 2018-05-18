@@ -56,22 +56,25 @@ public final class RouteBundleExtras implements Parcelable{
     public RouteBundleExtras() {}
 
     public void addInterceptor(RouteInterceptor interceptor) {
-        if (interceptor != null && !interceptors.contains(interceptor)) {
-            interceptors.add(interceptor);
+        if (interceptor != null && !getInterceptors().contains(interceptor)) {
+            getInterceptors().add(interceptor);
         }
     }
 
     public void removeInterceptor(RouteInterceptor interceptor) {
         if (interceptor != null) {
-            interceptors.remove(interceptor);
+            getInterceptors().remove(interceptor);
         }
     }
 
     public void removeAllInterceptors() {
-        interceptors.clear();
+        getInterceptors().clear();
     }
 
     public List<RouteInterceptor> getInterceptors() {
+        if (interceptors == null) {
+            interceptors = new ArrayList<>();
+        }
         return interceptors;
     }
 

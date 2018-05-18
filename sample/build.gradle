@@ -33,7 +33,7 @@ def butterknife_version='8.8.1'
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.alibaba:fastjson:1.2.35'
+    compile 'com.alibaba:fastjson:1.2.46'
 
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"

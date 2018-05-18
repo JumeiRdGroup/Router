@@ -183,6 +183,10 @@ public final class RouterConfiguration {
         return InternalCallback.findExtrasByUri(uri);
     }
 
+    public Context restorContext(Uri uri) {
+        return InternalCallback.findContextByUri(uri);
+    }
+
     public boolean dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         return ActivityResultDispatcher.get().dispatchActivityResult(activity, requestCode, resultCode, data);
     }

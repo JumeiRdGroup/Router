@@ -77,7 +77,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
             callback.onOpenFailed(e);
         }
 
-        callback.invoke();
+        callback.invoke(fragment.getActivity());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
         } catch (Throwable e) {
             callback.onOpenFailed(e);
         }
-        callback.invoke();
+        callback.invoke(fragment.getActivity());
     }
 
     @Override

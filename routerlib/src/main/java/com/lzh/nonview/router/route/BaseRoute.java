@@ -71,7 +71,7 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
             callback.onOpenFailed(e);
         }
 
-        callback.invoke();
+        callback.invoke(context);
     }
 
     @Override

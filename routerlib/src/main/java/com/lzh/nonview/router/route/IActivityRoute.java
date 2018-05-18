@@ -83,7 +83,7 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
         @Override
         public Intent createIntent(Context context) {
-            internal.invoke();
+            internal.invoke(context);
             return new Intent();
         }
 
@@ -114,12 +114,12 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
         @Override
         public void open(Fragment fragment) {
-            internal.invoke();
+            internal.invoke(fragment.getActivity());
         }
 
         @Override
         public void open(android.support.v4.app.Fragment fragment) {
-            internal.invoke();
+            internal.invoke(fragment.getActivity());
         }
     }
 }

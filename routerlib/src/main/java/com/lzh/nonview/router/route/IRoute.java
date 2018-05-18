@@ -42,7 +42,7 @@ public interface IRoute {
 
         @Override
         public void open(Context context) {
-            internal.invoke();
+            internal.invoke(context);
         }
     }
 }

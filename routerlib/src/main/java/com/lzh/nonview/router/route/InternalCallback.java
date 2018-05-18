@@ -1,6 +1,8 @@
 package com.lzh.nonview.router.route;
 
+import android.content.Context;
 import android.net.Uri;
+import android.util.Pair;
 
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.exception.NotFoundException;
@@ -19,7 +21,7 @@ import java.util.Map;
 public final class InternalCallback {
 
     // store the map to provided find extras for uri.
-    private static Map<Uri, RouteBundleExtras> cache = new HashMap<>();
+    private static Map<Uri, Pair<Context, RouteBundleExtras>> cache = new HashMap<>();
 
     private Uri uri;
     private RouteBundleExtras extras = new RouteBundleExtras();
@@ -52,8 +54,8 @@ public final class InternalCallback {
         this.error = e;
     }
 
-    void invoke() {
-        cache.put(uri, extras);
+    void invoke(Context context) {
+        cache.put(uri, new Pair<>(context, extras));
         invokeWithCallback(RouterConfiguration.get().getCallback(),
                 extras.getCallback());
         cache.remove(uri);
@@ -96,6 +98,12 @@ public final class InternalCallback {
     }
 
     public static RouteBundleExtras findExtrasByUri(Uri uri) {
-        return cache.get(uri);
+        Pair<Context, RouteBundleExtras> pair = cache.get(uri);
+        return pair == null? null : pair.second;
+    }
+
+    public static Context findContextByUri(Uri uri) {
+        Pair<Context, RouteBundleExtras> pair = cache.get(uri);
+        return pair == null? null : pair.first;
     }
 }
