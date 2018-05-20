@@ -15,24 +15,34 @@
  */
 package com.lzh.nonview.router.launcher;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.lzh.nonview.router.Router;
+import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
 import com.lzh.nonview.router.module.RouteRule;
+import com.lzh.nonview.router.tools.Constants;
+
+import java.util.Random;
 
 /**
  * The base launcher class.
  * @param <T> The route rule
  */
 public abstract class Launcher<T extends RouteRule> {
+    private static Random sCodeGenerator = new Random();
+
     protected Uri uri;
     protected Bundle bundle;
     protected RouteBundleExtras extras;
     protected T rule;
     protected Bundle remote;
+
+    protected Activity resumeContext;
+    protected ActivityResultCallback resultCallback;
 
     /**
      * Requires to open with this launcher.
@@ -54,5 +64,14 @@ public abstract class Launcher<T extends RouteRule> {
         this.extras = extras;
         this.rule = rule;
         this.remote = remote;
+
+        resumeContext = extras.getValue(Constants.KEY_RESUME_CONTEXT);
+        resultCallback = extras.getValue(Constants.KEY_RESULT_CALLBACK);
+
+        int requestCode = extras.getRequestCode();
+        if (resultCallback != null && requestCode == -1) {
+            extras.setRequestCode(sCodeGenerator.nextInt(0x0000ffff));
+        }
     }
+
 }

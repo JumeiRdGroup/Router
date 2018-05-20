@@ -23,17 +23,11 @@ import android.content.Intent;
 import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.activityresult.ActivityResultDispatcher;
 import com.lzh.nonview.router.extras.RouteBundleExtras;
-import com.lzh.nonview.router.tools.Constants;
-import com.lzh.nonview.router.tools.Utils;
-
-import java.util.Random;
 
 /**
  * Default Activity Launcher for {@link com.lzh.nonview.router.route.ActivityRoute}
  */
 public class DefaultActivityLauncher extends ActivityLauncher{
-
-    private static Random sCodeGenerator = new Random();
 
     @Override
     public Intent createIntent(Context context) {
@@ -47,9 +41,9 @@ public class DefaultActivityLauncher extends ActivityLauncher{
 
     @Override
     public void open(Fragment fragment) {
-        if (getResumeActivity() != null) {
-            open(getResumeActivity());
-        } else if (getResultCallback() != null) {
+        if (resumeContext != null) {
+            open(resumeContext);
+        } else if (resultCallback != null) {
             open(fragment.getActivity());
         } else {
             Intent intent = createIntent(fragment.getActivity());
@@ -60,9 +54,9 @@ public class DefaultActivityLauncher extends ActivityLauncher{
 
     @Override
     public void open(android.support.v4.app.Fragment fragment) {
-        if (getResumeActivity() != null) {
-            open(getResumeActivity());
-        } else if (getResultCallback() != null) {
+        if (resumeContext != null) {
+            open(resumeContext);
+        } else if (resultCallback != null) {
             open(fragment.getActivity());
         } else {
             Intent intent = createIntent(fragment.getActivity());
@@ -73,16 +67,13 @@ public class DefaultActivityLauncher extends ActivityLauncher{
 
     @Override
     public void open(Context context) {
-        Activity resume = getResumeActivity();
+        Activity resume = resumeContext;
         if (resume != null) {
             context = resume;
         }
 
-        ActivityResultCallback callback = getResultCallback();
+        ActivityResultCallback callback = resultCallback;
         int requestCode = extras.getRequestCode();
-        if (callback != null && requestCode == -1) {
-            requestCode = sCodeGenerator.nextInt(0x0000ffff);
-        }
 
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
@@ -106,15 +97,6 @@ public class DefaultActivityLauncher extends ActivityLauncher{
         if (inAnimation >= 0 && outAnimation >= 0) {
             activity.overridePendingTransition(inAnimation,outAnimation);
         }
-    }
-
-    private Activity getResumeActivity() {
-        Activity activity = extras.getValue(Constants.KEY_RESUME_CONTEXT);
-        return Utils.isValid(activity) ? activity : null;
-    }
-
-    private ActivityResultCallback getResultCallback() {
-        return extras.getValue(Constants.KEY_RESULT_CALLBACK);
     }
 
 }
