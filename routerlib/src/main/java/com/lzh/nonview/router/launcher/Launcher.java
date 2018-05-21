@@ -30,15 +30,14 @@ import java.util.Random;
 
 /**
  * The base launcher class.
- * @param <T> The route rule
  */
-public abstract class Launcher<T extends RouteRule> {
+public abstract class Launcher {
     private static Random sCodeGenerator = new Random();
 
     protected Uri uri;
     protected Bundle bundle;
     protected RouteBundleExtras extras;
-    protected T rule;
+    protected RouteRule rule;
     protected Bundle remote;
 
     protected Activity resumeContext;
@@ -58,7 +57,7 @@ public abstract class Launcher<T extends RouteRule> {
      * @param extras The extras data you set via {@link Router#getRoute()}
      * @param rule The rule that associate with the uri.
      */
-    public final void set(Uri uri, Bundle bundle, RouteBundleExtras extras, T rule, Bundle remote) {
+    public final void set(Uri uri, Bundle bundle, RouteBundleExtras extras,  RouteRule rule, Bundle remote) {
         this.uri = uri;
         this.bundle = bundle;
         this.extras = extras;

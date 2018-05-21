@@ -28,7 +28,7 @@ import com.lzh.nonview.router.tools.Utils;
 public class DefaultActionLauncher extends ActionLauncher{
 
     @Override
-    public void open(Context context) throws Exception {
+    public void open(Context context) {
         final ActionSupport support = newInstance(rule.getRuleClz());
         final Bundle data = new Bundle();
         data.putAll(bundle);
