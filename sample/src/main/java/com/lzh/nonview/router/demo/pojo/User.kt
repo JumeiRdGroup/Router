@@ -15,3 +15,5 @@ class User() {
     }
 
 }
+
+//data class User(var name:String?)

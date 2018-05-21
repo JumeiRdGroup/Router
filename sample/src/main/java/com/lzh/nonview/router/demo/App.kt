@@ -1,7 +1,6 @@
 package com.lzh.nonview.router.demo
 
 import android.app.Application
-import com.alibaba.fastjson.support.spring.FastJsonContainer
 import com.haoge.studio.RouterRuleCreator
 import com.lzh.compiler.parceler.Parceler
 import com.lzh.compiler.parceler.annotation.FastJsonConverter

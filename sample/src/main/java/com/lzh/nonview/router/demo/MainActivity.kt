@@ -78,7 +78,7 @@ class MainActivity : BaseActivity() {
                         Toast.makeText(this@MainActivity, "没匹配到与此uri所匹配的路由目标", Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onOpenSuccess(uri: Uri?, rule: RouteRule<out RouteRule<*, *>, out Launcher<*>>?) {
+                    override fun onOpenSuccess(uri: Uri?, rule: RouteRule<out RouteRule<*, *>, out Launcher>?) {
                         Toast.makeText(this@MainActivity, "打开路由成功", Toast.LENGTH_SHORT).show()
                     }
 
