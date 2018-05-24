@@ -5,12 +5,14 @@ import com.lzh.nonview.router.compiler.util.Utils;
 
 public class BasicConfigurations {
     public String baseUrl;
-    public String pack;
+    public String pack = "com.lzh.router";
 
     public BasicConfigurations(RouteConfig config) {
         if (config == null) return;
 
-        this.pack = Utils.isEmpty(config.pack()) ? "com.lzh.router" : config.pack();
+        if (!Utils.isEmpty(config.pack())) {
+            this.pack = config.pack();
+        }
         this.baseUrl = parseBaseUrl(config);
     }
 
