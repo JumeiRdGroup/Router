@@ -35,4 +35,6 @@ public interface RouteCreator {
      */
     Map<String, ActionRouteRule> createActionRouteRules();
 
+    Map<String, CreatorRouteRule> createCreatorRouteRule();
+
 }

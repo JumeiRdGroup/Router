@@ -18,6 +18,7 @@ package com.lzh.nonview.router.tools;
 import com.lzh.nonview.router.executors.MainThreadExecutor;
 import com.lzh.nonview.router.module.ActionRouteRule;
 import com.lzh.nonview.router.module.ActivityRouteRule;
+import com.lzh.nonview.router.module.CreatorRouteRule;
 import com.lzh.nonview.router.module.RouteCreator;
 import com.lzh.nonview.router.module.RouteRule;
 import com.lzh.nonview.router.parser.URIParser;
@@ -40,6 +41,7 @@ public final class Cache {
     /** A map to contains all of route rule created by creatorList*/
     private static Map<String,ActivityRouteRule> activityRouteMap = new HashMap<>();
     private static Map<String,ActionRouteRule> actionRouteMap = new HashMap<>();
+    private static Map<String,CreatorRouteRule> creatorRouteMap = new HashMap<>();
     public static final int TYPE_ACTIVITY_ROUTE = 0;
     public static final int TYPE_ACTION_ROUTE = 1;
 
@@ -58,6 +60,11 @@ public final class Cache {
         }
         creatorList.add(creator);
         shouldReload = true;
+    }
+
+    public static Map<String, CreatorRouteRule> getCreatorRules() {
+        obtainRouteRulesIfNeed();
+        return creatorRouteMap;
     }
 
     public static Map<String, ActionRouteRule> getActionRules() {
@@ -85,10 +92,12 @@ public final class Cache {
         if (shouldReload) {
             activityRouteMap.clear();
             actionRouteMap.clear();
+            creatorRouteMap.clear();
             int count = creatorList == null ? 0 : creatorList.size();
             for (int i = 0; i < count; i++) {
                 addAll(activityRouteMap, creatorList.get(i).createActivityRouteRules());
                 addAll(actionRouteMap, creatorList.get(i).createActionRouteRules());
+                addAll(creatorRouteMap, creatorList.get(i).createCreatorRouteRule());
             }
             shouldReload = false;
         }

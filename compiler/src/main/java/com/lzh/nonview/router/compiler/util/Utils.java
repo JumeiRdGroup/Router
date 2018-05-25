@@ -1,19 +1,13 @@
 package com.lzh.nonview.router.compiler.util;
 
 import com.lzh.compiler.parceler.annotation.Arg;
-import com.lzh.nonview.router.compiler.Constants;
 import com.lzh.nonview.router.compiler.exception.RouterException;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeName;
 
-import java.lang.annotation.Annotation;
 import java.util.Set;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.MirroredTypeException;
-import javax.lang.model.type.TypeMirror;
 
 public class Utils {
 
@@ -34,9 +28,6 @@ public class Utils {
         } else if (modifiers.contains(Modifier.ABSTRACT)) {
             // skip it
             return false;
-        } else if (!isSuperClass(type, Constants.CLASSNAME_ACTIVITY)
-                && !isSuperClass(type, Constants.CLASSNAME_ACTION_SUPPORT)) {
-            throw new RouterException(String.format("The class %s you annotated by RouterRule should be a subclass of Activity or ActionSupport",type.getSimpleName()),type);
         }
         return true;
     }

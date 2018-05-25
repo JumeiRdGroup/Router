@@ -30,17 +30,21 @@ public class RuleFactory {
     private ClassName clzName;
     private List<Parser> activityParser = new ArrayList<>();
     private List<Parser> actionParser = new ArrayList<>();
+    private List<Parser> creatorParser = new ArrayList<>();
     private ClassName routeMap = ClassName.bestGuess(Constants.CLASSNAME_ROUTE_MAP);
     private ClassName activityRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTIVITY_ROUTE_MAP);
     private ClassName actionRouteMap = ClassName.bestGuess(Constants.CLASSNAME_ACTION_ROUTE_MAP);
+    private ClassName creatorRouteMap = ClassName.bestGuess(Constants.CLASSNAME_CREATOR_ROUTE_MAP);
 
     public RuleFactory(ClassName name, List<Parser> parserList) {
         this.clzName = name;
         for (Parser item :  parserList) {
             if (Utils.isSuperClass(item.getType(), Constants.CLASSNAME_ACTIVITY)) {
                 activityParser.add(item);
-            } else {
+            } else if (Utils.isSuperClass(item.getType(), Constants.CLASSNAME_ACTION_SUPPORT)){
                 actionParser.add(item);
+            } else {
+                creatorParser.add(item);
             }
         }
     }
@@ -71,8 +75,20 @@ public class RuleFactory {
         }
         methodActionRulesCreator.addStatement("return routes");
 
+        MethodSpec.Builder methodCreatorRulesCreator = MethodSpec.overriding(getOverrideMethod(creator, Constants.METHODNAME_CREATE_CREATOR_ROUTER));
+        methodCreatorRulesCreator.addStatement("$T<String,$T> routes = new $T<>()",Map.class, creatorRouteMap, HashMap.class);
+        for (Parser parser : creatorParser ) {
+            String[] schemaes = parser.getScheme();
+            for (String schema : schemaes) {
+
+                appendMethod(parser,methodCreatorRulesCreator,schema, Constants.CLASSNAME_CREATOR_ROUTE_MAP);
+            }
+        }
+        methodCreatorRulesCreator.addStatement("return routes");
+
         typeBuilder.addMethod(methodActivityRulesCreator.build());
         typeBuilder.addMethod(methodActionRulesCreator.build());
+        typeBuilder.addMethod(methodCreatorRulesCreator.build());
         JavaFile.Builder javaBuilder = JavaFile.builder(clzName.packageName(), typeBuilder.build());
         javaBuilder.build().writeTo(UtilMgr.getMgr().getFiler());
     }

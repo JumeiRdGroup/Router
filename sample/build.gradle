@@ -41,10 +41,10 @@ dependencies {
     kapt "com.github.yjfnypeu.Parceler:compiler:$parceler_version"
     compile "com.github.yjfnypeu.Parceler:api:$parceler_version"
 
-    compile "com.github.yjfnypeu.Router:router-api:$router_version"
-    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
+//    compile "com.github.yjfnypeu.Router:router-api:$router_version"
+//    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
 
-//    compile project(':routerlib')
-//    kapt project(':compiler')
+    compile project(':routerlib')
+    kapt project(':compiler')
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

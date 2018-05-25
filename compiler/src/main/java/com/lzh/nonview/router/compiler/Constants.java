@@ -14,6 +14,8 @@ public class Constants {
     public static final String CLASSNAME_ACTIVITY_ROUTE_MAP = "com.lzh.nonview.router.module.ActivityRouteRule";
     // ActionRouteRule
     public static final String CLASSNAME_ACTION_ROUTE_MAP = "com.lzh.nonview.router.module.ActionRouteRule";
+    // CreatorRouteRule
+    public static final String CLASSNAME_CREATOR_ROUTE_MAP = "com.lzh.nonview.router.module.CreatorRouteRule";
     // RouteCreator
     public static final String CLASSNAME_ROUTE_CREATOR = "com.lzh.nonview.router.module.RouteCreator";
     // MainThreadExecutor
@@ -27,5 +29,7 @@ public class Constants {
     public static final String METHODNAME_CREATE_ACTIVITY_ROUTER = "createActivityRouteRules";
     // RouteCreator.createActionRouteRule
     public static final String METHODNAME_CREATE_ACTION_ROUTER = "createActionRouteRules";
+    // RouteCreator.createCreatorRouteRule
+    public static final String METHODNAME_CREATE_CREATOR_ROUTER = "createCreatorRouteRule";
 
 }
