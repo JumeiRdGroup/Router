@@ -141,8 +141,8 @@ class MainActivity : BaseActivity() {
                 .open(this)
     }
 
-    @OnClick(R.id.launchCreator)
-    fun launchCreator() {
+    @OnClick(R.id.createInstanceForJavaBean)
+    fun createInstanceForJavaBean() {
         val user = Router.createInstanceRouter("haoge://page/creator/user?name=CreatorRouter").createInstance<User>()
         EasyToast.DEFAULT.show("获取到对象：$user")
     }

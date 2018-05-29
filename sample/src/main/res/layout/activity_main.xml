@@ -75,14 +75,8 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/launchCreator"
-            android:text="启动对象创建路由"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/createFragment"
-            android:text="创建fragment实例"
+            android:id="@+id/createInstanceForJavaBean"
+            android:text="使用对象路由 创建实体bean"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

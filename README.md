@@ -433,6 +433,50 @@ Bundle bundle = getBundle();
 Uri lauchUri = bundle.getParcelable(Router.RAW_URI);
 ```
 
+### 使用对象路由
+
+对象路由(`InstanceRouter`)是在Router `2.8.+`版本以上添加的新型路由，主要作用为通过指定路由链接，创建出具体的对象实例提供使用：
+
+`对象路由`的配置方式是与`页面路由`,`动作路由`类似。也是直接在指定类上添加RouterRule注解，如此处将UserFragment作为实例创建目标：
+
+```
+@RouterRule("haoge://page/fragment/user")
+class UserFragment extends Fragment 
+		// 实现ICreatorInjector接口。复写方法以接收传参
+		implements ICreatorInjector{
+
+	@Override
+	public void inject(Bundle bundle) {
+		// 接收传参
+	}
+}
+```
+
+然后即可通过路由链接启动并获取UserFragment实例：
+
+```
+UserFragment user = Router.createInstanceRouter("haoge://page/fragment/user")
+		.addExtras(bundle)// 也可以添加额外参数
+		.createInstance<UserFragment>()// 获取具体实例进行使用
+```
+
+当然，不限于Fragment，你也可以为其他的任意类(除`Activity`与`ActionSupport`)添加上对象路由的配置，比如一个简单的普通bean：
+
+```
+// 对任意类添加路由配置注解
+@RouterRule("haoge://pojo/user")
+class Uesr implements ICreatorInjector {
+	@Override
+	public void inject(Bundle bundle) {
+		// 接收传参
+	}
+}
+
+// 然后通过指定的链接，直接获取实例
+User user = Router.createInstanceRouter("haoge://pojo/user")
+			.createInstance<User>()
+```
+
 ## 更多介绍
 
 基本使用方式说明，请参考[Router:一款单品、组件化、插件化全支持的路由框架](https://juejin.im/post/5a37771f6fb9a0450e7636e0)
