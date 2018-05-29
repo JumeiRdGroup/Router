@@ -1,6 +1,7 @@
 package com.lzh.nonview.router.demo
 
 import android.app.Application
+import com.haoge.easyandroid.EasyAndroid
 import com.haoge.studio.RouterRuleCreator
 import com.lzh.compiler.parceler.Parceler
 import com.lzh.compiler.parceler.annotation.FastJsonConverter
@@ -8,7 +9,6 @@ import com.lzh.nonview.router.Router
 import com.lzh.nonview.router.RouterConfiguration
 import com.lzh.nonview.router.anno.RouteConfig
 import com.lzh.nonview.router.demo.interceptors.DefaultInterceptor
-import com.lzh.nonview.router.demo.tools.SingleCache
 
 @RouteConfig(baseUrl = "haoge://page/", pack = "com.haoge.studio")
 class App : Application() {
@@ -26,6 +26,6 @@ class App : Application() {
         // 配置Parceler转换器
         Parceler.setDefaultConverter(FastJsonConverter::class.java)
 
-        SingleCache.init(this)
+        EasyAndroid.init(this)
     }
 }

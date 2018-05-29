@@ -28,12 +28,13 @@ android {
 }
 
 def parceler_version="1.3.9"
-def router_version="2.7.2"
+def router_version="c9a5d9af8b"
 def butterknife_version='8.8.1'
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.alibaba:fastjson:1.2.35'
+    compile 'com.github.yjfnypeu:EasyAndroid:1.0.3'
 
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"

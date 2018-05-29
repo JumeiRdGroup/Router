@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import butterknife.OnClick
 import com.alibaba.fastjson.JSON
+import com.haoge.easyandroid.easy.EasyToast
 import com.lzh.compiler.parceler.Parceler
 import com.lzh.nonview.router.Router
 import com.lzh.nonview.router.anno.RouterRule
@@ -138,5 +139,11 @@ class MainActivity : BaseActivity() {
         Router.create("haoge://page/executor/switcher")
                 .setExecutor(pool)
                 .open(this)
+    }
+
+    @OnClick(R.id.launchCreator)
+    fun launchCreator() {
+        val user = Router.createInstanceRouter("haoge://page/creator/user?name=CreatorRouter").createInstance<User>()
+        EasyToast.DEFAULT.show("获取到对象：$user")
     }
 }

@@ -18,9 +18,7 @@ package com.lzh.nonview.router.launcher;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.lzh.compiler.parceler.Parceler;
 import com.lzh.nonview.router.route.ActionSupport;
-import com.lzh.nonview.router.tools.Utils;
 
 /**
  * Default Action Launcher for {@link com.lzh.nonview.router.route.ActionRoute}
@@ -33,9 +31,6 @@ public class DefaultActionLauncher extends ActionLauncher{
         final Bundle data = new Bundle();
         data.putAll(bundle);
         data.putAll(extras.getExtras());
-        if (Utils.PARCELER_SUPPORT) {
-            Parceler.toEntity(support, data);// inject data
-        }
         getExecutor().execute(new ActionRunnable(support, context, data));
     }
 

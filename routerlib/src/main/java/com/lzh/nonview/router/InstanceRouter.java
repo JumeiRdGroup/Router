@@ -3,9 +3,9 @@ package com.lzh.nonview.router;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.lzh.compiler.parceler.Parceler;
 import com.lzh.nonview.router.module.CreatorRouteRule;
 import com.lzh.nonview.router.parser.URIParser;
+import com.lzh.nonview.router.route.ICreatorInjector;
 import com.lzh.nonview.router.tools.Cache;
 import com.lzh.nonview.router.tools.RouterLog;
 import com.lzh.nonview.router.tools.Utils;
@@ -15,31 +15,27 @@ import java.util.Map;
 /**
  * @author haoge on 2018/5/25
  */
-public class CreatorRouter {
+public class InstanceRouter {
 
-    Uri uri;
-    Bundle extra = new Bundle();
+    private Uri uri;
+    private Bundle extra = new Bundle();
 
-    private CreatorRouter(Uri uri) {
+    private InstanceRouter(Uri uri) {
         this.uri = uri;
     }
 
-    public static CreatorRouter create(String url) {
-        return new CreatorRouter(Uri.parse(url));
+    static InstanceRouter build(String url) {
+        return new InstanceRouter(Uri.parse(url));
     }
 
-    public static CreatorRouter create(Uri uri) {
-        return new CreatorRouter(uri);
-    }
-
-    public CreatorRouter addExtras(Bundle extra){
+    public InstanceRouter addExtras(Bundle extra){
         if (extra != null) {
             this.extra.putAll(extra);
         }
         return this;
     }
 
-    public <T> T createTarget() {
+    public <T> T createInstance() {
         try {
             Map<String, CreatorRouteRule> rules = Cache.getCreatorRules();
             URIParser parser = new URIParser(uri);
@@ -52,14 +48,14 @@ public class CreatorRouter {
 
             Object instance = rule.getTarget().newInstance();
 
-            Bundle bundle = Utils.parseRouteMapToBundle(parser, rule);
-            if (Utils.PARCELER_SUPPORT) {
-                Parceler.toEntity(instance, bundle);
+            if (instance instanceof ICreatorInjector) {
+                Bundle bundle = Utils.parseRouteMapToBundle(parser, rule);
+                ((ICreatorInjector) instance).inject(bundle);
             }
 
             return (T) instance;
         } catch (Throwable e) {
-            RouterLog.e("Create target class from CreatorRouter failed. cause by:" + e.getMessage(), e);
+            RouterLog.e("Create target class from InstanceRouter failed. cause by:" + e.getMessage(), e);
             return null;
         }
     }

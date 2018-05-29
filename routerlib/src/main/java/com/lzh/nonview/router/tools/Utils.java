@@ -38,9 +38,6 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class Utils {
 
-    /** Flag: indicate that <i><b><a href="https://github.com/yjfnypeu/Parceler">Parceler</a></b></i> is supported.*/
-    public static final boolean PARCELER_SUPPORT;
-
     /**
      * Adjust if the scheme is http or https
      * @param scheme scheme for uri
@@ -113,12 +110,12 @@ public class Utils {
     }
 
     /**
-     * create {@link BundleWrapper} instance by type.
+     * createInstance {@link BundleWrapper} instance by type.
      * <p>
-     *     When <i>type</i> between -1 and 7,should create subclass of {@link SimpleBundle} with type<br>
-     *     Otherwise,should create of {@link SimpleBundle} with type {@link RouteRule#STRING}
+     *     When <i>type</i> between -1 and 7,should createInstance subclass of {@link SimpleBundle} with type<br>
+     *     Otherwise,should createInstance of {@link SimpleBundle} with type {@link RouteRule#STRING}
      * </p>
-     * @return The type to indicate how tyce should be use to create wrapper instance
+     * @return The type to indicate how tyce should be use to createInstance wrapper instance
      */
     private static BundleWrapper createBundleWrapper (int type) {
         switch (type) {
@@ -134,19 +131,6 @@ public class Utils {
                 return new SimpleBundle(type);
             default:
                 return new SimpleBundle(RouteRule.STRING);
-        }
-    }
-
-    static {
-        boolean isSupport = true;
-        try {
-            Class parceler = Class.forName("com.lzh.compiler.parceler.Parceler");
-            parceler.getMethod("toEntity", Object.class, Bundle.class);
-            isSupport = true;
-        } catch (Throwable e) {
-            isSupport = false;
-        } finally {
-            PARCELER_SUPPORT = isSupport;
         }
     }
 }

@@ -84,6 +84,10 @@ public final class Router{
         return new Router(uri);
     }
 
+    public static InstanceRouter createInstanceRouter(String url) {
+        return InstanceRouter.build(url);
+    }
+
     /**
      * Set a callback to notify the user when the routing were success or failure.
      * @param callback The callback you set.
