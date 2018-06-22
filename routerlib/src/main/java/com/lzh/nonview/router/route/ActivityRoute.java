@@ -18,6 +18,7 @@ package com.lzh.nonview.router.route;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.lzh.nonview.router.RouterConfiguration;
 import com.lzh.nonview.router.activityresult.ActivityResultCallback;
@@ -49,6 +50,12 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     @Override
     public IActivityRoute resultCallback(ActivityResultCallback callback) {
         this.callback.getExtras().putValue(Constants.KEY_RESULT_CALLBACK, callback);
+        return this;
+    }
+
+    @Override
+    public IActivityRoute setOptions(Bundle options) {
+        this.callback.getExtras().putValue(Constants.KEY_ACTIVITY_OPTIONS, options);
         return this;
     }
 

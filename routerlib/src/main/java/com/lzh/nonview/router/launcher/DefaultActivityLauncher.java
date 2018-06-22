@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import com.lzh.nonview.router.activityresult.ActivityResultCallback;
 import com.lzh.nonview.router.activityresult.ActivityResultDispatcher;
@@ -78,7 +79,11 @@ public class DefaultActivityLauncher extends ActivityLauncher{
         Intent intent = createIntent(context);
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
-            activity.startActivityForResult(intent,requestCode);
+            if (options != null && Build.VERSION.SDK_INT >= 16) {
+                activity.startActivityForResult(intent, requestCode, options);
+            } else {
+                activity.startActivityForResult(intent,requestCode);
+            }
             overridePendingTransition((Activity) context, extras);
             ActivityResultDispatcher.get().bindRequestArgs(activity, requestCode, callback);
         } else {

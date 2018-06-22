@@ -42,6 +42,7 @@ public abstract class Launcher {
 
     protected Activity resumeContext;
     protected ActivityResultCallback resultCallback;
+    protected Bundle options;
 
     /**
      * Requires to open with this launcher.
@@ -66,6 +67,7 @@ public abstract class Launcher {
 
         resumeContext = extras.getValue(Constants.KEY_RESUME_CONTEXT);
         resultCallback = extras.getValue(Constants.KEY_RESULT_CALLBACK);
+        options = extras.getValue(Constants.KEY_ACTIVITY_OPTIONS);
 
         int requestCode = extras.getRequestCode();
         if (resultCallback != null && requestCode == -1) {

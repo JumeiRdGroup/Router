@@ -124,6 +124,11 @@ public final class Router{
         return this;
     }
 
+    public Router setOptions(Bundle options) {
+        this.internalCallback.getExtras().putValue(Constants.KEY_ACTIVITY_OPTIONS, options);
+        return this;
+    }
+
     public Router addExtras(Bundle extras) {
         this.internalCallback.getExtras().addExtras(extras);
         return this;

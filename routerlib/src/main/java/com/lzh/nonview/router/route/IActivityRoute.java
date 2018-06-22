@@ -48,6 +48,8 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
     IActivityRoute resultCallback(ActivityResultCallback callback);
 
+    IActivityRoute setOptions(Bundle options);
+
     /**
      * Set anim for {@link android.app.Activity#overridePendingTransition(int, int)}
      * @param enterAnim enter animation
@@ -96,6 +98,12 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
         @Override
         public IActivityRoute resultCallback(ActivityResultCallback callback) {
             internal.getExtras().putValue(Constants.KEY_RESULT_CALLBACK, callback);
+            return this;
+        }
+
+        @Override
+        public IActivityRoute setOptions(Bundle options) {
+            internal.getExtras().putValue(Constants.KEY_ACTIVITY_OPTIONS, options);
             return this;
         }
 
