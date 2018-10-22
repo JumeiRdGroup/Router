@@ -59,7 +59,7 @@ public final class ActivityResultDispatcher {
         Iterator<Activity> iterator = keys.iterator();
         while (iterator.hasNext()) {
             Activity next = iterator.next();
-            if (Utils.isValid(next)
+            if (!Utils.isValid(next)
                     || container.get(next).isEmpty()) {
                 iterator.remove();
             }
