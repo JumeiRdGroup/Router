@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'//添加
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -39,4 +39,4 @@ publish {
 }
 
 
-//apply from: '../javadoc.gradle'
+apply from: '../javadoc.gradle'
