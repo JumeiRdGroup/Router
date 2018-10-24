@@ -1,18 +1,9 @@
 apply plugin: 'java'
-apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'maven'
+
 dependencies {
 }
 
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
-publish {
-    artifactId = 'router-anno'
-    userOrg = rootProject.userOrg
-    groupId = rootProject.groupId
-    uploadName = rootProject.uploadName
-    publishVersion = rootProject.publishVersion
-    desc = rootProject.description
-    website = rootProject.website
-    licences = rootProject.licences
-}

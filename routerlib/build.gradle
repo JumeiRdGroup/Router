@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'//添加
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -33,23 +33,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile project(':annotation')
-    provided 'com.github.yjfnypeu.Parceler:api:1.3.9'
-    provided 'com.android.support:support-v4:28.0.0'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':annotation')
+    compileOnly 'com.github.yjfnypeu.Parceler:api:1.3.9'
+    compileOnly 'com.android.support:support-v4:28.0.0'
 }
-
-publish {
-    artifactId = 'router-api'
-    userOrg = rootProject.userOrg
-    groupId = rootProject.groupId
-    uploadName = rootProject.uploadName
-    publishVersion = rootProject.publishVersion
-    desc = rootProject.description
-    website = rootProject.website
-    licences = rootProject.licences
-}
-
-
-//apply from: '../javadoc.gradle'
