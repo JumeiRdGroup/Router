@@ -52,4 +52,4 @@ publish {
 }
 
 
-//apply from: '../javadoc.gradle'
+apply from: '../javadoc.gradle'
