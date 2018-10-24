@@ -38,31 +38,3 @@ dependencies {
     compileOnly 'com.github.yjfnypeu.Parceler:api:1.3.9'
     compileOnly 'com.android.support:support-v4:28.0.0'
 }
-
-def MAVEN_PATH ='https://jitpack.io'
-def ARTIFACT_ID = 'router-api'
-def VERSION_NAME = '1.0.1'
-def GROUP_ID = 'com.jm.router'
-
-uploadArchives {
-    repositories {
-
-        mavenDeployer {
-            repository(url:MAVEN_PATH )
-            pom.project {
-                groupId GROUP_ID
-                artifactId ARTIFACT_ID
-                version VERSION_NAME
-            }
-
-            pom.whenConfigured { pom ->
-                pom.dependencies.forEach { dep ->
-                    if (dep.getVersion() == "unspecified") {
-                        dep.setGroupId(GROUP_ID)
-                        dep.setVersion(VERSION_NAME)
-                    }
-                }
-            }
-        }
-    }
-}
