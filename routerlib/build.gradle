@@ -25,6 +25,11 @@ android {
         exclude 'LICENSE.txt'
     }
 
+    sourceSets {
+        main {
+            jni.srcDirs = [] //disable automatic ndk-build
+        }
+    }
 }
 
 dependencies {
