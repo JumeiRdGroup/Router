@@ -29,3 +29,5 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api project(':router-api')
 }
+
+apply from: '../javadoc.gradle'

@@ -38,3 +38,5 @@ dependencies {
     compileOnly 'com.github.yjfnypeu.Parceler:api:1.3.9'
     compileOnly 'com.android.support:support-v4:28.0.0'
 }
+
+apply from: '../javadoc.gradle'
