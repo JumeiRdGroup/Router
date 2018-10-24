@@ -28,7 +28,7 @@ android {
 }
 
 def parceler_version="1.3.9"
-def router_version="c5b6687882"
+def router_version="c402054f84"
 def butterknife_version='8.8.1'
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
@@ -41,10 +41,10 @@ dependencies {
     kapt "com.github.yjfnypeu.Parceler:compiler:$parceler_version"
     api "com.github.yjfnypeu.Parceler:api:$parceler_version"
 
-    compile "com.github.yjfnypeu.Router:router-api:$router_version"
-    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
+//    api "com.github.yjfnypeu.Router:router-api:$router_version"
+//    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
 
-//    api project(':routerlib')
-//    kapt project(':compiler')
+    api project(':router-api')
+    kapt project(':router-compiler')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

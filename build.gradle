@@ -39,5 +39,3 @@ ext {
     website = 'https://github.com/yjfnypeu/Router'
     licences = ['Apache-2.0']
 }
-
-apply from: './upload.gradle'

@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 
     sourceSets {
         main {
@@ -26,6 +33,8 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api project(':routerlib')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':router-anno')
+    compileOnly 'com.github.yjfnypeu.Parceler:api:1.3.9'
+    compileOnly 'com.android.support:support-v4:28.0.0'
 }
