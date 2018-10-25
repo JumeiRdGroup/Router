@@ -35,7 +35,6 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api project(':router-anno')
-    compileOnly 'com.github.yjfnypeu.Parceler:api:1.3.9'
     compileOnly 'com.android.support:support-v4:28.0.0'
 }
 
