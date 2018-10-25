@@ -3,15 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion compile_version
+    buildToolsVersion build_tool
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         applicationId "com.lzh.nonview.router.demo"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion target_version
         versionCode 1
         versionName "1.0"
     }
@@ -41,10 +41,10 @@ dependencies {
     kapt "com.github.yjfnypeu.Parceler:compiler:$parceler_version"
     api "com.github.yjfnypeu.Parceler:api:$parceler_version"
 
-    api "com.github.yjfnypeu.Router:router-api:$router_version"
-    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
+//    api "com.github.yjfnypeu.Router:router-api:$router_version"
+//    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"
 
-//    api project(':router-api')
-//    kapt project(':router-compiler')
+    api project(':router-api')
+    kapt project(':router-compiler')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

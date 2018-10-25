@@ -16,7 +16,6 @@
 package com.lzh.nonview.router.module;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.lzh.nonview.router.interceptors.RouteInterceptor;
 import com.lzh.nonview.router.launcher.Launcher;
@@ -31,24 +30,6 @@ import java.util.HashMap;
  */
 @SuppressWarnings("unchecked")
 public class RouteRule<R extends RouteRule, L extends Launcher>{
-    /** Associate with {@link Bundle#putString(String, String)}*/
-    public static final int STRING = -1;
-    /** Associate with {@link Bundle#putByte(String, byte)} */
-    public static final int BYTE = 0;
-    /** Associate with {@link Bundle#putShort(String, short)} */
-    public static final int SHORT = 1;
-    /** Associate with {@link Bundle#putInt(String, int)} */
-    public static final int INT = 2;
-    /** Associate with {@link Bundle#putLong(String, long)} */
-    public static final int LONG = 3;
-    /** Associate with {@link Bundle#putFloat(String, float)} */
-    public static final int FLOAT = 4;
-    /** Associate with {@link Bundle#putDouble(String, double)} */
-    public static final int DOUBLE = 5;
-    /** Associate with {@link Bundle#putBoolean(String, boolean)} */
-    public static final int BOOLEAN = 6;
-    /** Associate with {@link Bundle#putChar(String, char)} */
-    public static final int CHAR = 7;
 
     public RouteRule(String clzName) {
         this.clzName = clzName;
@@ -72,17 +53,6 @@ public class RouteRule<R extends RouteRule, L extends Launcher>{
         if (params != null) {
             this.params = params;
         }
-        return (R) this;
-    }
-
-    /**
-     * Specify required type when parsing the Url parameters
-     * @param key the key in Url params.
-     * @param type the required type. default is {@link RouteRule#STRING}
-     * @return RouteRule
-     */
-    public R addParam (String key, int type) {
-        params.put(key,type);
         return (R) this;
     }
 

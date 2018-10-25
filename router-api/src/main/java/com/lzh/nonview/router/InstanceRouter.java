@@ -49,7 +49,7 @@ public class InstanceRouter {
             Object instance = rule.getTarget().newInstance();
 
             if (instance instanceof ICreatorInjector) {
-                Bundle bundle = Utils.parseRouteMapToBundle(parser, rule);
+                Bundle bundle = Utils.parseToBundle(parser);
                 ((ICreatorInjector) instance).inject(bundle);
             }
 

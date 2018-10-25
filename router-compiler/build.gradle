@@ -4,7 +4,6 @@ apply plugin: 'maven'
 dependencies {
     implementation 'com.squareup:javapoet:1.7.0'
     implementation project(':router-anno')
-    implementation 'com.github.yjfnypeu.Parceler:annotation:1.2'
 }
 
 targetCompatibility = '1.7'

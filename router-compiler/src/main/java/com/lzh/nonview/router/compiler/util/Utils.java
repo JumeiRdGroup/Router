@@ -1,13 +1,11 @@
 package com.lzh.nonview.router.compiler.util;
 
-import com.lzh.compiler.parceler.annotation.Arg;
 import com.lzh.nonview.router.compiler.exception.RouterException;
 
 import java.util.Set;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 
 public class Utils {
 
@@ -54,36 +52,7 @@ public class Utils {
         } while (true);
     }
 
-    public static String getKeyFromArg(Arg arg, String def) {
-        return isEmpty(arg.value()) ? def : arg.value();
-    }
-
     public static boolean isEmpty (String data) {
         return data == null || data.length() == 0;
-    }
-
-    public static boolean isEffectType (VariableElement field) {
-        String type = field.asType().toString();
-        switch (type) {
-            case "boolean":
-            case "java.lang.Boolean":
-            case "byte":
-            case "java.lang.Byte":
-            case "char":
-            case "java.lang.Character":
-            case "short":
-            case "java.lang.Short":
-            case "int":
-            case "java.lang.Integer":
-            case "long":
-            case "java.lang.Long":
-            case "float":
-            case "java.lang.Float":
-            case "double":
-            case "java.lang.Double":
-            case "java.lang.String":
-                return true;
-        }
-        return false;
     }
 }

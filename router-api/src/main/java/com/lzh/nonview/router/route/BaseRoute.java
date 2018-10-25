@@ -48,7 +48,7 @@ public abstract class BaseRoute<T extends IBaseRoute> implements IRoute, IBaseRo
             this.remote = remote;
             this.callback = callback;
             this.routeRule = rule;
-            this.bundle = Utils.parseRouteMapToBundle(new URIParser(uri), routeRule);
+            this.bundle = Utils.parseToBundle(new URIParser(uri));
             this.bundle.putParcelable(Router.RAW_URI, uri);
             this.launcher = obtainLauncher();
             return this;

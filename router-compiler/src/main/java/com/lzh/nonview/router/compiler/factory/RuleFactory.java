@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -94,17 +93,11 @@ public class RuleFactory {
     }
 
     private void appendMethod(Parser parser, MethodSpec.Builder methodCreator,String schema, String className) {
-        Map<String, TypeMirror> map = parser.getMap();
         String target = parser.getType().getQualifiedName().toString();
         TypeElement actType = UtilMgr.getMgr().getElementUtils().getTypeElement(target);
         CodeBlock.Builder codeBuilder;
         codeBuilder = CodeBlock.builder().add("routes.put($S,new $T($T.class)",
                 schema, ClassName.bestGuess(className), actType);
-        Set<String> keySet = map.keySet();
-        for (String key : keySet) {
-            codeBuilder.add("\r\n\t\t");
-            codeBuilder.add(".addParam($S,$T.$L)",key, routeMap, getTypeFromName (map.get(key)));
-        }
 
         if (Constants.CLASSNAME_ACTION_ROUTE_MAP.equals(className)) {
             codeBuilder.add("\r\n\t\t");
