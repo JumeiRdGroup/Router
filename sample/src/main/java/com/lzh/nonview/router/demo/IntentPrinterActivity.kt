@@ -11,7 +11,7 @@ import com.lzh.nonview.router.anno.RouterRule
 @RouterRule("intent/printer")
 class IntentPrinterActivity:BaseActivity() {
 
-    val mPrinter:TextView by lazy { findViewById(R.id.printer_tv) as TextView }
+    val mPrinter:TextView by lazy { findViewById<TextView>(R.id.printer_tv) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,6 @@ class IntentPrinterActivity:BaseActivity() {
                 message.append("\n")
             }
         }
-        mPrinter.text = message;
+        mPrinter.text = message
     }
 }

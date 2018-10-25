@@ -37,7 +37,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     @Override
     public Intent createIntent(Context context) {
         ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-        activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
+        activityLauncher.set(uri, bundle, callback.getExtras(), routeRule, remote);
         return activityLauncher.createIntent(context);
     }
 
@@ -77,7 +77,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
         try {
             Utils.checkInterceptor(uri, callback.getExtras(), fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.getExtras(), routeRule, remote);
             activityLauncher.open(fragment);
             callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {
@@ -92,7 +92,7 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
         try {
             Utils.checkInterceptor(uri, callback.getExtras(), fragment.getActivity(), getInterceptors());
             ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, callback.getExtras(), (ActivityRouteRule) routeRule, remote);
+            activityLauncher.set(uri, bundle, callback.getExtras(), routeRule, remote);
             activityLauncher.open(fragment);
             callback.onOpenSuccess(routeRule);
         } catch (Throwable e) {

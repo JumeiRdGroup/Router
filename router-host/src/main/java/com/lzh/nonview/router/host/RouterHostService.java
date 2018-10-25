@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.Parcel;
-import android.os.RemoteException;
 
 import com.lzh.nonview.router.module.RemoteRule;
 import com.lzh.nonview.router.protocol.IService;
@@ -48,39 +47,39 @@ public class RouterHostService extends Service{
         List<String> plugins = new ArrayList<>();
 
         @Override
-        public void register(String pluginName) throws RemoteException {
+        public void register(String pluginName) {
             if (!plugins.contains(pluginName)) {
                 plugins.add(pluginName);
             }
         }
 
         @Override
-        public boolean isRegister(String pluginName) throws RemoteException {
+        public boolean isRegister(String pluginName) {
             return plugins.contains(pluginName);
         }
 
         @Override
-        public void addActivityRules(Map rules) throws RemoteException {
+        public void addActivityRules(Map rules) {
             activities.putAll(rules);
         }
 
         @Override
-        public void addActionRules(Map rules) throws RemoteException {
+        public void addActionRules(Map rules) {
             actions.putAll(rules);
         }
 
         @Override
-        public RemoteRule getActionRule(Uri uri) throws RemoteException {
+        public RemoteRule getActionRule(Uri uri) {
             return findRule(uri, actions);
         }
 
         @Override
-        public RemoteRule getActivityRule(Uri uri) throws RemoteException {
+        public RemoteRule getActivityRule(Uri uri) {
             return findRule(uri, activities);
         }
 
         @Override
-        public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+        public boolean onTransact(int code, Parcel data, Parcel reply, int flags) {
             try {
                 // check for security verification
                 if (verify != null && !verify.verify(getApplicationContext())) {

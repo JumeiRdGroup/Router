@@ -20,7 +20,7 @@ class UserActivity :BaseActivity(){
     @Arg("username")
     var username = "HaogeStudio"
 
-    val userTv:TextView by lazy { findViewById(R.id.username) as TextView }
+    val userTv:TextView by lazy { findViewById<TextView>(R.id.username) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

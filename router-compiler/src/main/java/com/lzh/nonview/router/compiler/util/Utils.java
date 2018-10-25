@@ -23,11 +23,7 @@ public class Utils {
         Set<Modifier> modifiers = type.getModifiers();
         if (modifiers.contains(Modifier.PRIVATE)) {
             throw new RouterException(String.format("The class %s should not be modified by private",type.getSimpleName()),type);
-        } else if (modifiers.contains(Modifier.ABSTRACT)) {
-            // skip it
-            return false;
-        }
-        return true;
+        } else return !modifiers.contains(Modifier.ABSTRACT);
     }
 
     /**

@@ -23,7 +23,7 @@ class LoginInterceptor : RouteInterceptor {
 
     override fun intercept(uri: Uri?, extras: RouteBundleExtras?, context: Context?): Boolean {
         // 判断是否已登录。已登录：不拦截、登录：拦截
-        return !DataManager.login;
+        return !DataManager.login
     }
 
 }

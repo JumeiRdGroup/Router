@@ -12,7 +12,7 @@ import android.util.Log;
 final class DefaultVerify implements RemoteVerify{
 
     @Override
-    public boolean verify(Context context) throws Exception {
+    public boolean verify(Context context) {
         String packageName = context.getPackageName();
         int uid = Binder.getCallingUid();
         String[] packages = context.getPackageManager().getPackagesForUid(uid);

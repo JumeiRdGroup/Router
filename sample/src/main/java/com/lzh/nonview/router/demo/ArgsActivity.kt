@@ -43,7 +43,7 @@ class ArgsActivity:BaseActivity() {
     @Arg
     var mUrl:String? = null
 
-    val mPrinter:TextView by lazy { findViewById(R.id.printer_tv) as TextView }
+    val mPrinter:TextView by lazy { findViewById<TextView>(R.id.printer_tv) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
