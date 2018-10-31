@@ -50,21 +50,6 @@ public class Utils {
         return url;
     }
 
-    /**
-     * <p>
-     * Check and completed the uri when it was build without a 'scheme'.
-     * in this case. the default scheme '<b>http</b>' will be added.
-     * </p>
-     * @param uri source uri
-     * @return complete uri
-     */
-    public static Uri completeUri(Uri uri) {
-        if (TextUtils.isEmpty(uri.getScheme())) {
-            return Uri.parse("http://" + uri.toString());
-        }
-        return uri;
-    }
-
     public static void checkInterceptor(Uri uri, RouteBundleExtras extras, Context context, List<RouteInterceptor> interceptors) {
         for (RouteInterceptor interceptor : interceptors) {
             if (interceptor.intercept(uri,extras,context)) {
@@ -89,5 +74,9 @@ public class Utils {
         return activity != null
                 && !activity.isFinishing()
                 && !(Build.VERSION.SDK_INT >= 17 && activity.isDestroyed());
+    }
+
+    public static boolean isValidUri(Uri uri) {
+        return uri != null && !TextUtils.isEmpty(uri.getScheme()) && !TextUtils.isEmpty(uri.getHost());
     }
 }

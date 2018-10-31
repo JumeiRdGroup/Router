@@ -62,7 +62,7 @@ public final class Router{
     private InternalCallback internalCallback;
 
     private Router(Uri uri) {
-        this.uri = Utils.completeUri(uri);
+        this.uri = uri;
         internalCallback = new InternalCallback(this.uri);
     }
 
@@ -72,7 +72,7 @@ public final class Router{
      * @return new Router
      */
     public static Router create(String url) {
-        return new Router(Uri.parse(url));
+        return new Router(Uri.parse(url == null?"":url));
     }
 
     /**
@@ -182,7 +182,9 @@ public final class Router{
 
     private IRoute getLocalRoute() {
         RouteRule rule;
-        if ((rule = ActionRoute.findRule(uri, Cache.TYPE_ACTION_ROUTE)) != null) {
+        if (!Utils.isValidUri(uri)) {
+            return new IRoute.EmptyRoute(internalCallback);
+        } else if ((rule = ActionRoute.findRule(uri, Cache.TYPE_ACTION_ROUTE)) != null) {
             return new ActionRoute().create(uri, rule, new Bundle(), internalCallback);
         } else if ((rule = ActivityRoute.findRule(uri, Cache.TYPE_ACTIVITY_ROUTE)) != null) {
             return new ActivityRoute().create(uri, rule, new Bundle(), internalCallback);
