@@ -29,17 +29,20 @@ android {
 
 def parceler_version="1.4.0"
 def router_version="2.8.4"
-def butterknife_version='8.8.1'
+def butterknife_version='8.0.1'
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.alibaba:fastjson:1.2.35'
-    api 'com.github.yjfnypeu:EasyAndroid:1.0.3'
+    api 'com.alibaba:fastjson:1.2.47'
+    api 'com.github.yjfnypeu:EasyAndroid:1.2.4'
 
     api "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     kapt "com.github.yjfnypeu.Parceler:compiler:$parceler_version"
     api "com.github.yjfnypeu.Parceler:api:$parceler_version"
+
+    kapt "com.github.longshihan1.AopBrocad:broca-compiler:1.1.7"
+    api 'com.github.longshihan1.AopBrocad:broca-api:1.1.7'
 
 //    api "com.github.yjfnypeu.Router:router-api:$router_version"
 //    kapt "com.github.yjfnypeu.Router:router-compiler:$router_version"

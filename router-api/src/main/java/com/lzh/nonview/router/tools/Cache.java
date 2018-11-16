@@ -95,9 +95,13 @@ public final class Cache {
             creatorRouteMap.clear();
             int count = creatorList == null ? 0 : creatorList.size();
             for (int i = 0; i < count; i++) {
-                addAll(activityRouteMap, creatorList.get(i).createActivityRouteRules());
-                addAll(actionRouteMap, creatorList.get(i).createActionRouteRules());
-                addAll(creatorRouteMap, creatorList.get(i).createCreatorRouteRule());
+                try {
+                    addAll(activityRouteMap, creatorList.get(i).createActivityRouteRules());
+                    addAll(actionRouteMap, creatorList.get(i).createActionRouteRules());
+                    addAll(creatorRouteMap, creatorList.get(i).createCreatorRouteRule());
+                } catch (AbstractMethodError error) {
+                    // ignore 兼容早期没有createCreatorRouteRule的结构
+                }
             }
             shouldReload = false;
         }
