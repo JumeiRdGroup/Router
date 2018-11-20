@@ -71,12 +71,6 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
      */
     void open(Fragment fragment);
 
-    /**
-     * Launch ronting by {@link android.support.v4.app.Fragment}
-     * @param fragment the fragment to startActivity
-     */
-    void open(android.support.v4.app.Fragment fragment);
-
     class EmptyActivityRoute extends EmptyBaseRoute<IActivityRoute> implements IActivityRoute {
 
         public EmptyActivityRoute(InternalCallback internal) {
@@ -122,11 +116,6 @@ public interface IActivityRoute extends IBaseRoute<IActivityRoute> {
 
         @Override
         public void open(Fragment fragment) {
-            internal.invoke(fragment.getActivity());
-        }
-
-        @Override
-        public void open(android.support.v4.app.Fragment fragment) {
             internal.invoke(fragment.getActivity());
         }
     }

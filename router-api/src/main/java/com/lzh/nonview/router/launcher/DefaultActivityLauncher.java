@@ -54,19 +54,6 @@ public class DefaultActivityLauncher extends ActivityLauncher{
     }
 
     @Override
-    public void open(android.support.v4.app.Fragment fragment) {
-        if (resumeContext != null) {
-            open(resumeContext);
-        } else if (resultCallback != null) {
-            open(fragment.getActivity());
-        } else {
-            Intent intent = createIntent(fragment.getActivity());
-            fragment.startActivityForResult(intent, extras.getRequestCode());
-            overridePendingTransition(fragment.getActivity(), extras);
-        }
-    }
-
-    @Override
     public void open(Context context) {
         Activity resume = resumeContext;
         if (resume != null) {

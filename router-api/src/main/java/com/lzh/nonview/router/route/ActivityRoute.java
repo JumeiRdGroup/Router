@@ -88,20 +88,6 @@ public class ActivityRoute extends BaseRoute<IActivityRoute> implements IActivit
     }
 
     @Override
-    public void open(android.support.v4.app.Fragment fragment) {
-        try {
-            Utils.checkInterceptor(uri, callback.getExtras(), fragment.getActivity(), getInterceptors());
-            ActivityLauncher activityLauncher = (ActivityLauncher) launcher;
-            activityLauncher.set(uri, bundle, callback.getExtras(), routeRule, remote);
-            activityLauncher.open(fragment);
-            callback.onOpenSuccess(routeRule);
-        } catch (Throwable e) {
-            callback.onOpenFailed(e);
-        }
-        callback.invoke(fragment.getActivity());
-    }
-
-    @Override
     protected Launcher obtainLauncher() throws Exception{
         ActivityRouteRule rule = (ActivityRouteRule) routeRule;
         Class<? extends ActivityLauncher> launcher = rule.getLauncher();

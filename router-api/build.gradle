@@ -35,7 +35,6 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api project(':router-anno')
-    compileOnly 'com.android.support:support-v4:28.0.0'
 }
 
 apply from: '../javadoc.gradle'

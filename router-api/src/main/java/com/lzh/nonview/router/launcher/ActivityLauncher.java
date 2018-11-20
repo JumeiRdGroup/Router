@@ -43,11 +43,4 @@ public abstract class ActivityLauncher extends Launcher{
      * @throws Exception a error occurs
      */
     public abstract void open(Fragment fragment) throws Exception;
-
-    /**
-     * The launch method for Support-v4 Fragment: {@link android.support.v4.app.Fragment#startActivityForResult(Intent, int)}
-     * @param fragment The fragment instance
-     * @throws Exception a error occurs
-     */
-    public void open(android.support.v4.app.Fragment fragment) throws Exception {}
 }
