@@ -181,16 +181,21 @@ public final class Router{
     }
 
     private IRoute getLocalRoute() {
-        RouteRule rule;
-        if (!Utils.isValidUri(uri)) {
-            return new IRoute.EmptyRoute(internalCallback);
-        } else if ((rule = ActionRoute.findRule(uri, Cache.TYPE_ACTION_ROUTE)) != null) {
-            return new ActionRoute().create(uri, rule, new Bundle(), internalCallback);
-        } else if ((rule = ActivityRoute.findRule(uri, Cache.TYPE_ACTIVITY_ROUTE)) != null) {
-            return new ActivityRoute().create(uri, rule, new Bundle(), internalCallback);
-        } else if (BrowserRoute.canOpenRouter(uri)) {
-            return BrowserRoute.getInstance().setUri(uri);
-        } else {
+        try {
+            RouteRule rule;
+            if (!Utils.isValidUri(uri)) {
+                return new IRoute.EmptyRoute(internalCallback);
+            } else if ((rule = ActionRoute.findRule(uri, Cache.TYPE_ACTION_ROUTE)) != null) {
+                return new ActionRoute().create(uri, rule, new Bundle(), internalCallback);
+            } else if ((rule = ActivityRoute.findRule(uri, Cache.TYPE_ACTIVITY_ROUTE)) != null) {
+                return new ActivityRoute().create(uri, rule, new Bundle(), internalCallback);
+            } else if (BrowserRoute.canOpenRouter(uri)) {
+                return BrowserRoute.getInstance().setUri(uri);
+            } else {
+                return new IRoute.EmptyRoute(internalCallback);
+            }
+        } catch (Exception e) {
+            internalCallback.onOpenFailed(e);
             return new IRoute.EmptyRoute(internalCallback);
         }
     }
