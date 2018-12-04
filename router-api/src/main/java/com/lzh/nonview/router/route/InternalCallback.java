@@ -51,7 +51,10 @@ public final class InternalCallback {
     }
 
     public void onOpenFailed(Throwable e) {
-        this.error = e;
+        if (error == null) {
+            // 只接受第一次配置的异常
+            this.error = e;
+        }
     }
 
     void invoke(Context context) {
